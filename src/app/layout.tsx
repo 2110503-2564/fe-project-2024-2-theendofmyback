@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
+import Sidebar, { SidebarItem } from "@/components/Slidebar";
+import { BarChart3, LayoutDashboard, LifeBuoy, Settings, UserCircle } from "lucide-react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +21,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopMenu />
-        {children}</body>
+        <div className="flex h-screen w-full">
+          {/* Sidebar ด้านซ้าย */}
+          <Sidebar>
+            <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" alert />
+            <SidebarItem icon={<BarChart3 size={20} />} text="Review" active />
+            <SidebarItem icon={<UserCircle size={20} />} text="Users" />
+            <hr className="my-3" />
+            <SidebarItem icon={<Settings size={20} />} text="Settings" />
+            <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+          </Sidebar>
+
+          <main className="flex bg-gray-100 overflow-auto">
+            {children}
+          </main>
+        </div>
+      </body>
     </html>
   );
 }
