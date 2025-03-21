@@ -1,6 +1,10 @@
 'use client'
-import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
+import { MoreVertical, ChevronLast, ChevronFirst, LayoutDashboard, BarChart3, UserCircle, Settings, LifeBuoy } from "lucide-react";
 import { useContext, createContext, useState, ReactNode } from "react";
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { AuthOptions } from 'next-auth';
+import { authOptions } from "@/api/auth/[...nextauth]/route";
 
 interface SidebarProps {
     children: ReactNode;
@@ -12,7 +16,11 @@ interface SidebarContextProps {
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(undefined);
 
-export default function Sidebar({ children }: SidebarProps) {
+
+
+export default async function Sidebar({ children }: SidebarProps) {
+
+    const session = await getServerSession(authOptions)
     const [expanded, setExpanded] = useState(true);
 
     return (
@@ -33,7 +41,9 @@ export default function Sidebar({ children }: SidebarProps) {
                 </div>
 
                 <SidebarContext.Provider value={{ expanded }}>
-                    <ul className="flex-1 px-3">{children}</ul>
+                    <ul className="flex-1 px-3">
+                        {children}
+                    </ul>
                 </SidebarContext.Provider>
 
                 <div className="border-t flex p-3">
@@ -44,7 +54,15 @@ export default function Sidebar({ children }: SidebarProps) {
                     />
                     <div
                         className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
-                    >
+                    >{
+                        session? <Link href = '/api/auth/signout'><div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
+                            Sign-Out of {session.user?.name} </div></Link>
+                        : <Link href = '/api/auth/signin'>
+                            <div className='flex items-center  h-full px-2 text-cyan-600 text-sm'>
+                                Sign-In
+                            </div>
+                        </Link>
+                    }
                         <div className="leading-4">
                             <h4 className="font-semibold">John Doe</h4>
                             <span className="text-xs text-gray-600">johndoe@gmail.com</span>
@@ -62,9 +80,10 @@ interface SidebarItemProps {
     text: string;
     active?: boolean;
     alert?: boolean;
+    pageRef: string;
 }
 
-export function SidebarItem({ icon, text, active, alert }: SidebarItemProps) {
+export function SidebarItem({ icon, text, active, alert, pageRef }: SidebarItemProps) {
     const context = useContext(SidebarContext);
     if (!context) {
         throw new Error("SidebarItem must be used within a Sidebar");
@@ -76,18 +95,20 @@ export function SidebarItem({ icon, text, active, alert }: SidebarItemProps) {
             className={`
                 relative flex items-center py-2 px-3 my-1
                 font-medium rounded-md cursor-pointer
-                transition-colors group 
-                ${
-                    active
-                        ? "bg-gradient-to-tr from-lime-200 to-lime-100 text-lime-800"
-                        : "hover:bg-lime-50 text-gray-600"
+                transition-colors group
+                ${active
+                    ? "bg-gradient-to-tr from-lime-200 to-lime-100 text-lime-800"
+                    : "hover:bg-lime-50 text-gray-600"
                 }
             `}
         >
-            {icon}
-            <span className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>
-                {text}
-            </span>
+            <Link href={pageRef} className="flex items-center w-full">
+                {icon}
+                <span className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>
+                    {text}
+                </span>
+            </Link>
+
             {alert && (
                 <div
                     className={`absolute right-2 w-2 h-2 rounded bg-lime-400 ${expanded ? "" : "top-2"}`}

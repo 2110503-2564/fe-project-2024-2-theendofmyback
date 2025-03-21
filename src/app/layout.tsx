@@ -22,14 +22,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex h-screen w-full">
-          {/* Sidebar ด้านซ้าย */}
+          
           <Sidebar>
-            <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" alert />
-            <SidebarItem icon={<BarChart3 size={20} />} text="Review" active />
-            <SidebarItem icon={<UserCircle size={20} />} text="Users" />
+            <SidebarItem icon={<LayoutDashboard size={20} />} text="Home" pageRef = '/'/>
+            <SidebarItem icon={<BarChart3 size={20} />} text="Review"  pageRef = '/review'/>
+            <SidebarItem icon={<UserCircle size={20} />} text="Users" pageRef = '/user' />
             <hr className="my-3" />
-            <SidebarItem icon={<Settings size={20} />} text="Settings" />
-            <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+            <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
+            <SidebarItem icon={<LifeBuoy size={20} />} text="Help" pageRef = '/help' />
           </Sidebar>
 
           <main className="flex bg-gray-100 overflow-auto">
