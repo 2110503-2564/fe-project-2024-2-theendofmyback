@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from './banner.module.css';
 import Image from 'next/image';
 import Input from '@/components/search';
+import Link from 'next/link';
 
 export default function Banner() {
     const covers = ['/img/cover1.jpg', '/img/cover2.jpg', '/img/cover3.jpg'];
@@ -13,11 +14,6 @@ export default function Banner() {
 
     const handleInputChange = (value: string) => {
         setInputValue(value);
-    };
-
-    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        router.push(`/campground/booking}`);
     };
 
     return (
@@ -37,12 +33,12 @@ export default function Banner() {
                 
                 <Input value={inputValue} onChange={handleInputChange} />
 
-                <button
-                    className={styles.bannerButton}
-                    onClick={handleButtonClick}
-                >
+                <Link href="/campground">
+                    <button className={styles.bannerButton}>
                     Book Now!
-                </button>
+                    </button>
+                </Link>
+            
             </div>
         </div>
     );
