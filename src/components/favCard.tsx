@@ -1,4 +1,6 @@
 'use client'
+import { Rating } from '@mui/material';
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -25,15 +27,18 @@ const FavCard = () => {
         <footer className="card__footer">
           <div className="card__job-summary">
             <div className="card__job-icon">
-            <img src="/img/logo.png" alt="Logo" width={50} height={20} />
+            <img src="/img/logo.png" alt="Logo" width={40} height={40} />
             </div>
             <div className="card__job">
-              <p className="card__job-title">
-                Cedt camp <br />
-              </p>
+              <h1 className="card__job-title">
+                Lakeside camp <br />
+              </h1>
+              <Rating name="read-only" value={5} readOnly />
             </div>
           </div>
+          <Link href="/campground">
           <button className="card__btn">view</button>
+        </Link>
         </footer>
       </article>
     </StyledWrapper>
@@ -43,7 +48,7 @@ const FavCard = () => {
 const StyledWrapper = styled.div`
   .card {
     margin: auto;
-    width: min(300px, 100%);
+    width: 300px;
     background-color: #fefefe;
     border-radius: 1rem;
     padding: 0.5rem;
@@ -58,8 +63,9 @@ const StyledWrapper = styled.div`
   .card__hero .card__job-title {
     margin: 0;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 700;
     padding-right: 2rem;
+    color:rgb(16, 90, 68);
   }
     .card__hero img {
     width: 100%;
@@ -75,6 +81,7 @@ const StyledWrapper = styled.div`
     flex-wrap: nowrap;
     gap: 1rem;
     font-weight: 700;
+    color:rgb(22, 97, 66);
   }
   .card__footer {
     display: flex;
@@ -105,17 +112,22 @@ const StyledWrapper = styled.div`
   }
   .card__btn {
     width: 100%;
-    font-weight: 400;
+    font-weight: 600;
     border: none;
     display: block;
     cursor: pointer;
     text-align: center;
     padding: 0.5rem 1.25rem;
     border-radius: 1rem;
-    background-color: #141417;
+    background-color:rgb(29, 186, 81);
     color: #fff;
     font-size: 1rem;
   }
+.card__btn:hover {
+    background-color:color:rgb(201, 240, 193);
+    color: rgb(8, 95, 89);
+    transform: scale(1.05);
+}
   @media (min-width: 340px) {
     .card__btn {
       width: max-content;

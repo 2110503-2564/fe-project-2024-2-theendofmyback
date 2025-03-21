@@ -23,7 +23,7 @@ const SidebarContext = createContext<SidebarContextProps | undefined>(undefined)
 export default function Sidebar({ children }: SidebarProps) {
 
     //const session = await getServerSession(authOptions)
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     return (
         <aside className="h-screen">

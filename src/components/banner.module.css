@@ -97,3 +97,11 @@
 .bannerButton:active {
     transform: scale(0.95);
 }
+
+.bannerContent input {
+    color: #006400; 
+    border: 1px solid #006400; 
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(0, 100, 0, 0.1); 
+}
