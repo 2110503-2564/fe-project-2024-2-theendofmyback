@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
-import { BarChart3, Book, Home, LayoutDashboard, LifeBuoy, Newspaper, Settings, UserCircle } from "lucide-react";
+import { BarChart3, Book, Home, LayoutDashboard, LifeBuoy, Newspaper, Settings, User, UserCircle } from "lucide-react";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
 import AuthButton from "@/components/AuthButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -37,7 +37,7 @@ export default function RootLayout({
             
             <hr className="my-3" />
             
-            <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
+            <SidebarItem icon={<UserCircle size={20} />} text="User" pageRef = '/account/1' />
             <SidebarItem icon={<LifeBuoy size={20} />} text="AboutUs" pageRef = '/about' />
           
             
