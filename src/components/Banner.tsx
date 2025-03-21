@@ -3,11 +3,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './banner.module.css';
 import Image from 'next/image';
+import Input from '@/components/search';
 
 export default function Banner() {
     const covers = ['/img/cover1.jpg', '/img/cover2.jpg', '/img/cover3.jpg'];
     const [index, setIndex] = useState(0);
+    const [inputValue, setInputValue] = useState('');
     const router = useRouter();
+
+    const handleInputChange = (value: string) => {
+        setInputValue(value);
+    };
+
+    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        router.push(`/campground/${inputValue}`);
+    };
 
     return (
         <div className={styles.banner} onClick={() => setIndex((index + 1) % covers.length)}>
@@ -23,13 +34,12 @@ export default function Banner() {
                 <p className={styles.subtitle}>Book your perfect campsite today!</p>
                 <h1 className={styles.title}>CAMPGROUND BOOKING</h1>
                 <p className={styles.slogan}>Escape to Nature</p>
+                
+                <Input value={inputValue} onChange={handleInputChange} />
 
                 <button
                     className={styles.bannerButton}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        router.push('/bookings');
-                    }}
+                    onClick={handleButtonClick}
                 >
                     Book Now!
                 </button>
