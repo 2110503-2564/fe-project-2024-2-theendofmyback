@@ -40,18 +40,32 @@ const mockPromotions = [
   ];
   
 
-export default function Promotion() {
-  return (
-    <div className="w-full px-10 my-10 " >   
-        <h2 className="text-[25px] mx-5 bg-emerald-100  w-fit px-5 py-2 rounded-3xl"> Promotion  </h2>
-        <div className="flex flex-wrap gap-6 justify-center ">
-        {mockPromotions.map((promotion) => (
-            <div className="w-full md:w-full mx-5  lg:w-1/3 flex justify-center p-3">
-            <PromotionCard  mockPromotions={promotion}/>
+  export default function Promotion() {
+    return (
+      <div className="w-full px-10 my-10">
+        {/* Header */}
+        <h2 className="text-[25px] mx-auto bg-emerald-100 w-fit px-5 py-2 rounded-3xl font-semibold shadow-md">
+          🎉 Promotion 🎉
+        </h2>
+  
+        {/* Card Container */}
+        <div className="flex flex-wrap gap-6 justify-center mt-6">
+          {mockPromotions.map((promotion) => (
+            <div
+              key={promotion._id}
+              className="w-full sm:w-[80%] md:w-1/2 lg:w-1/3 flex justify-center p-3"
+            >
+              <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <PromotionCard mockPromotions={promotion} />
+              </div>
             </div>
-        ))}
+          ))}
         </div>
-      
-    </div>
-  );
-}
+      </div>
+    );
+  }
+  
+
+
+
+  
