@@ -7,6 +7,8 @@ import CampgroundHomeCard from "@/components/CampgroundHomeCard";
 import Link from "next/link";
 import PromotionHomeCard from "@/components/PromotionHomeCard";
 import SeeAll from "@/components/seeAll";
+import Switch from "@/components/mode";
+import PromotionCard from "@/components/PromotionCard";
 
 export default function Home() {
   const [showExplosion, setShowExplosion] = useState(false);
@@ -17,6 +19,23 @@ export default function Home() {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
+
+  const mockPromotions = [
+    {
+      _id: "67bd907379db2d1502b32995",
+      name: "Discount 200",
+      campground: "67bd6dfcd3e3272696f5243d",
+      description: "Get 200 off on your next booking!",
+      discount: 200,
+    },
+    {
+      _id: "67bd908479db2d1502b32996",
+      name: "Weekend Special",
+      campground: "67bd6dfcd3e3272696f5243e",
+      description: "Enjoy a 15% discount on weekend stays!",
+      discount: 15, // 15% discount
+    }
+  ];
 
   return (
     <main className="relative">
@@ -31,6 +50,7 @@ export default function Home() {
         <FavCard />
         <FavCard />
         <FavCard />
+        
       </div>
       </div>
       
@@ -56,10 +76,8 @@ export default function Home() {
         </Link>
       </div>
       <div className={`flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-        <PromotionHomeCard />
-        <PromotionHomeCard />
-        <PromotionHomeCard />
-        <PromotionHomeCard />
+        <PromotionCard mockPromotions={mockPromotions[0]} />
+        <PromotionCard mockPromotions={mockPromotions[1]} />
       </div>
     </main>
   );

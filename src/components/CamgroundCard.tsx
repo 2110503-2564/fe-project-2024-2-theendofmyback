@@ -20,10 +20,10 @@ export default function CampgroundCard({id,name,description,Location,image}:{id:
                 </div>
                 <div className="w-1/4 flex flex-col p-2 ">
                 <Link href={`/campground/${id}`}>
-                    <button className="w-2/5 bg-orange-300 hover:bg-orange-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Detail</button>
+                    <button className="w-2/5 bg-emerald-400 hover:bg-emerald-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Detail</button>
                 </Link>
                     
-                    <button  className="w-2/5 bg-orange-300 hover:bg-orange-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Book</button>
+                    <button  className="w-2/5 bg-emerald-400 hover:bg-emerald-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Book</button>
                 </div>
             </div>
         </div>

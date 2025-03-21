@@ -40,7 +40,7 @@ export default function Campground() {
 
         <div className="w-full flex flex-row items-center justify-center">
             <input type="text" placeholder="Search" className="w-4/5 p-2 m-2 rounded-3xl border-2" />
-            <button className="bg-orange-300 hover:bg-orange-400 text-white px-4 py-2 rounded-3xl m-2 font-bold text-lg">Search</button>
+            <button className="bg-emerald-400 hover:bg-emerald-500 text-white px-4 py-2 rounded-3xl m-2 font-bold text-lg">Search</button>
         </div>
         {mockCampgrounds.map(campground => (
                 <CampgroundCard 

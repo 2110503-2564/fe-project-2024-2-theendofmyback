@@ -43,7 +43,7 @@ export default function Sidebar({ children }: SidebarProps) {
                 </div>
 
                 <SidebarContext.Provider value={{ expanded }}>
-                    <ul className="flex-1 px-3">
+                    <ul className="flex-1 px-3 ">
                         {children}
                     </ul>
                 </SidebarContext.Provider>
@@ -80,12 +80,13 @@ export function SidebarItem({ icon, text, active, alert, pageRef }: SidebarItemP
     return (
         <li
             className={`
+                z-20
                 relative flex items-center py-2 px-3 my-1
                 font-medium rounded-md cursor-pointer
                 transition-colors group
                 ${active
-                    ? "bg-gradient-to-tr from-lime-200 to-lime-100 text-lime-800"
-                    : "hover:bg-lime-50 text-gray-600"
+                    ? "bg-gradient-to-tr from-lime-200 to-lime-100 text-lime-800 z-20 "
+                    : "hover:bg-lime-50 text-gray-600 "
                 }
             `}
         >
@@ -98,13 +99,14 @@ export function SidebarItem({ icon, text, active, alert, pageRef }: SidebarItemP
 
             {alert && (
                 <div
-                    className={`absolute right-2 w-2 h-2 rounded bg-lime-400 ${expanded ? "" : "top-2"}`}
+                    className={`absolute right-2 z-20 w-2 h-2 rounded bg-lime-400 ${expanded ? "" : "top-2"}`}
                 />
             )}
 
             {!expanded && (
                 <div
                     className="
+                        z-20
                         absolute left-full rounded-md px-2 py-1 ml-6
                         bg-lime-200 text-lime-800 text-sm
                         invisible opacity-20 -translate-x-3 transition-all w-full

@@ -55,7 +55,7 @@ const StyledWrapper = styled.div`
     color: #141417;
   }
   .card__hero {
-    background-color:rgb(210, 249, 193);
+    background-color:rgb(207, 246, 220);
     border-radius: 0.5rem 0.5rem 0 0;
     padding: 1.5rem;
     font-size: 0.875rem;

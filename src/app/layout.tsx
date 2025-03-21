@@ -7,6 +7,7 @@ import { BarChart3, Book, Home, LayoutDashboard, LifeBuoy, Newspaper, Settings, 
 import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
 import AuthButton from "@/components/AuthButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Switch from "@/components/mode";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
             <SidebarItem icon={<LifeBuoy size={20} />} text="About us" pageRef = '/about' />
           
+            
             
           </Sidebar>
 
