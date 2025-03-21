@@ -33,20 +33,20 @@ export default function ReviewCard({mockReviews}: { mockReviews: Review }){
                 precision={0.5}
                 emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                 size="large"
-                sx={{ fontSize: "3rem" }}
+                sx={{ fontSize: "2rem" }}
                 />
            
-            <h2 className="text-[30px] font-bold">{mockReviews.title}</h2>
+            <h2 className="text-[25px] font-bold">{mockReviews.title}</h2>
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-row items-center">
                     <img src="/img/user-icon.png " className="w-6" alt="icon"/>
-                    <p className="px-2 text-gray-500">{mockReviews.user}</p>
+                    <p className="text-[10px] px-2 text-gray-500">{mockReviews.user}</p>
                 </div>
                 <p className="mx-2">on</p>
                 <Link href={`/campground/${mockReviews.campground}`}>
                     <div className="mx-3 bg-slate-200 w-fit rounded-2xl px-2 flex flex-row items-center">
                         <img src="/img/camp-logo.png" className="w-6 rounded-full py-2" alt="icon"/>
-                        <p className="px-2 text-gray-500">{mockReviews.campground}</p>
+                        <p className="text-[10px] px-2 text-gray-500">{mockReviews.campground}</p>
                     </div>
                 </Link>
             </div>       

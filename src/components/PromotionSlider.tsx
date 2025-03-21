@@ -47,7 +47,7 @@ export default function PromotionSlider() {
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={5}
-        slidesPerView={3}
+        slidesPerView={2}
         navigation 
         pagination={{ clickable: true }}
         className="py-5"
