@@ -12,6 +12,7 @@ const Info = () => {
 
     return (
         <div className="flex w-full flex-col">
+            
             {session ? (
                 <>
                     <div className="flex items-center space-x-3">

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
-import { BarChart3, Book, LayoutDashboard, LifeBuoy, Settings, UserCircle } from "lucide-react";
+import { BarChart3, Book, Home, LayoutDashboard, LifeBuoy, Newspaper, Settings, UserCircle } from "lucide-react";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
 import AuthButton from "@/components/AuthButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -29,13 +29,15 @@ export default function RootLayout({
           <Sidebar>
             
             <SidebarItem icon={<LayoutDashboard size={20} />} text="Home" pageRef = '/'/>
+            <SidebarItem icon={<Home size={20} />} text="Campground" pageRef = '/campground' />
             <SidebarItem icon={<Book size={20} />} text="Booking" pageRef = '/booking' />
+            <SidebarItem icon={<Newspaper size={20} />} text="Promotion" pageRef = '/promotion' />
             <SidebarItem icon={<BarChart3 size={20} />} text="Review"  pageRef = '/review'/>
             
             <hr className="my-3" />
             
             <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
-            <SidebarItem icon={<LifeBuoy size={20} />} text="Help" pageRef = '/help' />
+            <SidebarItem icon={<LifeBuoy size={20} />} text="About us" pageRef = '/about' />
           
             
           </Sidebar>
