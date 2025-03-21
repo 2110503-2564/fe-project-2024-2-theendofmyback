@@ -38,7 +38,7 @@ export default function RootLayout({
             <hr className="my-3" />
             
             <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
-            <SidebarItem icon={<LifeBuoy size={20} />} text="About us" pageRef = '/about' />
+            <SidebarItem icon={<LifeBuoy size={20} />} text="AboutUs" pageRef = '/about' />
           
             
             
