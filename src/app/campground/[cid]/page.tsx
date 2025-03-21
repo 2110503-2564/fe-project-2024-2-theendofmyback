@@ -1,0 +1,67 @@
+import ReviewCard from "@/components/ReviewCard";
+
+export default function CampgroundPage() {
+    const campInfo = {
+        Name: "The LaBaLaKe Camp",
+        Address: "123 Forest Road, Rocky Hills",
+        Tel: "555-1234",
+        Price: "25",
+        Capacity: "60",
+        Description: "A lakeside camp with outdoor activities",
+        picture: "/img/lakeside.jpg"
+      };
+    
+    return(
+        <div className="bg-white w-full p-5"> 
+            <div className="px-10 mt-9 w-full flex flex-row items-center justify-between">
+                <h2 className="px-2 my-2 font-bold text-[30px] font-sans">{campInfo.Name}</h2>
+                <button className="bg-orange-300 hover:bg-orange-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
+                    Book
+                </button>
+            </div>
+
+            <div className="px-10 w-full flex flex-col">
+                <div className="flex flex-row items-center bg-green-100 w-fit p-2 my-1 rounded-3xl">
+                    <h2 className="text-green-700 px-2 font-bold text-[25px] font-sans">$ {campInfo.Price}</h2>
+                </div>
+                <img src={campInfo.picture} className="my-10 w-full h-[300px] object-cover" ></img>
+                
+                <p className="my-2 font-medium text-[20px] font-sans">{campInfo.Description}</p>    
+                <div className="flex flex-row bg-slate-200 w-fit p-2 my-2 rounded-lg font-medium relative group">
+                    <img src="/img/location-icon.png" alt="location" className="w-6 h-6 inline-block" />
+                    <p className="px-2">{campInfo.Address}</p>  
+
+                    <div className="absolute bottom-11 left-2 z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700">
+                        Address
+                        <div className="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                
+                <div className="flex flex-row bg-slate-200 w-fit p-2 my-2 rounded-lg font-medium relative group">
+                    <img src="/img/tel-icon.png" alt="location" className="w-6 h-6 inline-block" />
+                    <p className="px-2">{campInfo.Tel}</p>  
+
+                    <div className="absolute bottom-11 left-2 z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700">
+                        Contact
+                        <div className="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            
+                <div className="flex flex-row bg-slate-200 w-fit p-2 my-2 rounded-lg font-medium relative group">
+                    <p className="px-2">Capacity: {campInfo.Capacity}</p>      
+                    <div className="absolute bottom-11 left-2 z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700">
+                        capacity
+                        <div className="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-slate-400">
+
+                BROOOOOOOOOO
+                <ReviewCard></ReviewCard>
+            </div>
+
+        </div>
+    );
+}
