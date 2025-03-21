@@ -177,7 +177,7 @@ const campgrounds = [
     price: 25,
     capacity: 60,
     description: 'A beautiful campsite with a breathtaking mountain view.',
-    image: 'mountain-view.jpg',
+    image: '/img/cover1.jpg',
     promotions: [
       { id: '1', name: 'Discount 200', discount: 200 },
       { id: '2', name: 'Online Discount', discount: 100 }
@@ -191,12 +191,16 @@ const campgrounds = [
     price: 30,
     capacity: 50,
     description: 'A peaceful campsite with a stunning city view.',
-    image: 'city-view.jpg',
+    image: '/img/cover1.jpg',
     promotions: [
       { id: '3', name: 'Weekend Special', discount: 150 }
     ]
   }
 ];
+
+
+
+
 
 export default function BookingPage() {
 
@@ -232,13 +236,18 @@ export default function BookingPage() {
     <div className="flex flex-col p-6 w-full h-full bg-gray-100">
   <div className="flex flex-row gap-6 mb-6">
     {/* Image */}
-    <Image
+    {/* <Image
       src="/img/cover1.jpg" // ใช้เส้นทางจากโฟลเดอร์ public
       alt="Cover Image"
       width={600}  // กำหนดขนาดรูปภาพ
       height={400} // กำหนดขนาดรูปภาพ
       className="rounded-lg" // ใช้ class สำหรับสไตล์
-    />
+    /> */}
+    <img
+          src={selectedCampground.image}
+          alt={selectedCampground.name}
+           className="rounded-lg w-[600px] h-[400px] object-cover"
+        />
 
     {/* Display Campground Information */}
     <div className="flex flex-col justify-start space-y-4">
@@ -259,7 +268,7 @@ export default function BookingPage() {
             type="text"
             value={nameLastname}
             onChange={(e) => setNameLastname(e.target.value)}
-            className="w-full p-3 bg-gray-800 text-black rounded-lg"
+            className="w-full p-3 bg-gray-300 text-black rounded-lg"
             placeholder="Your Name"
             required
           />
@@ -273,7 +282,7 @@ export default function BookingPage() {
             type="text"
             value={contactNumber}
             onChange={(e) => setContactNumber(e.target.value)}
-            className="w-full p-3 bg-gray-800 text-black rounded-lg"
+            className="w-full p-3 bg-gray-300 text-black rounded-lg"
             placeholder="Your Contact Number"
             required
           />
@@ -285,7 +294,7 @@ export default function BookingPage() {
           <select
             value={promotion}
             onChange={(e) => setPromotion(e.target.value)}
-            className="w-full p-3 bg-gray-800 text-black rounded-lg"
+            className="w-full p-3 bg-gray-300 text-black rounded-lg"
             required
           >
             <option value="">-- Select Promotion --</option>
