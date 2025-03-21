@@ -34,7 +34,7 @@ export default function RootLayout({
             <SidebarItem icon={<LifeBuoy size={20} />} text="Help" pageRef = '/help' />
           </Sidebar>
 
-          <main className="flex bg-gray-100 overflow-auto">
+          <main className="flex-1 bg-gray-100 overflow-auto p-6">
             {children}
           </main>
         </div>
