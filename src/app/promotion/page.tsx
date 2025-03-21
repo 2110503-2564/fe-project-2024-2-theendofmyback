@@ -44,9 +44,10 @@ const mockPromotions = [
     return (
       <div className="w-full px-10 my-10">
         {/* Header */}
-        <h2 className="text-[25px] mx-auto bg-emerald-100 w-fit px-5 py-2 rounded-3xl font-semibold shadow-md">
-          🎉 Promotion 🎉
-        </h2>
+        <h2 className="text-3xl text-center bg-gradient-to-r from-emerald-400 to-emerald-600 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+  🎉 <span className="drop-shadow-md">Promotion</span> 🎉
+</h2>
+
   
         {/* Card Container */}
         <div className="flex flex-wrap gap-6 justify-center mt-6">

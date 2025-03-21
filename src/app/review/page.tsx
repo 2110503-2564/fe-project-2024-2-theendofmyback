@@ -45,9 +45,10 @@ export default function Review() {
   return (
     <div className="w-full px-10 my-10">
       {/* Header */}
-      <h2 className="text-[25px] mx-auto bg-lime-100 w-fit px-5 py-2 rounded-3xl font-semibold shadow-md">
-        ⭐ Reviews ⭐
-      </h2>
+      <h2 className="text-3xl text-center bg-gradient-to-r from-lime-300 to-lime-500 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+  ⭐ <span className="drop-shadow-md">Reviews</span> ⭐
+</h2>
+
 
       {/* Review Container */}
       <div className="flex flex-wrap gap-6 justify-center mt-6">
