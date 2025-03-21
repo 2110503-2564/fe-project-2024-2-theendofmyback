@@ -58,6 +58,25 @@
     transition: all 0.3s ease-in-out;
 }
 
+.SignButton {
+    margin-top: 2px;
+    background-color: #47be35;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.SignButton:hover {
+    background-color: #108f3d;
+    color: white;
+    transform: scale(1.05);
+}
+
 .bannerButton:hover {
     background-color: #4CAF50;
     color: white;

@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
-import { LogIn, LogOut, MoreVertical } from "lucide-react";
-import Sidebar, { SidebarItem } from "@/components/Sidebar";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-const AuthButton = () => {
+import { useSession } from "next-auth/react";
+import { MoreVertical } from "lucide-react";
+import Link from "next/link";
+import styles from './banner.module.css';
 
-    
+const Info = () => {
+
     const { data: session } = useSession();
-    const [expanded, setExpanded] = useState(true);
+    const [expanded] = useState(true);
 
     return (
-        <div className="border-t flex w-full flex-col">
+        <div className="flex w-full flex-col">
             {session ? (
                 <>
                     <div className="flex items-center space-x-3">
@@ -34,25 +34,30 @@ const AuthButton = () => {
                         </div>
                         </div>
                         <MoreVertical size={20} />
+                    
                     </div>
-                    <div className="mt-0">
-                        <SidebarItem
-                            icon={<LogOut size={20} />}
-                            text="Log Out"
-                            pageRef="/api/auth/signout"
-                            active
-                        />
+                    <div className="mt-3 text-xs text-green-500">
+                        <Link href="/api/auth/signout">
+                        Sign-Out of {session.user?.name}
+                        </Link>
                     </div>
                 </>
             ) : (
-                <SidebarItem
-                    icon={<LogIn size={20} />}
-                    text="Log In"
-                    pageRef='/api/auth/signin'
-                />
+                <div className="text-center ">
+                <Link href="/api/auth/signin">
+                    <button className={styles.SignButton}>
+                        sign in
+                    </button>
+                </Link>
+                <div className="mt-3 text-xs text-green-500">
+                        <Link href="/api/auth/signup">
+                        do not have an acount?  Sign Up
+                        </Link>
+                </div>
+                </div>
             )}
         </div>
     );
 };
 
-export default AuthButton;
+export default Info;

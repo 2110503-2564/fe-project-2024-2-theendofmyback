@@ -17,7 +17,7 @@ export default function Banner() {
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        router.push(`/campground/${inputValue}`);
+        router.push(`/campground/booking}`);
     };
 
     return (

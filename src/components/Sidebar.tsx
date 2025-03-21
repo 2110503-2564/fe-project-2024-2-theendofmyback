@@ -4,8 +4,9 @@ import { useContext, createContext, useState, ReactNode } from "react";
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { AuthOptions } from 'next-auth';
-import { authOptions } from "@/api/auth/[...nextauth]/route";
-import AuthButton from "./AuthButton";
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import SignButton from "./SignButtom";
+import Info from "./info";
 
 interface SidebarProps {
     children: ReactNode;
@@ -47,22 +48,13 @@ export default function Sidebar({ children }: SidebarProps) {
                     </ul>
                 </SidebarContext.Provider>
 
-                <AuthButton />
                 
                 <div className="border-t flex p-3">
-                    <img
-                        src="https://ui-avatars.com/api/?background=bbf7d0&color=065f46&bold=true"
-                        alt="User Avatar"
-                        className="w-10 h-10 rounded-md"
-                    />
+                    
                     <div
                         className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
                     >
-                        <div className="leading-4">
-                            <h4 className="font-semibold">John Doe</h4>
-                            <span className="text-xs text-gray-600">johndoe@gmail.com</span>
-                        </div>
-                        <MoreVertical size={20} />
+                        <Info/>
                     </div>
                 </div>
             </nav>

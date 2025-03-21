@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import userLogin from '@/libs/userLogin';
+import userSignUp from '@/libs/userSignUp';
 export const authOptions: AuthOptions = {
   providers: [
     //Authentication Providers,use Credentials, OAuth, or JWT

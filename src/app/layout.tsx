@@ -3,9 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
-import { BarChart3, LayoutDashboard, LifeBuoy, Settings, UserCircle } from "lucide-react";
+import { BarChart3, Book, LayoutDashboard, LifeBuoy, Settings, UserCircle } from "lucide-react";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
-
+import AuthButton from "@/components/AuthButton";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,15 +27,20 @@ export default function RootLayout({
         <div className="flex h-screen w-full">
           
           <Sidebar>
+            
             <SidebarItem icon={<LayoutDashboard size={20} />} text="Home" pageRef = '/'/>
+            <SidebarItem icon={<Book size={20} />} text="Booking" pageRef = '/booking' />
             <SidebarItem icon={<BarChart3 size={20} />} text="Review"  pageRef = '/review'/>
-            <SidebarItem icon={<UserCircle size={20} />} text="Users" pageRef = '/user' />
+            
             <hr className="my-3" />
+            
             <SidebarItem icon={<Settings size={20} />} text="Settings" pageRef = '/setting' />
             <SidebarItem icon={<LifeBuoy size={20} />} text="Help" pageRef = '/help' />
+          
+            
           </Sidebar>
 
-          <main className="flex-1 bg-gray-100 overflow-auto p-6">
+          <main className="flex-1 bg-gray-100 overflow-auto ">
             {children}
           </main>
         </div>
