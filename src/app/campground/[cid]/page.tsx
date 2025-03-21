@@ -1,5 +1,9 @@
 import ReviewCard from "@/components/ReviewCard";
 import ReviewSlider from "@/components/ReviewSlider";
+import PromotionCard from "@/components/PromotionCard";
+import PromotionSlider from "@/components/PromotionSlider";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 export default function CampgroundPage() {
     const campInfo = {
         Name: "The LaBaLaKe Camp",
@@ -13,6 +17,11 @@ export default function CampgroundPage() {
     
     return(
         <div className="bg-white w-full p-5"> 
+            <Link href={'/campground'}>
+                <div>
+                    <ArrowLeft className="w-6 h-6 text-black" />
+                </div>
+            </Link> 
             <div className="px-10 mt-9 w-full flex flex-row items-center justify-between">
                 <h2 className="px-2 my-2 font-bold text-[30px] font-sans">{campInfo.Name}</h2>
                 <button className="bg-orange-300 hover:bg-orange-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
@@ -22,7 +31,8 @@ export default function CampgroundPage() {
 
             <div className="px-10 w-full flex flex-col">
                 <div className="flex flex-row items-center bg-green-100 w-fit p-2 my-1 rounded-3xl">
-                    <h2 className="text-green-700 px-2 font-bold text-[25px] font-sans">$ {campInfo.Price}</h2>
+                    <img src={"/img/cedt-coin.png"} className="w-10 inline-block" />
+                    <h2 className="text-green-700 px-2 font-bold text-[25px] font-sans">{campInfo.Price}</h2>
                 </div>
                 <img src={campInfo.picture} className="my-10 w-full h-[300px] object-cover" ></img>
                 
@@ -56,8 +66,11 @@ export default function CampgroundPage() {
                 </div>
             </div>
 
+            <div className="w-full border-t-2 border-gray-300 my-8"></div>
             <div>
                 <ReviewSlider />
+                <div className="w-full border-t-2 border-gray-300 my-8"></div>
+                <PromotionSlider />
             </div>
 
         </div>

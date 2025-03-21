@@ -1,4 +1,6 @@
-export default function CampgroundCard({name,description,Location,image}:{name: string, description: string, Location:string, image: string}) {
+import Link from "next/link";
+
+export default function CampgroundCard({id,name,description,Location,image}:{id:string, name: string, description: string, Location:string, image: string}) {
     return (
         <div className="w-full bg-white rounded-lg shadow-lg m-2 p-2">
             <div className=" flex flex-row p-2">
@@ -17,7 +19,10 @@ export default function CampgroundCard({name,description,Location,image}:{name: 
                     
                 </div>
                 <div className="w-1/4 flex flex-col p-2">
+                <Link href={`/campground/${id}`}>
                     <button className=" w-2/5 bg-orange-300 hover:bg-orange-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Detail</button>
+                </Link>
+                    
                     <button  className="w-2/5 bg-orange-300 hover:bg-orange-500 text-white py-2 rounded-3xl m-2 font-bold text-lg">Book</button>
                 </div>
             </div>

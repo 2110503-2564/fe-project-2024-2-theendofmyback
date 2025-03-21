@@ -35,7 +35,7 @@ export default function Campground() {
     ];
 
     return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center px-2 py-10">
         <h1 className="text-[40px] font-sans font-semibold">Campground</h1>
 
         <div className="w-full flex flex-row items-center justify-center">
@@ -45,6 +45,7 @@ export default function Campground() {
         {mockCampgrounds.map(campground => (
                 <CampgroundCard 
                     key={campground._id}
+                    id={campground._id}
                     name={campground.name}
                     description={campground.description}
                     Location={campground.address}
