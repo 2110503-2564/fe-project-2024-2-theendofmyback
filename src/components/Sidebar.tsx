@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { AuthOptions } from 'next-auth';
 import { authOptions } from "@/api/auth/[...nextauth]/route";
+import AuthButton from "./AuthButton";
 
 interface SidebarProps {
     children: ReactNode;
@@ -18,9 +19,9 @@ const SidebarContext = createContext<SidebarContextProps | undefined>(undefined)
 
 
 
-export default async function Sidebar({ children }: SidebarProps) {
+export default function Sidebar({ children }: SidebarProps) {
 
-    const session = await getServerSession(authOptions)
+    //const session = await getServerSession(authOptions)
     const [expanded, setExpanded] = useState(true);
 
     return (
@@ -46,6 +47,8 @@ export default async function Sidebar({ children }: SidebarProps) {
                     </ul>
                 </SidebarContext.Provider>
 
+                <AuthButton />
+                
                 <div className="border-t flex p-3">
                     <img
                         src="https://ui-avatars.com/api/?background=bbf7d0&color=065f46&bold=true"
@@ -54,15 +57,7 @@ export default async function Sidebar({ children }: SidebarProps) {
                     />
                     <div
                         className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
-                    >{
-                        session? <Link href = '/api/auth/signout'><div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
-                            Sign-Out of {session.user?.name} </div></Link>
-                        : <Link href = '/api/auth/signin'>
-                            <div className='flex items-center  h-full px-2 text-cyan-600 text-sm'>
-                                Sign-In
-                            </div>
-                        </Link>
-                    }
+                    >
                         <div className="leading-4">
                             <h4 className="font-semibold">John Doe</h4>
                             <span className="text-xs text-gray-600">johndoe@gmail.com</span>

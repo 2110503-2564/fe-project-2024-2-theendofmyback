@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
-import Sidebar, { SidebarItem } from "@/components/Slidebar";
+import Sidebar, { SidebarItem } from "@/components/Sidebar";
 import { BarChart3, LayoutDashboard, LifeBuoy, Settings, UserCircle } from "lucide-react";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <SessionProviderWrapper> 
         <div className="flex h-screen w-full">
           
           <Sidebar>
@@ -36,6 +38,7 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        </SessionProviderWrapper> 
       </body>
     </html>
   );
