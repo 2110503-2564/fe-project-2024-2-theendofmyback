@@ -1,5 +1,5 @@
 import ReviewCard from "@/components/ReviewCard";
-
+import ReviewSlider from "@/components/ReviewSlider";
 export default function CampgroundPage() {
     const campInfo = {
         Name: "The LaBaLaKe Camp",
@@ -56,10 +56,8 @@ export default function CampgroundPage() {
                 </div>
             </div>
 
-            <div className="bg-slate-400">
-
-                BROOOOOOOOOO
-                <ReviewCard></ReviewCard>
+            <div>
+                <ReviewSlider />
             </div>
 
         </div>

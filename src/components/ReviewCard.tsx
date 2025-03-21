@@ -2,8 +2,18 @@ import { Rating } from "@mui/material";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function ReviewCard(){
-    const mockReviews =  {
+interface Review {
+    _id: string;
+    title: string;
+    text: string;
+    rating: number;
+    campground: string;
+    user: string;
+    createdAt: string;
+}
+
+export default function ReviewCard({mockReviews}: { mockReviews: Review }){
+    /*const mockReviews =  {
         _id: "67bd8e632189ebec0206ba2d",
         title: "Not what I expected",
         text: "The place was overcrowded, and the lake was not as clean as I hoped. The staff was friendly, but the facilities were not well-maintained.",
@@ -11,7 +21,7 @@ export default function ReviewCard(){
         campground: "67bd6dfcd3e3272696f5243d",
         user: "67bd7a3612afc095dad3b5f8",
         createdAt: "2025-02-15T08:45:30.890+00:00",
-    };
+    };*/
 
     return (
         <div className="px-5 py-10 flex flex-col w-fit bg-white rounded-lg shadow-lg m-2 p-2">
