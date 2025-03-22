@@ -260,14 +260,12 @@ export default function BookingPage() {
 
                 <button
                 type="submit"
-                onClick={(e) => {
-                  e.preventDefault();  
+                onClick={() => {
                   const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
-                    if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
-                    
+                  if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
                     alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
-                    }
-                    handleSubmit(e);
+                    return;
+                  }
                 }}
                 className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
                 >
