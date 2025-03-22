@@ -6,6 +6,25 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useSession } from "next-auth/react";
 import getCampground from "@/libs/campgrounds/getCampground";
+import getReview from "@/libs/reviews/getReviews";
+
+interface Review {
+    _id: string;
+    title: string;
+    text: string;
+    rating: number;
+    campground: string;
+    user: string;
+    createdAt: string;
+}
+
+interface Promotion {
+    _id: string;
+    name: string;
+    campground: string;
+    description: string;
+    discount: number;
+}
 
 export default async function CampgroundPage({params} : { params: {cid:string}}) {
     interface Campground {
@@ -31,7 +50,24 @@ export default async function CampgroundPage({params} : { params: {cid:string}})
 
     
     const campInfo:Campground =(await getCampground(params.cid)).data;
-    console.log(campInfo);
+    if (campInfo.image[0] !== '/') {
+        campInfo.image = '/' + campInfo.image;
+    }
+
+    const queryReview = `?campground=${params.cid}`;
+    let allReviews: Review[] = [];
+
+    try {
+        const response = await getReview(queryReview);
+        if (response && response.data) {
+            allReviews = response.data; 
+        } else {
+            console.error("Unexpected response format:", response);
+        }
+    } catch (error) {
+        console.error("Error fetching reviews:", error);
+    } 
+    
 
     return(
         <div className="bg-white w-full p-5"> 
@@ -86,7 +122,7 @@ export default async function CampgroundPage({params} : { params: {cid:string}})
 
             <div className="w-full border-t-2 border-gray-300 my-8"></div>
             <div>
-                <ReviewSlider />
+                <ReviewSlider allReviews = {allReviews}/>
                 <div className="w-full border-t-2 border-gray-300 my-8"></div>
                 <PromotionSlider />
             </div>

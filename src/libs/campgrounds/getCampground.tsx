@@ -1,6 +1,6 @@
 export default async function getCampground(cid: string) {
     const response = await fetch(
-      `${process.env.BACKEND_URL}/api/v1/campgrounds/${cid}`
+      `https://swdev-backend.vercel.app/api/v1/campgrounds/${cid}`
     )
   
     if (response.status.toString().slice(0, 1)[0] === '4') return null

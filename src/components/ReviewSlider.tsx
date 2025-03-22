@@ -8,6 +8,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import ReviewCard from "./ReviewCard"; // Assuming ReviewCard is your review component
 
+interface Review {
+  _id: string;
+  title: string;
+  text: string;
+  rating: number;
+  campground: string;
+  user: string;
+  createdAt: string;
+}
+
 const mockReviews = [
   {
     _id: "1",
@@ -47,7 +57,10 @@ const mockReviews = [
   },
 ];
 
-export default function ReviewSlider() {
+export default function ReviewSlider({allReviews}:{allReviews: Review[]}) {
+  console.log(allReviews);
+ // console.log(mockReviews);
+
   return (
     <div className="w-full px-10 my-10">
         <h2 className="text-[25px] mx-5 bg-lime-100  w-fit px-5 py-2 rounded-3xl"> Reviews </h2>
@@ -59,9 +72,14 @@ export default function ReviewSlider() {
         pagination={{ clickable: true }}
         className="py-5"
       >
-        {mockReviews.map((review) => (
+        {allReviews.length === 0 && (
+          <div className="text-center text-gray-500 py-5">
+            There are no reviews yet. (You could be the first one!)
+          </div>
+        )}
+        {allReviews.map((review) => (
           <SwiperSlide key={review._id}>
-            <ReviewCard mockReviews={review} />
+            <ReviewCard reviews={review} />
           </SwiperSlide>
         ))}
       </Swiper>
