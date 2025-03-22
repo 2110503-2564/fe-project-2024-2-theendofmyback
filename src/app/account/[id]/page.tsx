@@ -1,21 +1,44 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import getMe from '@/libs/users/getMe';
+import { useSession } from 'next-auth/react';
 
 export default function AccountPage() {
-    const mockUser = {
-        name: 'Croissant Brioche',
-        tel: '123-123-1231',
-        address: 'Floor 19, Build 4',
-        email: 'user@example.com',
-        picture: '/img/avatar-1.png',
-    };
-
-    const [name, setName] = useState(mockUser.name);
-    const [tel, setTel] = useState(mockUser.tel);
-    const [address, setAddress] = useState(mockUser.address);
-    const [email, setEmail] = useState(mockUser.email);
-    const [picture, setPicture] = useState(mockUser.picture);
+   
+    const [name, setName] = useState("");
+    const [tel, setTel] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [picture, setPicture] = useState("img/avatar-1.png");
     const [isEditing, setIsEditing] = useState(false);
+
+    const { data: session } = useSession()
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                if (session && session.user.token) {
+                    const response = await getMe(session.user.token);
+                    setName(response.data.name);
+                    setTel(response.data.tel);
+                    setAddress(response.data.address);
+                    setEmail(response.data.email);
+                    setPicture(response.data.picture);
+                    console.log(response);
+                } else {
+                    console.error('Session or token is null');
+                    <div>Session or token is null</div>
+                }
+                
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUser();
+    }, [session]);
+    
+
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
