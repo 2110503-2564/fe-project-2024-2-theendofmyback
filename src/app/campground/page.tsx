@@ -3,6 +3,7 @@ import CampgroundCard from "@/components/CampgroundCard";
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
+import Loader from "@/components/load";
 
 export default function Campground() {
   interface CampgroundsJson {
@@ -74,7 +75,7 @@ export default function Campground() {
 
     <div className="p-6 space-y-6">
       {campgrounds === null ? (
-        <p className="text-gray-500 text-center">Hold On, Data is currently Loading...</p>
+        <div><Loader /></div>
       ) : filteredCampgrounds?.length ? (
         filteredCampgrounds.map((campground) => (
         <CampgroundCard
