@@ -6,6 +6,16 @@ export default async function userLogin(userEmail:string,userPassword:string) {
         body: JSON.stringify({ email: userEmail, password: userPassword })
     });*/
 
+    const baseURL = process.env.NEXT_PUBLIC_API_URL; // ตรวจสอบค่าตัวแปรนี้
+
+console.log("Base URL:", baseURL); // เช็กว่ามีค่า undefined หรือไม่
+
+fetch(`${baseURL}/api/v1/auth/login`)
+  .then(res => res.json())
+  .then(data => console.log("Response:", data))
+  .catch(err => console.error("Fetch error:", err));
+
+
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
