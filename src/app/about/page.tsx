@@ -1,8 +1,16 @@
 'use client';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Like from "./like";
 
 export default function AboutUs() {
+    const coversPhu = ['/img/phu.jpg', '/img/phu1.jpg', '/img/phu2.jpg'];
+    const coversKwan = ['/img/kwan.jpg', '/img/kwan1.jpg', '/img/kwan2.jpg'];
+    const coversNat = ['/img/nat.png', '/img/nat1.jpg', '/img/nat2.jpg'];
+    const [indexN, setIndexN] = useState(0);
+    const [indexP, setIndexP] = useState(0);
+    const [indexK, setIndexK] = useState(0);
+
     return (
         <div className=" items-center justify-center w-full h-full p-4 space-y-8">
             <motion.div 
@@ -22,8 +30,8 @@ export default function AboutUs() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg">
-                        <img src="/img/phu.jpg" alt="Phu" className="w-full h-full object-cover" />
+                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg" onClick={() => setIndexP((indexP + 1) % coversPhu.length)}>
+                        <img src={coversPhu[indexP]} alt="Phu" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-6 text-center">
                         <h5 className="text-xl font-semibold text-green-900">PHU.tsx</h5>
@@ -40,8 +48,8 @@ export default function AboutUs() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg">
-                        <img src="/img/kwan.jpg" alt="Kwan" className="w-full h-full object-cover" />
+                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg" onClick={() => setIndexK((indexK + 1) % coversKwan.length)}>
+                        <img src={coversKwan[indexK]} alt="Kwan" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-6 text-center">
                         <h5 className="text-xl font-semibold text-green-900">Kw@nn lnwza</h5>
@@ -58,8 +66,8 @@ export default function AboutUs() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg">
-                        <img src="/img/nat.png" alt="Nat" className="w-full h-full object-cover" />
+                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg" onClick={() => setIndexN((indexN + 1) % coversNat.length)} >
+                        <img src={coversNat[indexN]} alt="Nat" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-6 text-center">
                          <h5 className="text-xl font-semibold text-green-900">Natzazahahahihi</h5>
