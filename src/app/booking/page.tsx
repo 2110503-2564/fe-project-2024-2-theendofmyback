@@ -40,6 +40,9 @@ interface UserProfile {
 
 
 import SeeYoursButton from '@/components/seeYours';
+import { useRouter } from 'next/navigation';
+import { create } from 'domain';
+import createBooking from '@/libs/bookings/createBooking';
 
 const campgrounds = [
   {
@@ -100,7 +103,11 @@ export default function BookingPage() {
   
   const [promotion, setPromotion] = useState('');
 
+  const router = useRouter();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    
+    
     event.preventDefault();
     console.log({
       campground: selectedCampground.name,
@@ -108,6 +115,27 @@ export default function BookingPage() {
       dateCheckOut,
       promotion
     });
+
+    if (dateCheckIn && dateCheckOut) {
+      const diffInDays = dayjs(dateCheckOut).diff(dayjs(dateCheckIn), 'day');
+      if (dayjs(dateCheckIn).isAfter(dayjs(dateCheckOut))) {
+        alert("Check-in date cannot be later than check-out date.");
+        return;
+      }
+      if (diffInDays > 3) {
+        alert("The stay duration cannot exceed 3 days.");
+        return;
+      }
+    }
+    console.log(session?.user?.token);  
+    createBooking(
+      session?.user?.token || '',
+      cid || '',
+      dateCheckIn ? dateCheckIn.toISOString() : '',
+      dateCheckOut ? dateCheckOut.toISOString() : '',
+      promotion ? promotion : ''
+    );
+    router.push('/booking/manage');
   };
 
   const { data: session } = useSession()
@@ -143,7 +171,8 @@ export default function BookingPage() {
           <Loader />
           <p className="text-emerald-600">Loading...</p>
         </div>
-      ) : (
+      ) 
+      : (
         <div className="flex flex-row p-8 mx-auto bg-white rounded-lg shadow-lg relative">
      
           <Link href="/booking/manage">
@@ -153,93 +182,99 @@ export default function BookingPage() {
           </Link>
 
           <div>
-      <div className="flex flex-row gap-6 mb-6  pb-4">
-        <Image
-          src={selectedCampground.image}
-          alt={selectedCampground.name}
-          className="rounded-lg w-[300px] h-[200px] object-cover"
-          width={300}
-          height={200}
-        />
-        
-        <div className="w-full flex flex-col justify-start space-y-4">
-          <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
-          <p className="text-emerald-600">{selectedCampground.description}</p>
-          <div className="text-emerald-500">
-            <p>Address: {selectedCampground.address}</p>
-            <p>Tel: {selectedCampground.tel}</p>
-            <p>Price: ${selectedCampground.price} / night</p>
-          </div>
-        </div>
-      </div>
+            <div className="flex flex-row gap-6 mb-6  pb-4">
+              <Image
+                src={selectedCampground.image}
+                alt={selectedCampground.name}
+                className="rounded-lg w-[300px] h-[200px] object-cover"
+                width={300}
+                height={200}
+              />
+              
+              <div className="w-full flex flex-col justify-start space-y-4">
+                <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
+                <p className="text-emerald-600">{selectedCampground.description}</p>
+                <div className="text-emerald-500">
+                  <p>Address: {selectedCampground.address}</p>
+                  <p>Tel: {selectedCampground.tel}</p>
+                  <p>Price: ${selectedCampground.price} / night</p>
+                </div>
+              </div>
+            </div>
 
-      <div className="border-t-2 border-b-2 py-4 mb-6">
-        
-        <h2 className="font-semibold text-lg text-green-600">Your Information</h2>
-        <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
-          <p >Your Name: {userData.name}</p>
-          <p >Your Email: {userData.email}</p>
-          <p >Your Tel: {userData.tel}</p>
-        </div>
+            <div className="border-t-2 border-b-2 py-4 mb-6">
+              
+              <h2 className="font-semibold text-lg text-green-600">Your Information</h2>
+              <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
+                <p >Your Name: {userData.name}</p>
+                <p >Your Email: {userData.email}</p>
+                <p >Your Tel: {userData.tel}</p>
+              </div>
 
-        <div className="flex items-center space-x-2 mb-4 my-4 mx-4">
-          <input
-            type="checkbox"
-            id="confirmInfo"
-            className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-            required
-          />
-          <label htmlFor="confirmInfo" className="text-green-600">
-            I confirm that the above information is correct.
-          </label>
-        </div>
-      </div>
+              <div className="flex items-center space-x-2 mb-4 my-4 mx-4">
+                <input
+                  type="checkbox"
+                  id="confirmInfo"
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  required
+                />
+                <label htmlFor="confirmInfo" className="text-green-600">
+                  I confirm that the above information is correct.
+                </label>
+              </div>
+            </div>
 
-      <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
-        <div className="space-y-2 mb-4">
-          <div className="font-bold text-green-600">Select Promotion: </div>
-          <select
-            value={promotion}
-            onChange={(e) => setPromotion(e.target.value)}
-            className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            required
-          >
-            <option value="">-- Select Promotion --</option>
-            {/*selectedCampground.promotions.map((promo) => (
-              <option key={promo.id} value={promo.name}>
-                {promo.name} - ${promo.discount} OFF
-              </option>
-            ))*/}
-          </select>
-        </div>
+              <div className="space-y-2 mb-4">
+                <div className="font-bold text-green-600">Select Promotion: </div>
+                <select
+                  value={promotion}
+                  onChange={(e) => setPromotion(e.target.value)}
+                  className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  <option value="">-- Select Promotion --</option>
+                  {/*selectedCampground.promotions.map((promo) => (
+                    <option key={promo.id} value={promo.name}>
+                      {promo.name} - ${promo.discount} OFF
+                    </option>
+                  ))*/}
+                </select>
+              </div>
 
-        <hr className="my-6 border-gray-200" />
+              <hr className="my-6 border-gray-200" />
 
-        <div className="flex flex-row justify-center gap-6 mb-6">
-          <div className="w-1/2">
-            <div className="font-bold text-green-600">Check-in Date</div>
-            <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
-          </div>
+              <div className="flex flex-row justify-center gap-6 mb-6">
+                <div className="w-1/2">
+                  <div className="font-bold text-green-600">Check-in Date</div>
+                  <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
+                </div>
 
-          <div className="w-1/2">
-            <div className="font-bold text-green-600">Check-out Date</div>
-            <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
-          </div>
-        </div>
+                <div className="w-1/2">
+                  <div className="font-bold text-green-600">Check-out Date</div>
+                  <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
+                </div>
+              </div>
 
-        <hr className="my-6 border-gray-200" />
+              <hr className="my-6 border-gray-200" />
 
-        <Link href="/booking/manage">
-          <button
-            type="submit"
-            className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
-          >
-            Book Camp
-          </button>
-        </Link>
-      </form>
-        </div>
+                <button
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();  
+                  const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
+                    if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
+                    
+                    alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
+                    }
+                    handleSubmit(e);
+                }}
+                className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
+                >
+                Book Camp
+                </button>
+            </form>
+              </div>
         </div>
       )}
     </div>
