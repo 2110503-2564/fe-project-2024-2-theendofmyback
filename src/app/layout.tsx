@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
       <SessionProviderWrapper> 
+        
         <div className="flex h-screen w-full">
           
           <Sidebar>

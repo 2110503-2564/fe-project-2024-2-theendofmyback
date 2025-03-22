@@ -55,7 +55,7 @@ export default function Campground() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-green-200 to-tea-200">
+    <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-green-00 to-tea-200">
       <div className="p-4">
         <h1 className="text-4xl text-center bg-gradient-to-r from-green-400 to-emerald-500 text-white w-fit mx-auto px-8 py-4 rounded-full font-bold shadow-xl flex items-center gap-3 hover:shadow-2xl transition-all ease-in-out duration-300">
           ⭐ <span className="drop-shadow-md">Campground</span> ⭐

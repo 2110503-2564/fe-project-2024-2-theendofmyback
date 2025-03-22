@@ -1,28 +1,19 @@
-/* From Uiverse.io by SnyDeTreves */ 
-/*************/
-/* Variables */
-/*************/
 
 .map-container {
-    --city-radius: 2rem;
-    --city-sign-color-back: #00c080;
-    --city-sign-color-font: #fff;
-    --city-pin-size-font: 1.2rem;
+    --camp-radius: 2rem;
+    --camp-sign-color-back: #00c080;
+    --camp-sign-color-font: #fff;
+    --camp-pin-size-font: 1.2rem;
+    
   }
   
-  /**********/
-  /* Styles */
-  /**********/
-  
-  /* Container */
   .map-container {
     border-radius: 0.5em;
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     line-height: 1;
-    min-width: 15rem;
     position: relative;
-    width: 50%;
-    aspect-ratio: 1;
+    width: 800px;  
+    height: 500px;
   }
   
   /* Map - Background */
@@ -31,39 +22,41 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;
+    width: 800px;  
+    height: 500px;
   }
   
   /* Map - Cities */
   .map-cities {
-    width: 100%;
+    width: 800px;  
+    height: 500px;
   }
-  .map-city {
-    border-radius: var(--city-radius);
-    left: calc(var(--x) * 1% - var(--city-radius));
-    padding: var(--city-radius);
+  .map-camp {
+    border-radius: var(--camp-radius);
+    left: calc(var(--x) * 1% - var(--camp-radius));
+    padding: var(--camp-radius);
     position: absolute;
-    top: calc(var(--y) * 1% - var(--city-radius));
+    top: calc(var(--y) * 1% - var(--camp-radius));
   }
-  .map-city::after,
-  .map-city::before {
-    font-size: var(--city-pin-size-font);
+  .map-camp::after,
+  .map-camp::before {
+    font-size: var(--camp-pin-size-font);
   }
-  .map-city::before {
+  .map-camp::before {
     content: "•";
-    left: calc(-50% + var(--city-radius));
+    left: calc(-50% + var(--camp-radius));
     position: absolute;
-    top: calc(-0.65em + var(--city-radius));
+    top: calc(-0.65em + var(--camp-radius));
     text-align: center;
     text-shadow: 0 1px 1px #000;
     width: 100%;
   }
-  .map-city::after {
+  .map-camp::after {
     clip-path: inset(-0.5em 0 0 0);
     content: "📍";
-    left: calc(-50% + var(--city-radius));
+    left: calc(-50% + var(--camp-radius));
     position: absolute;
-    top: calc(-1em + var(--city-radius));
+    top: calc(-1em + var(--camp-radius));
     text-align: center;
     transition: all 300ms ease-out;
     width: 100%;
@@ -71,7 +64,7 @@
   }
   
   /* Map - Sign */
-  .map-city__label {
+  .map-camp__label {
     display: none;
     left: calc(-5em + 50%);
     position: absolute;
@@ -79,13 +72,13 @@
     width: 10em;
     z-index: 999;
   }
-  .map-city__sign {
+  .map-camp__sign {
     align-items: center;
-    background-color: var(--city-sign-color-back);
+    background-color: var(--camp-sign-color-back);
     border-radius: 0.2rem;
-    border: 0.15em solid var(--city-sign-color-font);
+    border: 0.15em solid var(--camp-sign-color-font);
     box-shadow: 0 0 3px #000;
-    color: var(--city-sign-color-font);
+    color: var(--camp-sign-color-font);
     column-gap: 0.3em;
     display: flex;
     font-weight: 700;
@@ -98,7 +91,7 @@
     text-wrap: nowrap;
     width: max-content;
   }
-  .map-city__sign::before {
+  .map-camp__sign::before {
     content: attr(data-icon);
   }
   
@@ -107,26 +100,26 @@
   /************/
   
   /* Map - Cities */
-  .map-city:hover::after {
+  .map-camp:hover::after {
     clip-path: inset(-0.5em 0 0.5em 0);
     transform: translateY(0.5em);
   }
   
   /* Map - Sign */
-  .map-city:hover .map-city__label {
+  .map-camp:hover .map-camp__label {
     animation: fadein 300ms forwards ease-out;
     display: block;
   }
   
-  .map-city:hover .map-city__sign.anim::before {
+  .map-camp:hover .map-camp__sign.anim::before {
     animation-duration: 500ms;
     animation-fill-mode: forwards;
   }
-  .map-city:hover .map-city__sign.anim-grow::before {
+  .map-camp:hover .map-camp__sign.anim-grow::before {
     animation-name: grow;
     animation-timing-function: ease-in;
   }
-  .map-city:hover .map-city__sign.anim-slidein::before {
+  .map-camp:hover .map-camp__sign.anim-slidein::before {
     animation-name: slidein;
     animation-timing-function: ease-out;
   }
@@ -138,13 +131,13 @@
   /* Fade in from top */
   @keyframes fadein {
     0% {
-      opacity: 0;
-      top: calc(var(--city-radius));
+      opacamp: 0;
+      top: calc(var(--camp-radius));
     }
   
     100% {
-      opacity: 1;
-      top: calc(var(--city-radius) + var(--city-pin-size-font) / 2);
+      opacamp: 1;
+      top: calc(var(--camp-radius) + var(--camp-pin-size-font) / 2);
     }
   }
   
