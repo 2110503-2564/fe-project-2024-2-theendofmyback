@@ -15,9 +15,10 @@ export default function ManagePage() {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await getBookings(session?.user?.token || "", "");
+                const response = (await getBookings(session?.user?.token || "", "")).data;
                 console.log(response.data)
-                setBookingData(response.data);
+                response.sort((a, b) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
+                setBookingData(response);
             } catch (error) {
                 console.error("Error fetching bookings:", error);
             }

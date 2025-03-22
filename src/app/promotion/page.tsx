@@ -9,6 +9,8 @@ import PromotionCard from "@/components/PromotionCard";
 import FlashSellCard from "./flashsale";
 import Link from "next/link";
 import SeeYoursButton from "@/components/seeYours";
+import { useEffect } from "react";
+import getPromotions from "@/libs/promotions/getPromotions";
 
 const mockPromotions = [
     {
@@ -41,7 +43,23 @@ const mockPromotions = [
     },
 ];
 
+    
+
 export default function Promotion() {
+    useEffect(() => {
+        const fetchPromotions = async () => {
+            try {
+                const promotionData = await getPromotions("")
+                promotionData
+
+            } catch (error) {
+                console.error('Error fetching promotion data:', error);
+            }
+        };
+
+        fetchPromotions();
+    }, []);
+
     return (
         <div className="bg-gradient-to-r from-blue-100 to-teal-300 w-full flex flex-col px-2 py-10">
             <Link href="/promotion/manage">
