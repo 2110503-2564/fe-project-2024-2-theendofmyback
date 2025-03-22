@@ -9,6 +9,7 @@ import PromotionHomeCard from "@/components/PromotionHomeCard";
 import SeeAll from "@/components/seeAll";
 import Switch from "@/components/mode";
 import PromotionCard from "@/components/PromotionCard";
+import GameComponent from "@/components/game";
 
 export default function Home() {
   const [showExplosion, setShowExplosion] = useState(false);
@@ -79,6 +80,7 @@ export default function Home() {
         <PromotionCard mockPromotions={mockPromotions[0]} />
         <PromotionCard mockPromotions={mockPromotions[1]} />
       </div>
+
     </main>
   );
 }
