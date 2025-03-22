@@ -3,6 +3,7 @@ import { Pen, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import deleteBooking from "@/libs/bookings/deleteBooking";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface Booking {
   _id: string;
@@ -41,7 +42,9 @@ export default function BookingCard({ bookingData }: { bookingData: Booking }) {
       <div className="flex items-center justify-between border-b pb-3 mb-3">
         <p className="text-xl font-semibold text-green-700">{bookingData.campground.name}</p>
         <div className="flex items-center space-x-2">
-          <Pen className="w-8 p-2 text-white bg-green-500 rounded-lg hover:bg-green-600 cursor-pointer transition duration-200" />
+            <Link href={`/booking/${bookingData._id}?id=${bookingData.campground._id}`}>
+            <Pen className="w-8 p-2 text-white bg-green-500 rounded-lg hover:bg-green-600 cursor-pointer transition duration-200" />
+            </Link>
           {confirmDelete ? (
             <div className="flex items-center space-x-1 px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 transition duration-200" 
             
