@@ -7,6 +7,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PromotionCard from "@/components/PromotionCard";
 import FlashSellCard from "./flashsale";
+import Link from "next/link";
+import SeeYoursButton from "@/components/seeYours";
 
 const mockPromotions = [
     {
@@ -42,12 +44,17 @@ const mockPromotions = [
 export default function Promotion() {
     return (
         <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-teal-100 to-tea-200">
+            <Link href="/promotion/manage">
+        <div className="absolute top-4 right-4 flex justify-center">
+          <SeeYoursButton name="My Promotion" />
+        </div>
+      </Link>
             <div className="w-full px-10 my-10">
                 {/* Header */}
                 <h2 className="text-3xl text-center bg-gradient-to-r from-emerald-400 to-emerald-600 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
                     🎉 <span className="drop-shadow-md">Promotion</span> 🎉
                 </h2>
-
+                
                 {/* Card Container */}
                 <div className="flex flex-wrap gap-8 justify-center mt-6">
                     {mockPromotions.map((promotion) => (

@@ -1,4 +1,9 @@
+'use client';
+
 import BookingCard from "@/components/BookingCard";
+import Link from "next/link";
+import GoBackButton from "@/components/Gobackbutton";
+
 
 export default function ManagePage() {
 
@@ -47,14 +52,23 @@ export default function ManagePage() {
     
 
     return (
-        <div className="bg-white w-full flex flex-col items-center px-2 py-10 ">
+        <div className="bg-white w-full flex flex-col  px-2 py-10 ">
+        <Link href="/booking">
+                <div className="absolute top-0 left-0 flex justify-start relative"> 
+                <GoBackButton name="Booking" />
+                </div>
+            </Link>            
+            <div className=" w-full flex flex-col  px-2 py-10 items-center">
             <h1 className="text-[40px] font-extrabold">Your Booking</h1>
             
+
             <div className="flex flex-col w-4/5 items-center">
                 {mockBookings.map((booking) => (
                     <BookingCard key={booking._id} bookingData={booking} />
                 ))}
             </div>
+            </div>
         </div>
+
   );
 }

@@ -12,7 +12,7 @@ export default function AboutUs() {
     const [indexK, setIndexK] = useState(0);
 
     return (
-        <div className=" items-center justify-center w-full h-full p-4 space-y-8">
+        <div className="items-center justify-center w-full h-full p-8 space-y-8"> {/* Increased padding to prevent content from touching edges */}
             <motion.div 
                 className="w-full p-9 bg-emerald-400 text-gray-800 text-center py-12 px-6 shadow-lg rounded-2xl"
                 initial={{ opacity: 0, y: 50 }}
@@ -23,7 +23,8 @@ export default function AboutUs() {
                 <h2 className="text-7xl font-semibold text-white mb-6">The end of my BACK</h2>
             </motion.div>
 
-            <div className="flex flex-row gap-6 items-center justify-center">
+            <div className="flex flex-row gap-6 items-center justify-center flex-wrap">
+                {/* Phu's Section */}
                 <motion.div 
                     className="flex flex-col items-center justify-center w-80 bg-white rounded-xl shadow-md"
                     initial={{ opacity: 0, y: 50 }}
@@ -42,6 +43,7 @@ export default function AboutUs() {
                     </div>
                 </motion.div>
 
+                {/* Kwan's Section */}
                 <motion.div 
                     className="flex flex-col items-center justify-center w-80 bg-white rounded-xl shadow-md"
                     initial={{ opacity: 0, y: 50 }}
@@ -60,17 +62,18 @@ export default function AboutUs() {
                     </div>
                 </motion.div>
 
+                {/* Nat's Section */}
                 <motion.div 
                     className="flex flex-col items-center justify-center w-80 bg-white rounded-xl shadow-md"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg" onClick={() => setIndexN((indexN + 1) % coversNat.length)} >
+                    <div className="w-full h-60 overflow-hidden rounded-t-xl bg-green-500 text-white shadow-lg" onClick={() => setIndexN((indexN + 1) % coversNat.length)}>
                         <img src={coversNat[indexN]} alt="Nat" className="w-full h-full object-cover" />
                     </div>
                     <div className="p-6 text-center">
-                         <h5 className="text-xl font-semibold text-green-900">Natzazahahahihi</h5>
+                        <h5 className="text-xl font-semibold text-green-900">Natzazahahahihi</h5>
                         <p className="text-base text-gray-600">CEDT-student</p>
                     </div>
                     <div className="p-6 pt-0">
@@ -92,7 +95,7 @@ export default function AboutUs() {
             </motion.div>
 
             <motion.div 
-                className="w-full p-3 bg-white p-8 shadow-xl rounded-3xl mt-12"
+                className="w-full p-3 bg-white p-8 shadow-xl rounded-3xl mt-12 "
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -106,9 +109,7 @@ export default function AboutUs() {
                 </div>
             </motion.div>
 
-            <div className="w-5">
-
-            </div>
+            <div className="w-5 pb-10"></div>
         </div>
     );
 }
