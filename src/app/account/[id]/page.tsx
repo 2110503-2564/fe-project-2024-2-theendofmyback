@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import getBooking from '@/libs/bookings/getBooking';
 import getBookings from '@/libs/bookings/getBookings';
+import Loader from '@/components/load';
 export default function AccountPage() {
 
     const mockBookings = [
@@ -45,7 +46,7 @@ export default function AccountPage() {
                     const response = await getMe(session.user.token);
                     const bookingData = (await getBookings(session.user.token)).data
                     console.log(bookingData)
-                    bookingData.sort((a, b) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
+                    bookingData.sort((a: { checkInDate: string }, b: { checkInDate: string }) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
                     
                     setBookingData(bookingData)
                     setName(response.data.name);

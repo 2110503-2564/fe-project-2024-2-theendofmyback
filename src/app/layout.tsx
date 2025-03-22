@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import TopMenu from "@/components/TopMenu";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
 import { BarChart3, Book, Home, LayoutDashboard, LifeBuoy, Newspaper, Settings, User, UserCircle } from "lucide-react";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper ";
-import AuthButton from "@/components/AuthButton";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import Switch from "@/components/mode";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
       <SessionProviderWrapper> 
-        
         <div className="flex h-screen w-full">
           
           <Sidebar>

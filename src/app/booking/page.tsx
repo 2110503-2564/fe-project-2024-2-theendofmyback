@@ -10,6 +10,10 @@ import getCampground from '@/libs/campgrounds/getCampground';
 import { useSession } from 'next-auth/react';
 import getMe from '@/libs/users/getMe';
 import Loader from "@/components/load";
+import SeeYoursButton from '@/components/seeYours';
+import { useRouter } from 'next/navigation';
+import createBooking from '@/libs/bookings/createBooking';
+import getPromotions from '@/libs/promotions/getPromotions';
 
 interface Campground {
   _id: string;
@@ -39,40 +43,6 @@ interface UserProfile {
 }
 
 
-import SeeYoursButton from '@/components/seeYours';
-import { useRouter } from 'next/navigation';
-import { create } from 'domain';
-import createBooking from '@/libs/bookings/createBooking';
-
-const campgrounds = [
-  {
-    id: '67bd6dfcd3e3272696f5243d',
-    name: 'Mountain View Camp',
-    address: '123 Forest Road, Rocky Hills',
-    tel: '555-1234',
-    price: 25,
-    capacity: 60,
-    description: 'A beautiful campsite with a breathtaking mountain view.',
-    image: '/img/cover1.jpg',
-    promotions: [
-      { id: '1', name: 'Discount 200', discount: 200 },
-      { id: '2', name: 'Online Discount', discount: 100 }
-    ]
-  },
-  {
-    id: '67bd7bb482dcce4043ef0333',
-    name: 'City View Camp',
-    address: '456 City Road, Urban Hills',
-    tel: '555-5678',
-    price: 30,
-    capacity: 50,
-    description: 'A peaceful campsite with a stunning city view.',
-    image: '/img/cover1.jpg',
-    promotions: [
-      { id: '3', name: 'Weekend Special', discount: 150 }
-    ]
-  }
-];
 
 export default function BookingPage() {
   const urlParams = useSearchParams()
@@ -81,6 +51,7 @@ export default function BookingPage() {
 
   const [dateCheckIn, setDateCheckIn] = useState<Dayjs | null>(null);
   const [dateCheckOut, setDateCheckOut] = useState<Dayjs | null>(null);
+  const [allPromotions, setAllPromotions] = useState<any[]>([])
   const [selectedCampground, setSelectedCampground] = useState<Campground>({
     _id: '',
     name: '',
@@ -145,6 +116,9 @@ export default function BookingPage() {
     (async () => {
       try {
         const campgroundData: Campground = (await getCampground(cid)).data;
+        const promotions = (await getPromotions("")).data
+        setAllPromotions(promotions)
+        console.log(promotions)
 
         if (session && session.user.token) {
           const response = await getMe(session.user.token);
@@ -239,12 +213,12 @@ export default function BookingPage() {
                       onChange={(e) => setPromotion(e.target.value)}
                       className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
-                      <option value="">-- Select Promotion --</option>
-                      {/*selectedCampground.promotions.map((promo) => (
-                    <option key={promo.id} value={promo.name}>
-                      {promo.name} - ${promo.discount} OFF
-                    </option>
-                  ))*/}
+                        <option value="">-- Select Promotion --</option>
+                        {allPromotions.map((promo) => (
+                          <option key={promo._id} value={promo._id}>
+                            {promo.name} - ${promo.discount} OFF
+                          </option>
+                        ))}
                     </select>
                   </div>
 

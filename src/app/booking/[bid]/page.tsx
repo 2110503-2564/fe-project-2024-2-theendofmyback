@@ -12,6 +12,10 @@ import getMe from '@/libs/users/getMe';
 import Loader from "@/components/load";
 import updateBooking from '@/libs/bookings/updateBooking';
 import getBooking from '@/libs/bookings/getBooking';
+import SeeYoursButton from '@/components/seeYours';
+import { useRouter } from 'next/navigation';
+import getPromotions from '@/libs/promotions/getPromotions';
+
 interface Campground {
   _id: string;
   name: string;
@@ -40,11 +44,6 @@ interface UserProfile {
 }
 
 
-import SeeYoursButton from '@/components/seeYours';
-import { useRouter } from 'next/navigation';
-import { create } from 'domain';
-import createBooking from '@/libs/bookings/createBooking';
-
 
 export default function SingleBookingPage({params} : { params: {bid:string} }) {
   const urlParams = useSearchParams()
@@ -54,8 +53,10 @@ export default function SingleBookingPage({params} : { params: {bid:string} }) {
 
   const [dateCheckIn, setDateCheckIn] = useState<Dayjs | null>(null);
   const [dateCheckOut, setDateCheckOut] = useState<Dayjs | null>(null);
+  const [allPromotions, setAllPromotions] = useState<any[]>([])
+  
   const [promotion, setPromotion] = useState('');
-  const [bookingAt, setBookingAt] = useState<Dayjs | null>(null);
+  
   const [bookingData, setBookingData] = useState<any>(null)
   const [enableEdit, setEnableEdit] = useState(false);
   const [selectedCampground, setSelectedCampground] = useState<Campground>({
@@ -129,9 +130,11 @@ export default function SingleBookingPage({params} : { params: {bid:string} }) {
               try {
                   const campgroundData: Campground = (await getCampground(cid)).data;
                   const bookingData = (await getBooking(session?.user?.token || "",params.bid)).data
-                  
-                  console.log("debug: ",bookingData)
                   setBookingData(bookingData)
+                  
+                  const promotions = (await getPromotions("")).data
+                  setAllPromotions(promotions)
+                  console.log(promotions)
                   if (session && session.user.token) {
                     const response = await getMe(session.user.token);
                     setUserData(response.data);
@@ -222,11 +225,11 @@ export default function SingleBookingPage({params} : { params: {bid:string} }) {
                   className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
                   <option value="">-- Select Promotion --</option>
-                  {/*selectedCampground.promotions.map((promo) => (
-                    <option key={promo.id} value={promo.name}>
-                      {promo.name} - ${promo.discount} OFF
-                    </option>
-                  ))*/}
+                        {allPromotions.map((promo) => (
+                          <option key={promo._id} value={promo._id}>
+                            {promo.name} - ${promo.discount} OFF
+                          </option>
+                        ))}
                 </select>
               </div>
 
