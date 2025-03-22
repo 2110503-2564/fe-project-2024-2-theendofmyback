@@ -16,6 +16,7 @@ const Info = () => {
     const [tel, setTel] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");
     const [picture, setPicture] = useState("/img/avatar-1.png");
     const [isEditing, setIsEditing] = useState(false);
     const [bookingData, setBookingData] = useState<any[]>([]);
@@ -30,6 +31,7 @@ const Info = () => {
                     setAddress(response.data.address);
                     setEmail(response.data.email);
                     setPicture(response.data.picture);
+                    setRole(response.data.role);
                     console.log("User Data:", response);
                 } catch (error) {
                     console.error('Error fetching user data:', error);
@@ -57,13 +59,24 @@ const Info = () => {
         }
     }, [session]);
 
+
     return (
         <div className="flex w-full flex-col">
             {session ? (
                 <>
+                <div className="flex flex-col items-center space-x-3 p-3">
+                        {role === "admin" && (
+                            <Link href="/handle">
+                                <button className={styles.SignButton}>Dashboard</button>
+                            </Link>
+                        )}
+                        </div>
                     <div className="flex items-center space-x-3">
+                        
+                        
+
                         <img
-                            src={picture || "/img/avatar-1.png"} 
+                            src={picture || "/img/avatar-1.png"}
                             alt="User Avatar"
                             className="w-10 h-10 rounded-md"
                         />
