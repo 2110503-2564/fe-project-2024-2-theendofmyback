@@ -44,6 +44,7 @@ const mockReviews = [
 
 export default function Review() {
   return (
+    <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-lime-100 to-tea-200">
     <div className="w-full px-10 my-10">
       {/* Header */}
       <h2 className="text-3xl text-center bg-gradient-to-r from-lime-300 to-lime-500 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
@@ -66,6 +67,7 @@ export default function Review() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

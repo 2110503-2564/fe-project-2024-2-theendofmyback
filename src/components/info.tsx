@@ -34,7 +34,9 @@ const Info = () => {
                             </div>
                         </div>
                         </div>
+                        <Link href={`/account/${session.user?._id}`}>
                         <MoreVertical size={20} />
+                        </Link>
                     
                     </div>
                     <div className="mt-3 text-xs text-green-500">
@@ -50,6 +52,7 @@ const Info = () => {
                         sign in
                     </button>
                 </Link>
+                
                 <div className="mt-3 text-xs text-green-500">
                         <Link href="/api/auth/signup">
                         do not have an acount?  Sign Up

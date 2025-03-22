@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -40,45 +39,39 @@ const mockPromotions = [
     },
 ];
 
-
 export default function Promotion() {
     return (
-        <div className="w-full px-10 my-10">
-            {/* Header */}
-            <h2 className="text-3xl text-center bg-gradient-to-r from-emerald-400 to-emerald-600 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
-                🎉 <span className="drop-shadow-md">Promotion</span> 🎉
-            </h2>
+        <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-teal-100 to-tea-200">
+            <div className="w-full px-10 my-10">
+                {/* Header */}
+                <h2 className="text-3xl text-center bg-gradient-to-r from-emerald-400 to-emerald-600 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+                    🎉 <span className="drop-shadow-md">Promotion</span> 🎉
+                </h2>
 
-
-            {/* Card Container */}
-            <div className="flex flex-wrap gap-6 justify-center mt-6">
-                {mockPromotions.map((promotion) => (
-                    <div
-                        key={promotion._id}
-                        className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center p-5"
-                    >
-                        <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-2 transition-all duration-300 hover:scale-105 hover:shadow-xl 
+                {/* Card Container */}
+                <div className="flex flex-wrap gap-8 justify-center mt-6">
+                    {mockPromotions.map((promotion) => (
+                        <div
+                            key={promotion._id}
+                            className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center p-6"
+                        >
+                            <div className=" bg-white shadow-lg rounded-xl border border-gray-200  transition-all duration-300 hover:scale-105 hover:shadow-xl 
               flex flex-col items-center justify-center  w-80% h-full">
-                            <PromotionCard mockPromotions={promotion} />
+                                <PromotionCard mockPromotions={promotion} />
+                            </div>
                         </div>
-                    </div>
+                    ))}
+                </div>
 
-                ))}
-            </div>
-            <div className="w-full bg-white p-8 shadow-xl rounded-3xl mt-12">
-                <div className="text-center text-2xl  font-bold text-lime-400 mt-2">
-                    limited time offer
+                <div className="w-full bg-white p-8 shadow-xl rounded-3xl mt-12">
+                    <div className="text-center text-2xl font-bold text-lime-400 mt-2">
+                        Limited Time Offer
+                    </div>
                     <div className="mt-3">
                         <FlashSellCard />
                     </div>
                 </div>
             </div>
         </div>
-
-
     );
 }
-
-
-
-
