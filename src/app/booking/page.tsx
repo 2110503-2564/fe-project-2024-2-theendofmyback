@@ -144,14 +144,15 @@ export default function BookingPage() {
           <p className="text-emerald-600">Loading...</p>
         </div>
       ) : (
-        <div className="flex flex-col p-8 mx-auto bg-white rounded-lg shadow-lg relative">
-      {/* Position the SeeYoursButton at the top-right corner */}
-      <Link href="/booking/manage">
-        <div className="absolute top-4 right-4 flex justify-center">
-          <SeeYoursButton name="My Booking" />
-        </div>
-      </Link>
+        <div className="flex flex-row p-8 mx-auto bg-white rounded-lg shadow-lg relative">
+     
+          <Link href="/booking/manage">
+            <div className="absolute top-4 right-4 flex justify-center">
+              <SeeYoursButton name="My Booking" />
+            </div>
+          </Link>
 
+          <div>
       <div className="flex flex-row gap-6 mb-6  pb-4">
         <Image
           src={selectedCampground.image}
@@ -239,7 +240,9 @@ export default function BookingPage() {
         </Link>
       </form>
         </div>
+        </div>
       )}
     </div>
+    
   );
 }
