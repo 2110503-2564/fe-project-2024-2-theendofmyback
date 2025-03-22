@@ -25,7 +25,19 @@ interface Campground {
 }
 
 export default function ReviewCard({ reviews }: { reviews: Review }) {
-    let campgroundName=reviews.campground.name
+    const [campgroundName, setCampgroundName] = useState<string>("Loading...");
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await fetch(`/api/campgrounds/${reviews.campground}`);
+                const campground: Campground = await response.json();
+                setCampgroundName(campground.name);
+            } catch (error) {
+                console.error("Error fetching campground data:", error);
+            }
+        })();
+    }, [reviews.campground]);
     const [userData, setUserData] = useState<any>({
         _id: "",
         name: "Loading...",
@@ -55,7 +67,7 @@ export default function ReviewCard({ reviews }: { reviews: Review }) {
         <div className="px-5 py-10 flex flex-col w-fit bg-white rounded-lg shadow-lg m-2 p-2">
             <Rating
                 name="text-feedback"
-                value={reviews.rating / 2.0}
+                value={Math.ceil(reviews.rating / 2.0)}
                 readOnly
                 precision={0.5}
                 emptyIcon={<Star style={{ opacity: 0.55 }} fontSize="inherit" />} 
