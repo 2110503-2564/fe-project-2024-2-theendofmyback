@@ -2,6 +2,7 @@
 import BookingCard from '@/components/BookingCard';
 import SeeAll from '@/components/seeAll';
 import getMe from '@/libs/users/getMe';
+import updateMe from '@/libs/users/updateMe';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -65,6 +66,21 @@ export default function AccountPage() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log({ name, tel, address });
+
+        const update = async () => {
+            try {
+                if (session && session.user.token) {
+                    const response = await updateMe(session.user.token, name, email, tel, address, picture);
+                    console.log(response);
+                } else {
+                    console.error('Session or token is null');
+                }
+            } catch (error) {
+                console.error('Error updating user data:', error);
+            }
+        }
+
+        update();
     };
 
     const profileImages = [

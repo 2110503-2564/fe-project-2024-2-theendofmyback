@@ -12,7 +12,7 @@ export default async function updateMe(
 
     console.log(updateData)
   
-    const response = await fetch(`${process.env.BACKEND_URL}/api/users/me`, {
+    const response = await fetch(`https://swdev-backend.vercel.app/api/v1/auth/profile`, {
       method: 'PUT',
       headers: {
         authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ export default async function updateMe(
     }
   
     if (!response.ok) {
-      throw new Error("Cannot update user's profile")
+      throw new Error("Cannot update")
     }
   
     return await response.json()
