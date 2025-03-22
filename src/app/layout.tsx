@@ -31,7 +31,7 @@ export default function RootLayout({
             
             <SidebarItem icon={<LayoutDashboard size={20} />} text="Home" pageRef = '/'/>
             <SidebarItem icon={<Home size={20} />} text="Campground" pageRef = '/campground' />
-            <SidebarItem icon={<Book size={20} />} text="Booking" pageRef = '/booking' />
+            <SidebarItem icon={<Book size={20} />} text="Booking" pageRef = '/booking/manage' />
             <SidebarItem icon={<Newspaper size={20} />} text="Promotion" pageRef = '/promotion' />
             <SidebarItem icon={<BarChart3 size={20} />} text="Review"  pageRef = '/review'/>
             
