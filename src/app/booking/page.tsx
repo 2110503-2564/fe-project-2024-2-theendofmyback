@@ -92,22 +92,22 @@ export default function BookingPage() {
     image: '',
     promotions: []
   });
-  
+
   const [userData, setUserData] = useState<UserProfile>({
     name: 'Loading...',
     email: 'Loading...',
     tel: 'Loading...',
     address: 'Loading...',
-    picture: '/img/avatar-1.png', 
+    picture: '/img/avatar-1.png',
   });
-  
+
   const [promotion, setPromotion] = useState('');
 
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    
-    
+
+
     event.preventDefault();
     console.log({
       campground: selectedCampground.name,
@@ -127,7 +127,7 @@ export default function BookingPage() {
         return;
       }
     }
-    console.log(session?.user?.token);  
+    console.log(session?.user?.token);
     createBooking(
       session?.user?.token || '',
       cid || '',
@@ -139,143 +139,149 @@ export default function BookingPage() {
   };
 
   const { data: session } = useSession()
-  
-  useEffect (() => { 
+
+  useEffect(() => {
     if (!cid) return;
-          (async () => {
-              try {
-                  const campgroundData: Campground = (await getCampground(cid)).data;
+    (async () => {
+      try {
+        const campgroundData: Campground = (await getCampground(cid)).data;
 
-                  if (session && session.user.token) {
-                    const response = await getMe(session.user.token);
-                    //console.log(response.data);
-                    setUserData(response.data);
-                  }
+        if (session && session.user.token) {
+          const response = await getMe(session.user.token);
+          //console.log(response.data);
+          setUserData(response.data);
+        }
 
-                  console.log(campgroundData);
-                  setSelectedCampground(campgroundData);
-      
-              } catch (error) {
-                  console.error("Error fetching campground data:", error);
-              }
-          })();
-      }, [cid, session]);
-  
-      console.log(userData);
+        console.log(campgroundData);
+        setSelectedCampground(campgroundData);
+
+      } catch (error) {
+        console.error("Error fetching campground data:", error);
+      }
+    })();
+  }, [cid, session]);
+
+  console.log(userData);
 
   return (
-    <div className="flex flex-col p-8 mx-auto bg-white rounded-lg shadow-lg">
-      {!selectedCampground._id ?
-      (
-        <div className='flex flew-row justify-center justify-items-center p-10'>
-          <Loader />
-          <p className="text-emerald-600">Loading...</p>
+    <div className="relative min-h-screen">
+      <Link href="/booking/manage">
+        <div className="absolute top-4 right-4 p-6">
+          <SeeYoursButton name="My Booking" />
         </div>
-      ) 
-      : (
-        <div className="flex flex-row p-8 mx-auto bg-white rounded-lg shadow-lg relative">
-     
-          <Link href="/booking/manage">
-            <div className="absolute top-4 right-4 flex justify-center">
-              <SeeYoursButton name="My Booking" />
-            </div>
-          </Link>
+      </Link>
+      <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-tzeal-200 to-green-2x00">
 
-          <div>
-            <div className="flex flex-row gap-6 mb-6  pb-4">
-              <Image
-                src={selectedCampground.image}
-                alt={selectedCampground.name}
-                className="rounded-lg w-[300px] h-[200px] object-cover"
-                width={300}
-                height={200}
-              />
-              
-              <div className="w-full flex flex-col justify-start space-y-4">
-                <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
-                <p className="text-emerald-600">{selectedCampground.description}</p>
-                <div className="text-emerald-500">
-                  <p>Address: {selectedCampground.address}</p>
-                  <p>Tel: {selectedCampground.tel}</p>
-                  <p>Price: ${selectedCampground.price} / night</p>
+
+
+        {!selectedCampground._id ?
+          (
+            <div className='flex flew-row justify-center justify-items-center p-10'>
+              <Loader />
+              <p className="text-emerald-600">Loading...</p>
+            </div>
+          )
+          : (
+            <div className="flex flex-row p-8 mx-auto bg-white rounded-lg shadow-lg relative">
+
+
+
+              <div>
+                <div className="flex flex-row gap-6 mb-6  pb-4">
+                  <Image
+                    src={selectedCampground.image}
+                    alt={selectedCampground.name}
+                    className="rounded-lg w-[300px] h-[200px] object-cover"
+                    width={300}
+                    height={200}
+                  />
+
+                  <div className="w-full flex flex-col justify-start space-y-4">
+                    <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
+                    <p className="text-emerald-600">{selectedCampground.description}</p>
+                    <div className="text-emerald-500">
+                      <p>Address: {selectedCampground.address}</p>
+                      <p>Tel: {selectedCampground.tel}</p>
+                      <p className="font-bold">Price: ${selectedCampground.price} / night</p>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="border-t-2 border-b-2 py-4 mb-6">
-              
-              <h2 className="font-semibold text-lg text-green-600">Your Information</h2>
-              <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
-                <p >Your Name: {userData.name}</p>
-                <p >Your Email: {userData.email}</p>
-                <p >Your Tel: {userData.tel}</p>
-              </div>
+                <div className="border-t-2 border-b-2 py-4 mb-6">
 
-              <div className="flex items-center space-x-2 mb-4 my-4 mx-4">
-                <input
-                  type="checkbox"
-                  id="confirmInfo"
-                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                  required
-                />
-                <label htmlFor="confirmInfo" className="text-green-600">
-                  I confirm that the above information is correct.
-                </label>
-              </div>
-            </div>
+                  <h2 className="font-semibold text-lg text-green-600">Your Information</h2>
+                  <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
+                    <p >Your Name: {userData.name}</p>
+                    <p >Your Email: {userData.email}</p>
+                    <p >Your Tel: {userData.tel}</p>
+                  </div>
 
-            <form onSubmit={handleSubmit}>
+                  <div className="flex items-center space-x-2 mb-4 my-4 mx-4">
+                    <input
+                      type="checkbox"
+                      id="confirmInfo"
+                      className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                      required
+                    />
+                    <label htmlFor="confirmInfo" className="text-green-600">
+                      I confirm that the above information is correct.
+                    </label>
+                  </div>
+                </div>
 
-              <div className="space-y-2 mb-4">
-                <div className="font-bold text-green-600">Select Promotion: </div>
-                <select
-                  value={promotion}
-                  onChange={(e) => setPromotion(e.target.value)}
-                  className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                >
-                  <option value="">-- Select Promotion --</option>
-                  {/*selectedCampground.promotions.map((promo) => (
+                <form onSubmit={handleSubmit}>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="font-bold text-green-600">Select Promotion: </div>
+                    <select
+                      value={promotion}
+                      onChange={(e) => setPromotion(e.target.value)}
+                      className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="">-- Select Promotion --</option>
+                      {/*selectedCampground.promotions.map((promo) => (
                     <option key={promo.id} value={promo.name}>
                       {promo.name} - ${promo.discount} OFF
                     </option>
                   ))*/}
-                </select>
+                    </select>
+                  </div>
+
+                  <hr className="my-6 border-gray-200" />
+
+                  <div className="flex flex-row justify-center gap-6 mb-6">
+                    <div className="w-1/2">
+                      <div className="font-bold text-green-600">Check-in Date</div>
+                      <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
+                    </div>
+
+                    <div className="w-1/2">
+                      <div className="font-bold text-green-600">Check-out Date</div>
+                      <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
+                    </div>
+                  </div>
+
+                  <hr className="my-6 border-gray-200" />
+
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
+                      if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
+                        alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
+                        return;
+                      }
+                    }}
+                    className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
+                  >
+                    Book Camp
+                  </button>
+                </form>
               </div>
-
-              <hr className="my-6 border-gray-200" />
-
-              <div className="flex flex-row justify-center gap-6 mb-6">
-                <div className="w-1/2">
-                  <div className="font-bold text-green-600">Check-in Date</div>
-                  <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
-                </div>
-
-                <div className="w-1/2">
-                  <div className="font-bold text-green-600">Check-out Date</div>
-                  <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
-                </div>
-              </div>
-
-              <hr className="my-6 border-gray-200" />
-
-                <button
-                type="submit"
-                onClick={() => {
-                  const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
-                  if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
-                    alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
-                    return;
-                  }
-                }}
-                className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
-                >
-                Book Camp
-                </button>
-            </form>
-              </div>
-        </div>
-      )}
+            </div>
+          )}
+      </div>
     </div>
-    
   );
 }

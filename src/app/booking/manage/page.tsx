@@ -31,26 +31,29 @@ export default function ManagePage() {
 
     console.log("Booked Data:", bookingData)
     return (
-        <div className="bg-white w-full flex flex-col  px-2 py-10 ">
-        <Link href="/booking">
-                <div className="absolute top-0 left-0 flex justify-start relative"> 
-                <GoBackButton name="Booking" />
-                </div>
-            </Link>            
-            <div className=" w-full flex flex-col  px-2 py-10 items-center">
-            <h1 className="text-[40px] font-extrabold">Your Booking</h1>
-            
+        
+        <div className="bg-white w-full flex flex-col">
+        <div className="min-h-screen flex flex-col items-center px-4 bg-gradient-to-t from-transparent to-emerald-200">
 
+               
+            <div className=" w-full flex flex-col  px-2 py-10 items-center">
+            <div className="flex flex-row gap-6 mb-6  pb-4">
+            <h2 className="text-4xl text-center bg-gradient-to-r from-white to-white text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
+            ✅  <span className="text-emerald-600 drop-shadow-md ">Your booking</span> ✅
+            </h2>
+            </div>
+            
+            
             {bookingData.length === 0 ? (
                 <div className="m-10"><Loader /></div>
             ) : null}
-            <div className="flex flex-col w-4/5 items-center">
+            <div className="flex flex-col w-4/5 items-center gap-6">
                 {bookingData.map((booking) => (
                     <BookingCard key={booking._id} bookingData={booking} />
                 ))}
             </div>
             </div>
         </div>
-
+        </div>
   );
 }
