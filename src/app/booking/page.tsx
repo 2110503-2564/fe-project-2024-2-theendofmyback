@@ -36,10 +36,6 @@ const campgrounds = [
   }
 ];
 
-
-
-
-
 export default function BookingPage() {
 
   const [dateCheckIn, setDateCheckIn] = useState<Dayjs | null>(null);
@@ -47,7 +43,6 @@ export default function BookingPage() {
   const [selectedCampground, setSelectedCampground] = useState(campgrounds[0]);
   const [promotion, setPromotion] = useState('');
 
-  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({
@@ -66,42 +61,51 @@ export default function BookingPage() {
   }, [selectedCampground.id]);
 
   return (
-    <div className="flex flex-col p-10 w-full h-fit bg-gray-100">
-      <div className="flex flex-row gap-6 mb-6 border-2 border-gray-300 rounded-lg p-4">
-    <img
+    <div className="flex flex-col p-8 mx-auto bg-white rounded-lg shadow-lg">
+      <div className="flex flex-row gap-6 mb-6  pb-4">
+        <Image
           src={selectedCampground.image}
           alt={selectedCampground.name}
-           className="rounded-lg w-[300px] object-cover"
-    />
+          className="rounded-lg w-[300px] h-[200px] object-cover"
+          width={300}
+          height={200}
+        />
 
-    <div className="w-full flex flex-col justify-start space-y-4">
-      <h2 className="text-3xl font-semibold font-serif text-black">{selectedCampground.name}</h2>
-      <p> details: </p>
-      <div className='border-2 border-gray-300 p-2 rounded-lg w-full'>
-        <p className="text-black">{selectedCampground.description}</p>
-        <p className="text-black">Address: {selectedCampground.address}</p>
-        <p className="text-black">Tel: {selectedCampground.tel}</p>
-        <p className="text-black">Price: ${selectedCampground.price} / night</p>
+        <div className="w-full flex flex-col justify-start space-y-4">
+          <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
+          <p className="text-emerald-600">{selectedCampground.description}</p>
+          <div className="text-emerald-500">
+            <p>Address: {selectedCampground.address}</p>
+            <p>Tel: {selectedCampground.tel}</p>
+            <p>Price: ${selectedCampground.price} / night</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  
-      <div className='border-2 border-gray-300 p-4 rounded-lg w-full'>
-        <h2 className='font-bold text-md my-2'>Your Informatioin</h2>
-        <p>name: </p>
-        <p>contact number: </p>
+
+      <div className="border-t-2 border-b-2 py-4 mb-6">
+        <h2 className="font-semibold text-lg text-green-600">Your Information</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            className="w-full p-3 border text-green-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+          <input
+            type="tel"
+            placeholder="Enter your contact number"
+            className="w-full p-3 border font-bold text-green-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
       </div>
 
       <form onSubmit={handleSubmit}>
-        
-        <hr className="my-6 border-gray-300 border-2" />
-    
+
         <div className="space-y-2 mb-4">
-          <div className="text-black">Select Promotion: </div>
+          <div className="font-bold text-green-600">Select Promotion: </div>
           <select
             value={promotion}
             onChange={(e) => setPromotion(e.target.value)}
-            className="w-full p-3 bg-gray-300 text-black rounded-lg"
+            className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             required
           >
             <option value="">-- Select Promotion --</option>
@@ -113,29 +117,31 @@ export default function BookingPage() {
           </select>
         </div>
 
-        <hr className="my-6 border-gray-300 border-2" />
+        <hr className="my-6 border-gray-200" />
 
-        <div className="flex flex-row justify-center">
-          <div className='mx-4'>
-          <div className="text-black">Check-in Date</div>
-          <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
+        <div className="flex flex-row justify-center gap-6 mb-6">
+          <div className="w-1/2">
+            <div className="font-bold text-green-600">Check-in Date</div>
+            <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
           </div>
 
-          <div className='mx-4'>
-          <div className="text-black">Check-out Date</div>
-          <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
+          <div className="w-1/2">
+            <div className="font-bold text-green-600">Check-out Date</div>
+            <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
           </div>
         </div>
 
-        <hr className="my-6 border-gray-300 border-2" />
+        <hr className="my-6 border-gray-200" />
 
         <Link href="/booking/manage">
-        <button type="submit" className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-lg mt-4">
-          Book Camp
-        </button>
+          <button
+            type="submit"
+            className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
+          >
+            Book Camp
+          </button>
         </Link>
       </form>
-      
     </div>
   );
 }
