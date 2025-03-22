@@ -1,17 +1,12 @@
 'use client';
 import BookingCard from '@/components/BookingCard';
 import SeeAll from '@/components/seeAll';
+import getMe from '@/libs/users/getMe';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AccountPage() {
-    const mockUser = {
-        name: 'Croissant Brioche',
-        tel: '123-123-1231',
-        address: 'Floor 19, Build 4',
-        email: 'user@example.com',
-        picture: '/img/avatar-1.png',
-    };
 
     const mockBookings = [
         {
@@ -32,11 +27,11 @@ export default function AccountPage() {
         },
     ]
 
-    const [name, setName] = useState(mockUser.name);
-    const [tel, setTel] = useState(mockUser.tel);
-    const [address, setAddress] = useState(mockUser.address);
-    const [email, setEmail] = useState(mockUser.email);
-    const [picture, setPicture] = useState(mockUser.picture);
+    const [name, setName] = useState("");
+    const [tel, setTel] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [picture, setPicture] = useState("/img/avatar-1.png");
     const [isEditing, setIsEditing] = useState(false);
 
     const { data: session } = useSession()
