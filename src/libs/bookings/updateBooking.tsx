@@ -14,6 +14,7 @@ export default async function updateBooking(
         body: JSON.stringify({
             checkInDate: checkInDate,
             checkOutDate: checkOutDate,  
+            ...(promotion ? { promotion } : {}),
         }),
       }
     )
