@@ -35,12 +35,12 @@ export default function Promotion() {
     return (
         <div className="bg-gradient-to-r from-blue-100 to-teal-300 w-full flex flex-col px-2 py-10">
             <Link href="/promotion/manage">
-                <div className="absolute top-4 right-4 flex justify-center">
+                <div className="absolute  top-4 right-4 flex justify-start p-4 pt-10 text-3xl font-bold">
                 <SeeYoursButton name="My Promotion" />
                 </div>
             </Link>
             
-            <div className="w-full px-10 my-10 ">
+            <div className="w-full px-10 my-10  p-12">
                 {/* Header */}
                 <h2 className="text-4xl text-center bg-gradient-to-r from-white to-white text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
                     🎉 <span className="text-emerald-600 drop-shadow-md">Promotion</span> 🎉

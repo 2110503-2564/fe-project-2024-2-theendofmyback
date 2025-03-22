@@ -5,13 +5,13 @@ interface SeeYoursButtonProps {
   name: string;
 }
 
-const seeYoursButton: React.FC<SeeYoursButtonProps> = ({ name }) => {
+const SeeYoursButton: React.FC<SeeYoursButtonProps> = ({ name }) => {
   return (
     <StyledWrapper>
       <button className="cssbuttons-io-button">
         {name}
         <div className="icon">
-          <svg height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg height={26} width={26} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0z" fill="none" />
             <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor" />
           </svg>
@@ -19,27 +19,26 @@ const seeYoursButton: React.FC<SeeYoursButtonProps> = ({ name }) => {
       </button>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .cssbuttons-io-button {
-    background:rgb(36, 200, 132);
+    background : rgb(74 ,222 ,128);
     color: white;
     font-family: inherit;
-    padding: 0.35em;
-    padding-left: 1.2em;
-    font-size: 17px;
+    padding: 0.5em 1.6em; /* ลด padding ลงเล็กน้อย */
+    font-size: 18px; /* ลดขนาดตัวอักษร */
     font-weight: 500;
     border-radius: 0.9em;
     border: none;
     letter-spacing: 0.05em;
     display: flex;
     align-items: center;
-    box-shadow: inset 0 0 1.6em -0.6em rgb(36, 200, 132);;
+    box-shadow: inset 0 0 1.6em -0.6em rgb(74,222,128);
     overflow: hidden;
     position: relative;
-    height: 2.8em;
-    padding-right: 3.3em;
+    height: 3.2em; /* ลดความสูงของปุ่ม */
+    padding-right: 3.6em;
     cursor: pointer;
   }
 
@@ -50,10 +49,10 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.2em;
-    width: 2.2em;
-    border-radius: 0.7em;
-    box-shadow: 0.1em 0.1em 0.6em 0.2em rgb(36, 200, 132);;
+    height: 2.5em; /* ลดขนาดไอคอน */
+    width: 2.5em;
+    border-radius: 0.8em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em rgb(74,222,128);
     right: 0.3em;
     transition: all 0.3s;
   }
@@ -63,9 +62,9 @@ const StyledWrapper = styled.div`
   }
 
   .cssbuttons-io-button .icon svg {
-    width: 1.1em;
+    width: 1.2em; /* ปรับขนาดไอคอน */
     transition: transform 0.3s;
-    color: rgb(36, 200, 132);;
+    color: rgb(74,222,128);
   }
 
   .cssbuttons-io-button:hover .icon svg {
@@ -74,6 +73,7 @@ const StyledWrapper = styled.div`
 
   .cssbuttons-io-button:active .icon {
     transform: scale(0.95);
-  }`;
+  }
+`;
 
-export default seeYoursButton;
+export default SeeYoursButton;
