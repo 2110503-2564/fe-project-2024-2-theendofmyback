@@ -53,13 +53,15 @@ const mockPromotions = [
         <div className="flex flex-wrap gap-6 justify-center mt-6">
           {mockPromotions.map((promotion) => (
             <div
-              key={promotion._id}
-              className="w-full sm:w-[80%] md:w-1/2 lg:w-1/3 flex justify-center p-3"
-            >
-              <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <PromotionCard mockPromotions={promotion} />
-              </div>
+            key={promotion._id}
+            className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center p-5"
+          >
+            <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-2 transition-all duration-300 hover:scale-105 hover:shadow-xl 
+              flex flex-col items-center justify-center  w-80% h-full">
+              <PromotionCard mockPromotions={promotion} />
             </div>
+          </div>
+          
           ))}
         </div>
       </div>
