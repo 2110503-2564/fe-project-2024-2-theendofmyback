@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import DateReserve from '@/components/DateReserve';
 import dayjs, { Dayjs } from 'dayjs';
 import Image from 'next/image'
+import Link from 'next/link';
 
 const campgrounds = [
   {
@@ -128,9 +129,12 @@ export default function BookingPage() {
 
         <hr className="my-6 border-gray-300 border-2" />
 
+        <Link href="/booking/manage">
         <button type="submit" className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-lg mt-4">
-          Book Venue
+          Book Camp
         </button>
+        </Link>
+
       </form>
       
     </div>
