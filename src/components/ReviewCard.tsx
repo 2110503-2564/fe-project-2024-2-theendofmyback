@@ -1,7 +1,7 @@
 import { Rating } from "@mui/material";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import getCampground from "@/libs/campgrounds/getCampground";
+import getUserList from "@/libs/users/getUserList";
 
 interface Review {
     _id: string;
@@ -25,15 +25,28 @@ interface Campground {
 }
 
 export default function ReviewCard({ reviews }: { reviews: Review }) {
-    const [campgroundName, setCampgroundName] = useState<string>("Loading...");
+    let campgroundName=reviews.campground.name
+    const [userData, setUserData] = useState<any>({
+        _id: "",
+        name: "Loading...",
+        email: "",
+        picture: "user-icon.png",
+        tel: "",
+    });
 
     useEffect(() => {
         (async () => {
             try {
-                const campgroundData: Campground = await getCampground(reviews.campground);
-                setCampgroundName(campgroundData.name);
+                const response = await getUserList()
+                const users = Array.isArray(response) ? response : response.data;
+                const foundUser = users.find((u: any) => u._id === reviews.user);
+                if (!foundUser.picture) {
+                    foundUser.picture = "/img/avatar-1.png";
+                }
+                setUserData(foundUser)
+                console.log(foundUser)
             } catch (error) {
-                console.error("Error fetching campground data:", error);
+                console.error("Error fetching user data:", error);
             }
         })();
     }, []);
@@ -53,8 +66,8 @@ export default function ReviewCard({ reviews }: { reviews: Review }) {
             <h2 className="text-[25px] font-bold">{reviews.title}</h2>
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-row items-center">
-                    <img src="/img/user-icon.png" className="w-6" alt="icon" />
-                    <p className="text-[10px] px-2 text-gray-500">{reviews.user}</p>
+                    <img src={userData.picture} className="w-6" alt="icon" />
+                    <p className="text-[10px] px-2 text-gray-500">{userData.name}</p>
                 </div>
                 <p className="mx-2">on</p>
                 <div className="mx-3 bg-slate-200 w-fit rounded-2xl px-2 flex flex-row items-center">

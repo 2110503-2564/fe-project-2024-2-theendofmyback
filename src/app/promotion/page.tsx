@@ -13,39 +13,6 @@ import { useEffect, useState } from "react";
 import getPromotions from "@/libs/promotions/getPromotions";
 import Loader from "@/components/load";
 
-const mockPromotions = [
-    {
-        _id: "67bd907379db2d1502b32995",
-        name: "Discount 200",
-        campground: "67bd6dfcd3e3272696f5243d",
-        description: "Get 200 off on your next booking!",
-        discount: 200,
-    },
-    {
-        _id: "67bd908479db2d1502b32996",
-        name: "Weekend Special",
-        campground: "67bd6dfcd3e3272696f5243e",
-        description: "Enjoy a 15% discount on weekend stays!",
-        discount: 15, // 15% discount
-    },
-    {
-        _id: "67bd909579db2d1502b32997",
-        name: "New Year Offer",
-        campground: "67bd6dfcd3e3272696f5243f",
-        description: "Save 500 when booking for the New Year celebration!",
-        discount: 500,
-    },
-    {
-        _id: "67bd90a679db2d1502b32998",
-        name: "Early Bird Deal",
-        campground: "67bd6dfcd3e3272696f52440",
-        description: "Book 2 weeks in advance and get 10% off!",
-        discount: 10, // 10% discount
-    },
-];
-
-    
-
 export default function Promotion() {
 
     const [promotions, setPromotions] = useState<any[]>([])
