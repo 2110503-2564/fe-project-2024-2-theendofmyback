@@ -62,7 +62,7 @@ export default function Review() {
               </div>
 
               {/* Review Card */}
-              <ReviewCard mockReviews={review} />
+              <ReviewCard reviews={review} />
             </div>
           </div>
         ))}
