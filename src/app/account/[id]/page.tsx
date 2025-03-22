@@ -1,21 +1,66 @@
 'use client';
-import { useState } from 'react';
+import BookingCard from '@/components/BookingCard';
+import SeeAll from '@/components/seeAll';
+import getMe from '@/libs/users/getMe';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function AccountPage() {
-    const mockUser = {
-        name: 'Croissant Brioche',
-        tel: '123-123-1231',
-        address: 'Floor 19, Build 4',
-        email: 'user@example.com',
-        picture: '/img/avatar-1.png',
-    };
 
-    const [name, setName] = useState(mockUser.name);
-    const [tel, setTel] = useState(mockUser.tel);
-    const [address, setAddress] = useState(mockUser.address);
-    const [email, setEmail] = useState(mockUser.email);
-    const [picture, setPicture] = useState(mockUser.picture);
+    const mockBookings = [
+        {
+            _id: "67bf2d872bb021e49823add4",
+            user: "67bf18029a6366536b150330",
+            campground: "67bd6dfcd3e3272696f5243d",
+            checkInDate: "2025-02-26T00:00:00.000+00:00",
+            checkOutDate: "2025-02-27T00:00:00.000+00:00",
+            bookingAt: "2025-02-26T15:04:39.865+00:00"
+        },
+        {
+            _id: "67c02a12fbb0a1e4a90abc22",
+            user: "67c018fa3e6f4a127b2cd560",
+            campground: "67bd6e89a1d3272696f52abc",
+            checkInDate: "2025-03-01T00:00:00.000+00:00",
+            checkOutDate: "2025-03-03T00:00:00.000+00:00",
+            bookingAt: "2025-02-28T12:30:15.420+00:00"
+        },
+    ]
+
+    const [name, setName] = useState("");
+    const [tel, setTel] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [picture, setPicture] = useState("/img/avatar-1.png");
     const [isEditing, setIsEditing] = useState(false);
+
+    const { data: session } = useSession()
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                if (session && session.user.token) {
+                    const response = await getMe(session.user.token);
+                    setName(response.data.name);
+                    setTel(response.data.tel);
+                    setAddress(response.data.address);
+                    setEmail(response.data.email);
+                    setPicture(response.data.picture);
+                    console.log(response);
+                } else {
+                    console.error('Session or token is null');
+                    <div>Session or token is null</div>
+                }
+                
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUser();
+    }, [session]);
+    
+
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,8 +75,8 @@ export default function AccountPage() {
     ];
 
     return (
-        
-        <div className="max-w-4xl mx-auto p-6 ">
+        <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-teal-100 to-tea-200">
+        <div className="max-w-5xl mx-auto p-6 ">
         
         <div className='p-4'>
         <h2 className="p-6 text-3xl text-center bg-gradient-to-r from-emerald-300 to-lime-500 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
@@ -45,7 +90,7 @@ export default function AccountPage() {
                     <img src={picture} alt="Profile" className="w-full h-full object-cover" />
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 ">
                     <h2 className="text-2xl font-semibold text-emerald-800">{name}</h2>
                     <p className="text-emerald-600">{email}</p>
                     <p className="text-emerald-700"><strong>Tel:</strong> {tel}</p>
@@ -129,6 +174,33 @@ export default function AccountPage() {
                     </form>
                 </div>
             )}
+            <div>
+            <div className="flex justify-between items-center mx-20 mt-10">
+        <h1 className="text-4xl font-bold text-green-600">Your Booking</h1>
+        <Link href="/promotion">
+        <SeeAll />
+        </Link>
+      </div>
+      <div className="flex justify-center items-center space-x-12 p-4 transition-all duration-500" >
+        {mockBookings.map((booking) => (
+                            <BookingCard key={booking._id} bookingData={booking} />
+                        ))}
+      </div>
+      </div>
+      <div>
+            <div className="flex justify-between items-center mx-20 mt-10">
+        <h1 className="text-4xl font-bold text-green-600">Your Promotion</h1>
+        <Link href="/promotion">
+        <SeeAll />
+        </Link>
+      </div>
+      <div className="flex justify-center items-center space-x-12 p-4 transition-all duration-500" >
+        {mockBookings.map((booking) => (
+                            <BookingCard key={booking._id} bookingData={booking} />
+                        ))}
+      </div>
+      </div>
+        </div>
         </div>
     );
 }

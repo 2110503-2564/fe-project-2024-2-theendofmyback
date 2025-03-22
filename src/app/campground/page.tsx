@@ -1,6 +1,11 @@
-import CampgroundCard from "@/components/CamgroundCard"
+"use client";
+import CampgroundCard from "@/components/CampgroundCard";
+import { useState } from "react";
+import { Search } from "lucide-react";
 
 export default function Campground() {
+    const [searchTerm, setSearchTerm] = useState("");
+
     const mockCampgrounds = [
         {
             _id: "67bd6dfcd3e3272696f5243d",
@@ -34,24 +39,42 @@ export default function Campground() {
         }
     ];
 
-    return (
-        <div className="w-full flex flex-col items-center px-2 py-10">
-        <h1 className="text-[40px] font-sans font-semibold">Campground</h1>
+    const filteredCampgrounds = mockCampgrounds.filter(campground => 
+        campground.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        campground.address.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-        <div className="w-full flex flex-row items-center justify-center">
-            <input type="text" placeholder="Search" className="w-4/5 p-2 m-2 rounded-3xl border-2" />
-            <button className="bg-emerald-400 hover:bg-emerald-500 text-white px-4 py-2 rounded-3xl m-2 font-bold text-lg">Search</button>
-        </div>
-        {mockCampgrounds.map(campground => (
-                <CampgroundCard 
-                    key={campground._id}
-                    id={campground._id}
-                    name={campground.name}
-                    description={campground.description}
-                    Location={campground.address}
-                    image={campground.image}
+    return (
+        <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-lime-100 to-tea-200">
+            <div className="p-4">
+                <h1 className="text-4xl text-center bg-gradient-to-r from-green-400 to-emerald-500 text-white w-fit mx-auto px-8 py-4 rounded-full font-bold shadow-xl flex items-center gap-3 hover:shadow-2xl transition-all ease-in-out duration-300">
+                    ⭐ <span className="drop-shadow-md">Campground</span> ⭐
+                </h1>
+            </div>
+
+            <div className="w-full max-w-2xl flex items-center bg-white bg-opacity-80 rounded-3xl shadow-lg p-3 mb-6 backdrop-blur-xl">
+                <Search className="text-gray-600" />
+                <input 
+                    type="text" 
+                    placeholder="Search for a campground..." 
+                    className="w-full p-3 outline-none bg-transparent text-gray-700 focus:ring-2 focus:ring-lime-400 transition duration-200 ease-in"
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
-            ))}    
+            </div>
+
+            <div className="p-6 space-y-6 ">
+                {filteredCampgrounds.map(campground => (
+                    <CampgroundCard 
+                        key={campground._id}
+                        id={campground._id}
+                        name={campground.name}
+                        description={campground.description}
+                        Location={campground.address}
+                        image={campground.image}
+                    />
+                ))}
+            </div>
         </div>
-    )
+    );
 }

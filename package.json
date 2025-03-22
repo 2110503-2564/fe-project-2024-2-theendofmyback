@@ -14,6 +14,7 @@
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@mui/x-date-pickers": "^7.28.0",
+    "aos": "^2.3.4",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.483.0",
@@ -25,6 +26,7 @@
     "swiper": "^11.2.6"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

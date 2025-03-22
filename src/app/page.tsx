@@ -71,7 +71,7 @@ export default function Home() {
       <hr className="my-3" />
       <div className="flex justify-between items-center mx-20 mt-10">
         <h1 className="text-4xl font-bold text-green-600">Promotion</h1>
-        <Link href="/campground">
+        <Link href="/promotion">
         <SeeAll />
         </Link>
       </div>
