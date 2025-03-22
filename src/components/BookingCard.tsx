@@ -1,6 +1,8 @@
 "use client";
 import { Pen, Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import deleteBooking from "@/libs/bookings/deleteBooking";
+import { useSession } from "next-auth/react";
 
 interface Booking {
   _id: string;
@@ -13,15 +15,37 @@ interface Booking {
 
 export default function BookingCard({ bookingData }: { bookingData: Booking }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const { data: session } = useSession()
+  
+  const handleDelete = (): void => {
+    if (confirmDelete) {
+      console.log(`Deleting booking with ID: ${bookingData._id}`);
+      setConfirmDelete(false);
+      deleteBooking(
+        session?.user?.token || '',
+        bookingData._id
+      ).then(
+        () => {
+          console.log("Booking deleted successfully.");
+          window.location.reload();
+        }
+      )
+
+    } else {
+      console.log("Delete not confirmed yet.");
+    }
+  };
 
   return (
     <div className="p-4 w-full bg-white hover:bg-green-50 rounded-xl shadow-md transition duration-300">
       <div className="flex items-center justify-between border-b pb-3 mb-3">
-        <p className="text-xl font-semibold text-green-700">{bookingData.campground}</p>
+        <p className="text-xl font-semibold text-green-700">{bookingData.campground.name}</p>
         <div className="flex items-center space-x-2">
           <Pen className="w-8 p-2 text-white bg-green-500 rounded-lg hover:bg-green-600 cursor-pointer transition duration-200" />
           {confirmDelete ? (
-            <div className="flex items-center space-x-1 px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 transition duration-200" onClick={() => setConfirmDelete(false)}>
+            <div className="flex items-center space-x-1 px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 transition duration-200" 
+            
+            onClick={() => handleDelete()}>
               <p className="text-sm font-semibold">Confirm</p>
               <Trash2 className="w-5" />
             </div>
