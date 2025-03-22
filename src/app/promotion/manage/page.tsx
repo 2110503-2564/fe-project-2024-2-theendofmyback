@@ -44,7 +44,7 @@ export default function MyPromotion() {
           <GoBackButton name="Promotion" />
         </div>
       </Link>
-      <div className="w-full flex flex-col px-2 py-10 items-center">
+      <div className="w-full flex flex-col px-2 items-center">
         <h2 className="text-4xl text-center bg-gradient-to-r from-white to-white text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
           🎉 <span className="text-emerald-600 drop-shadow-md">Your Promotion</span> 🎉
         </h2>
