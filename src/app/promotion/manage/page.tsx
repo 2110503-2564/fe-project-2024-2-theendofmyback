@@ -1,7 +1,8 @@
 'use client'
 import PromotionList from "@/components/PromotionList"
 import PromotionCard from "@/components/PromotionCard"
-
+import Link from "next/link";
+import GoBackButton from "@/components/Gobackbutton";
 
 export default function MyPromotion() {
 
@@ -39,14 +40,22 @@ export default function MyPromotion() {
 
 
   return (
-    <div className="bg-white w-full flex flex-col items-center px-2 py-10 ">
-                <h1 className="text-[40px] font-extrabold">Your Promotion</h1>
+    <div className="bg-white w-full flex flex-col  px-2 py-10  ">
+      <Link href="/promotion">
+                <div className="absolute top-0 left-0 flex justify-start relative"> 
+                <GoBackButton name="Promotion" />
+                </div>
+            </Link> 
+            <div className=" w-full flex flex-col  px-2 py-10 items-center">
+                <h1 className="text-[40px] font-extrabold items-center">Your Promotion</h1>
                 
-                <div className="flex flex-col w-4/5 items-center">
+                <div className="flex flex-col w-4/5 items-center px-2 py-2 ">
                     {mockPromotions.map((promotion) => (
+                      <div className="px-2 py-2 ">
                         <PromotionCard mockPromotions={promotion} />
+                      </div>
                     ))}
                 </div>
-            </div>
+            </div></div>
   )
 }

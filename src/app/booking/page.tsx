@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import DateReserve from '@/components/DateReserve';
 import dayjs, { Dayjs } from 'dayjs';
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
+import SeeYoursButton from '@/components/seeYours';
 
 const campgrounds = [
   {
@@ -61,7 +62,14 @@ export default function BookingPage() {
   }, [selectedCampground.id]);
 
   return (
-    <div className="flex flex-col p-8 mx-auto bg-white rounded-lg shadow-lg">
+    <div className="flex flex-col p-8 mx-auto bg-white rounded-lg shadow-lg relative">
+      {/* Position the SeeYoursButton at the top-right corner */}
+      <Link href="/booking/manage">
+        <div className="absolute top-4 right-4 flex justify-center">
+          <SeeYoursButton name="My Booking" />
+        </div>
+      </Link>
+
       <div className="flex flex-row gap-6 mb-6  pb-4">
         <Image
           src={selectedCampground.image}
@@ -70,7 +78,7 @@ export default function BookingPage() {
           width={300}
           height={200}
         />
-
+        
         <div className="w-full flex flex-col justify-start space-y-4">
           <h2 className="text-3xl font-bold text-emerald-700">{selectedCampground.name}</h2>
           <p className="text-emerald-600">{selectedCampground.description}</p>

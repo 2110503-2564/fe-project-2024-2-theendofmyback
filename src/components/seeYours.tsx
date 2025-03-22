@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const seeYoursButton = () => {
+interface SeeYoursButtonProps {
+  name: string;
+}
+
+const seeYoursButton: React.FC<SeeYoursButtonProps> = ({ name }) => {
   return (
     <StyledWrapper>
       <button className="cssbuttons-io-button">
-        See Yours
+        {name}
         <div className="icon">
           <svg height={24} width={24} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0z" fill="none" />
