@@ -78,7 +78,7 @@ export default function Review() {
     
 
     return (
-        <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-green-100 to-lime-200">
+        <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-lime-100 to-green-200">
             <div className="w-full px-10 my-10">
                 <h2 className="text-4xl text-center bg-gradient-to-r from-green-400 to-lime-600 text-white w-fit mx-auto px-8 py-4 rounded-full font-bold shadow-xl flex items-center gap-2">
                     ⭐ <span className="drop-shadow-md">Reviews</span> ⭐

@@ -40,6 +40,7 @@ export default function Home() {
 
   return (
     <main className="relative ">
+      
       <div className="mx-auto transform">
         <Banner />
       
