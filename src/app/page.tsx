@@ -57,7 +57,7 @@ export default function Home() {
       <div className="h-[300px]"></div>
       <hr className="my-3" />
       <div className="flex justify-between items-center mx-20 mt-10">
-        <h1 className="text-4xl font-bold text-green-600">Campground</h1>
+        <h1 className="text-4xl font-bold text-green-600 ">Campground</h1>
         <Link href="/campground">
         <SeeAll />
         </Link>
