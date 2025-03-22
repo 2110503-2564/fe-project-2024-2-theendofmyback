@@ -6,7 +6,8 @@ import updateMe from '@/libs/users/updateMe';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
+import getBooking from '@/libs/bookings/getBooking';
+import getBookings from '@/libs/bookings/getBookings';
 export default function AccountPage() {
 
     const mockBookings = [
@@ -34,7 +35,7 @@ export default function AccountPage() {
     const [email, setEmail] = useState("");
     const [picture, setPicture] = useState("/img/avatar-1.png");
     const [isEditing, setIsEditing] = useState(false);
-
+    const [bookingData, setBookingData] = useState<any[]>([])
     const { data: session } = useSession()
     
     useEffect(() => {
@@ -42,6 +43,11 @@ export default function AccountPage() {
             try {
                 if (session && session.user.token) {
                     const response = await getMe(session.user.token);
+                    const bookingData = (await getBookings(session.user.token)).data
+                    console.log(bookingData)
+                    bookingData.sort((a, b) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
+                    
+                    setBookingData(bookingData)
                     setName(response.data.name);
                     setTel(response.data.tel);
                     setAddress(response.data.address);
@@ -62,7 +68,7 @@ export default function AccountPage() {
     }, [session]);
     
 
-
+    console.log(bookingData)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log({ name, tel, address });
@@ -192,13 +198,13 @@ export default function AccountPage() {
             )}
             <div>
             <div className="flex justify-between items-center mx-20 mt-10">
-        <h1 className="text-4xl font-bold text-green-600">Your Booking</h1>
+        <h1 className="text-4xl font-bold text-green-600">Recent Booking</h1>
         <Link href="/promotion">
         <SeeAll />
         </Link>
       </div>
       <div className="flex justify-center items-center space-x-12 p-4 transition-all duration-500" >
-        {mockBookings.map((booking) => (
+        {bookingData.slice(0, 2).map((booking) => (
                             <BookingCard key={booking._id} bookingData={booking} />
                         ))}
       </div>

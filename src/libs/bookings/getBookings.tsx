@@ -1,4 +1,4 @@
-export default async function getReserves(token: string, query?: string) {
+export default async function getBookings(token: string, query?: string) {
     console.log(query)
   
     const response = await fetch(
