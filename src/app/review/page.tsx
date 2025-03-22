@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid'; // Import the pin icon
 import ReviewCard from "@/components/ReviewCard";
 
 const mockReviews = [
@@ -43,19 +44,23 @@ const mockReviews = [
 
 export default function Review() {
   return (
-    
     <div className="w-full px-10 my-10">
       {/* Header */}
       <h2 className="text-3xl text-center bg-gradient-to-r from-lime-300 to-lime-500 text-white w-fit mx-auto px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2">
-  ⭐ <span className="drop-shadow-md">Reviews</span> ⭐
-</h2>
-
+        ⭐ <span className="drop-shadow-md">Reviews</span> ⭐
+      </h2>
 
       {/* Review Container */}
       <div className="flex flex-wrap gap-6 justify-center mt-6">
         {mockReviews.map((review) => (
           <div key={review._id} className="w-full sm:w-[80%] md:w-1/2 lg:w-1/3 flex justify-center p-3">
-            <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-4 transition-all duration-300 hover:scale-105 hover:shadow-xl relative">
+              {/* Pin Icon */}
+              <div className=" top-5 right-5 text-lime-300">
+                <ChatBubbleBottomCenterTextIcon className=" w-9 h-10" />
+              </div>
+
+              {/* Review Card */}
               <ReviewCard mockReviews={review} />
             </div>
           </div>
