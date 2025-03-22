@@ -91,7 +91,7 @@ export default function Review() {
                                 <div className="absolute top-5 right-5 text-lime-400">
                                     <ChatBubbleBottomCenterTextIcon className="w-10 h-10" />
                                 </div>
-                                <ReviewCard mockReviews={review} />
+                                <ReviewCard reviews={review} />
                             </div>
                         </div>
                     ))}

@@ -22,7 +22,9 @@ export default function CampgroundCard({ id, name, description, location, image 
                         <Link href={`/campground/${id}`}>
                             <button className="p-6 bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 shadow-md">Detail</button>
                         </Link>
-                        <button className="w-1/3 bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 shadow-md">Book</button>
+                        <Link href={`/booking?id=${id}`}>
+                            <button className="p-6 bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-xl font-bold text-lg transition-all duration-300 shadow-md">Book</button>
+                        </Link>
                     </div>
                 </div>
             </div>
