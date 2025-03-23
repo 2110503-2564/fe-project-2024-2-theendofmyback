@@ -25,19 +25,8 @@ interface Campground {
 }
 
 export default function ReviewCard({ reviews }: { reviews: Review }) {
-    const [campgroundName, setCampgroundName] = useState<string>("Loading...");
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const response = await fetch(`/api/campgrounds/${reviews.campground}`);
-                const campground: Campground = await response.json();
-                setCampgroundName(campground.name);
-            } catch (error) {
-                console.error("Error fetching campground data:", error);
-            }
-        })();
-    }, [reviews.campground]);
+    let campgroundName = reviews.campground.name
+    
     const [userData, setUserData] = useState<any>({
         _id: "",
         name: "Loading...",
