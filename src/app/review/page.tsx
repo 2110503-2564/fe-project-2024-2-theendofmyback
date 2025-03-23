@@ -52,11 +52,17 @@ export default function Review() {
         });
     };
 
-    const filteredReviews = selectedCampground === "all" 
-        ? reviews 
-        : reviews.filter(review => review.campgroundId === selectedCampground);
+    const [filteredReviews, setFilteredReviews] = useState<any[]>([]);
 
-    console.log(selectedCampground);
+    useEffect(() => {
+        const filterReviews = () => {
+            const filtered = selectedCampground === "all" 
+                ? reviews 
+                : reviews.filter(review => review.campground._id === selectedCampground);
+            setFilteredReviews(filtered);
+        };
+        filterReviews();
+    }, [selectedCampground, reviews]);
 
     return (
         <div className="min-h-screen flex flex-col items-center px-6 py-12 bg-gradient-to-t from-lime-100 to-teal-200">
