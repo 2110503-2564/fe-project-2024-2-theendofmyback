@@ -5,7 +5,6 @@ import FavCard from "@/components/favCard";
 import { useEffect, useState } from "react";
 import CampgroundHomeCard from "@/components/CampgroundHomeCard";
 import Link from "next/link";
-import PromotionHomeCard from "@/components/PromotionHomeCard";
 import SeeAll from "@/components/seeAll";
 import PromotionCard from "@/components/PromotionCard";
 import MapCard from "@/components/map";
@@ -18,6 +17,14 @@ import { Campground , CampgroundsJson } from "../../interface";
 export default function Home() {
 
   const [showExplosion, setShowExplosion] = useState(false);
+  const [campgrounds, setCampgrounds] = useState<CampgroundsJson | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [promotions, setPromotions] = useState<any[]>([])
+
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [allCampgrounds, setAllCampgrounds] = useState<any[]>([]);
+  const [uniqueReviews, setUniqueReviews] = useState<any[]>([]);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,9 +32,6 @@ export default function Home() {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
-
-  const [campgrounds, setCampgrounds] = useState<CampgroundsJson | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredCampgrounds = campgrounds?.data.filter(campground =>
     campground.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -50,24 +54,7 @@ export default function Home() {
     fetchCampground();
   }, []);
 
-  const mockPromotions = [
-    {
-      _id: "67bd907379db2d1502b32995",
-      name: "Discount 200",
-      campground: "67bd6dfcd3e3272696f5243d",
-      description: "Get 200 off on your next booking!",
-      discount: 200,
-    },
-    {
-      _id: "67bd908479db2d1502b32996",
-      name: "Weekend Special",
-      campground: "67bd6dfcd3e3272696f5243e",
-      description: "Enjoy a 15% discount on weekend stays!",
-      discount: 15, // 15% discount
-    }
-  ];
 
-  const [promotions, setPromotions] = useState<any[]>([])
 
   useEffect(() => {
     const fetchPromotions = async () => {
@@ -84,10 +71,6 @@ export default function Home() {
     fetchPromotions();
   }, []);
 
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [allCampgrounds, setAllCampgrounds] = useState<any[]>([]);
-
-  const [uniqueReviews, setUniqueReviews] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,13 +101,8 @@ export default function Home() {
 
   return (
     <main className="relative ">
-
       <div className="mx-auto transform">
       <Banner campgrounds={campgrounds as CampgroundsJson} />
-
-
-
-
         <div className="flex justify-between items-center mx-10 mt-10">
 
         </div>
@@ -144,9 +122,6 @@ export default function Home() {
         </div>
       </div>
       <div className="min-h-screen fitems-center px-4 py-10 bg-gradient-to-t from-green-100 to-transparent">
-
-
-
         <div className="h-[300px]"></div>
         <hr className="my-3" />
         <div className="flex justify-between items-center mx-20 mt-10">
@@ -175,10 +150,6 @@ export default function Home() {
             )}
           </div>
         </div>
-
-
-
-
         <hr className="my-3  " />
         <div className="flex justify-between items-center mx-20 mt-10">
           <h1 className="text-4xl font-bold text-green-600">Promotion</h1>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputProps } from '../../interface';
 
-const Input = ({ value: initialValue, onChange }: InputProps) => {
+const Input: React.FC<InputProps & { onClick: () => void }> = ({ value: initialValue, onChange, onClick }) => {
     const [value, setValue] = useState(initialValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,15 +12,16 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); 
-            onChange(value);   
+        if (e.key === "Enter") {
+            e.preventDefault();
+            onClick();
         }
     };
 
     return (
         <StyledWrapper>
-            <form className="form" onSubmit={(e) => { e.preventDefault(); onChange(value); }}>
+            <form className="form" 
+                onSubmit={(e) => { e.preventDefault(); onClick(); onChange(value)}}>
                 <button type="submit">
                     <svg width={17} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
@@ -32,13 +33,15 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
                     type="text"
                     value={value}
                     onChange={handleChange}
-                    onKeyDown={handleKeyDown}  
+                    onKeyDown={handleKeyDown}
+                    onClick={(e) => e.stopPropagation()}
                     required
                 />
                 <button
                     className="reset"
                     type="button"
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.stopPropagation();
                         setValue("");
                         onChange("");
                     }}
