@@ -4,30 +4,10 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import Loader from "@/components/load";
+import { CampgroundsJson } from "../../../interface";
 
 export default function Campground() {
-  interface CampgroundsJson {
-    success: boolean;
-    count: number;
-    pagination?: {
-      next?: {
-        page: number;
-        limit: number;
-      };
-    };
-    data: Campground[];
-  }
-
-  interface Campground {
-    _id: string;
-    name: string;
-    address: string;
-    tel: string;
-    price: number;
-    capacity: number;
-    description: string;
-    image: string;
-  }
+  
 
   const [campgrounds, setCampgrounds] = useState<CampgroundsJson | null>(null);
   const [searchTerm, setSearchTerm] = useState("");

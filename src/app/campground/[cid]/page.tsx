@@ -6,24 +6,9 @@ import { ArrowLeft } from "lucide-react";
 import getCampground from "@/libs/campgrounds/getCampground";
 import getReview from "@/libs/reviews/getReviews";
 import { useEffect, useState } from "react";
+import { Review } from "../../../../interface";
 
-interface Review {
-    _id: string;
-    title: string;
-    text: string;
-    rating: number;
-    campground: string;
-    user: string;
-    createdAt: string;
-}
 
-interface Promotion {
-    _id: string;
-    name: string;
-    campground: string;
-    description: string;
-    discount: number;
-}
 
 export default function CampgroundPage({params} : { params: {cid:string}}) {
     interface Campground {
