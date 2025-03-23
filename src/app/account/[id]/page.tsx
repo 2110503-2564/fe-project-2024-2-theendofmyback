@@ -12,8 +12,9 @@ import Loader from '@/components/load';
 import getPromotions from "@/libs/promotions/getPromotions";
 import PromotionCard from '@/components/PromotionCard';
 import Swal from 'sweetalert2';
+import { Booking } from '../../../../interface';
 
-export default function AccountPage() {
+export default async function AccountPage() {
 
     const mockBookings = [
         {
@@ -42,6 +43,8 @@ export default function AccountPage() {
     const [isEditing, setIsEditing] = useState(false);
     const [bookingData, setBookingData] = useState<any[]>([])
     const { data: session } = useSession()
+
+    const response: Booking[] = (await getBookings(session?.user?.token || "", "")).data;
     
     useEffect(() => {
         const fetchUser = async () => {

@@ -15,7 +15,7 @@ export interface Campground {
 export interface Promotion {
     _id: string;
     name: string;
-    campground: string;
+    campground: Campground;
     description: string;
     discount: number;
 }
@@ -52,7 +52,7 @@ export interface AlertCardProps {
 export interface Booking {
     _id: string;
     user: string;
-    campground: string;
+    campground: Campground;
     checkInDate: string;
     checkOutDate: string;
     bookingAt: string;
@@ -68,7 +68,7 @@ export interface Review {
     title: string;
     text: string;
     rating: number;
-    campground: string;
+    campground: Campground;
     user: string;
     createdAt: string;
 }
@@ -139,3 +139,12 @@ export interface Promotion {
     description: string;
     discount: number;
 }
+
+
+export interface UserData {
+    _id: string;
+    name: string;
+    email: string;
+    tel: string;
+    picture?: string;
+  }

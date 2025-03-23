@@ -6,11 +6,11 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import getPromotions from "@/libs/promotions/getPromotions";
 import getUserList from "@/libs/users/getUserList";
-import { Booking } from "../../interface";
+import { Booking , UserData} from "../../interface";
 
 export default function BookingCard({ bookingData, isAdmin }: { bookingData: Booking, isAdmin:boolean }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [userData, setUserData] = useState<any[]>([]);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const { data: session } = useSession()
   
     useEffect(() => {

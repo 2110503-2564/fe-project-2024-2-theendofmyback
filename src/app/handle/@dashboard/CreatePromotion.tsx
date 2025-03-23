@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormEvent } from "react";
 import { useState } from "react";
-import { Promotion } from "../../../../interface";
+import { Campground, Promotion } from "../../../../interface";
 import createPromotion from "@/libs/promotions/createPromotion";
 interface Profile {
     data: {
@@ -18,14 +18,29 @@ interface Profile {
 }
 
 export default function CreatePromotion({ profile, token }: { profile: Profile, token:string }) {
+
+    const mockCampground: Campground = {
+        _id: "1",
+        name: "Mock Campground",
+        address: "123 Mock Street",
+        tel: "123-456-7890",
+        price: 100,
+        capacity: 50,
+        description: "This is a mock campground for testing purposes.",
+        image: "mock-image-url",
+        promotions: [],
+    };
+
     const [promotionData, setPromotionData] = useState<Promotion>({
         _id: "no use",
         id: "no use",
         name: "New Promotion",
         description: "this is a promotion",
         discount: 10,
-        campground: "default campground",
+        campground: mockCampground,
     });
+
+    
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

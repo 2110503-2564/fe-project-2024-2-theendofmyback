@@ -6,6 +6,7 @@ import Link from "next/link";
 import styles from './banner.module.css';
 import getMe from "@/libs/users/getMe";
 import getBookings from "@/libs/bookings/getBookings";
+import { Booking } from "../../interface";
 
 const Info = () => {
 
@@ -47,7 +48,7 @@ const Info = () => {
             const fetchBookingData = async () => {
                 try {
                     const bookingResponse = await getBookings(session.user.token);
-                    const sortedBookingData = bookingResponse.data.sort((a: any, b: any) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
+                    const sortedBookingData = bookingResponse.data.sort((a: { checkInDate: string | number | Date; }, b: { checkInDate: string | number | Date; }) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
                     setBookingData(sortedBookingData);
                     console.log("Booking Data:", sortedBookingData);
                 } catch (error) {

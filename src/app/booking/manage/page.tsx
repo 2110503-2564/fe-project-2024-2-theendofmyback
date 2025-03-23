@@ -7,19 +7,22 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loader from "@/components/load";
 import getMe from "@/libs/users/getMe";
+import { Booking } from "../../../../interface";
 
 export default function ManagePage() {
 
     const { data: session } = useSession();
-    const [bookingData, setBookingData] = useState([]);
+    const [bookingData, setBookingData] = useState<Booking[]>([]);
     const [isAdmin, setAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const fetchBookings = async () => {
             try {
                 const response = (await getBookings(session?.user?.token || "", "")).data;
                 console.log(response.data)
-                response.sort((a, b) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
+                response.sort((a: { checkInDate: string | number | Date; }, b: { checkInDate: string | number | Date; }) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
                 setBookingData(response);
 
                 if (session?.user?.token) {

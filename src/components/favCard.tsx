@@ -7,10 +7,10 @@ import { Review, Campground } from '../../interface';
 
 
 const FavCard = ({ reviews }: { reviews?: Review }) => {
-  let campgroundName = reviews.campground.name
-  let camgroundDescription = reviews.campground.description
-  let campgroubdImage = reviews.campground.image
-  let campgroundId = reviews.campground._id
+  let campgroundName = reviews?.campground?.name || ''
+  let camgroundDescription = reviews?.campground?.description || ''
+  let campgroubdImage = reviews?.campground?.image || ''
+  let campgroundId = reviews?.campground?._id || ''
 
   console.log(campgroubdImage)
 

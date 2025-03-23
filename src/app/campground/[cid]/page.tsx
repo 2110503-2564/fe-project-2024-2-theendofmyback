@@ -1,6 +1,5 @@
 'use client'
 import ReviewSlider from "@/components/ReviewSlider";
-import PromotionSlider from "@/components/PromotionSlider";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import getCampground from "@/libs/campgrounds/getCampground";
@@ -126,8 +125,7 @@ export default function CampgroundPage({params} : { params: {cid:string}}) {
             <div className="w-full border-t-2 border-gray-300 my-8"></div>
             <div>
                 <ReviewSlider allReviews = {allReviews}/>
-                <div className="w-full border-t-2 border-gray-300 my-8"></div>
-                <PromotionSlider />
+                
             </div>
 
         </div>
