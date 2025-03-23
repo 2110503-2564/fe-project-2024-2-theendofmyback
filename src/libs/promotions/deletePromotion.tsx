@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 export default async function deletePromotions(token: string, id: string) {
     const response = await fetch(
       `https://swdev-backend.vercel.app/api/v1/promotions/${id}`,
@@ -18,7 +20,11 @@ export default async function deletePromotions(token: string, id: string) {
     if (!response.ok) throw new Error('Delete failed')
 
   
-    alert('Delete campground successfully.' )
+      Swal.fire({
+        title: "Good job!",
+        text: "Delete promotion successfully",
+        icon: "success"
+      });
   
     return await response.json()
 }

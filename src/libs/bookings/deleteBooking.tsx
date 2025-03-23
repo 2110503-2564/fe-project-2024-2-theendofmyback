@@ -1,3 +1,5 @@
+import Swal from "sweetalert2"
+
 export default async function deleteBooking(token: string, bid: string) {
     const response = await fetch(
       `https://swdev-backend.vercel.app/api/v1/bookings/${bid}`,
@@ -17,8 +19,11 @@ export default async function deleteBooking(token: string, bid: string) {
   
     if (!response.ok) throw new Error('Delete failed')
 
-  
-    alert('Delete booking successfully.' )
+  Swal.fire({
+                  title: "Good job!",
+                  text: "Delete booking successfully.",
+                  icon: "success"
+                });
   
     return await response.json()
   }

@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import createBooking from '@/libs/bookings/createBooking';
 import getPromotions from '@/libs/promotions/getPromotions';
 import { Campground, Promotion, UserProfile } from '../../../interface';
+import Swal from 'sweetalert2';
 
 
 
@@ -64,11 +65,24 @@ export default function BookingPage() {
     if (dateCheckIn && dateCheckOut) {
       const diffInDays = dayjs(dateCheckOut).diff(dayjs(dateCheckIn), 'day');
       if (dayjs(dateCheckIn).isAfter(dayjs(dateCheckOut))) {
-        alert("Check-in date cannot be later than check-out date.");
+
+        Swal.fire({
+          title: "Check-in date cannot be later than check-out date.!",
+          icon: "warning",
+          draggable: true
+        });
+        
         return;
       }
       if (diffInDays > 3) {
-        alert("The stay duration cannot exceed 3 days.");
+
+        Swal.fire({
+          title: "The stay duration cannot exceed 3 days.!",
+          icon: "warning",
+          draggable: true
+        });
+
+        
         return;
       }
     }
@@ -221,7 +235,12 @@ export default function BookingPage() {
                     onClick={() => {
                       const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
                       if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
-                        alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
+                        Swal.fire({
+                          title: "Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.",
+                          icon: "error",
+                          draggable: true
+                        });
+                       
                         return;
                       }
                     }}

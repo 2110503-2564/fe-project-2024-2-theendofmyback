@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default async function createCampground(
     token:string, 
     name:string, address:string, tel:string, 
@@ -32,6 +34,11 @@ export default async function createCampground(
     if (!response.ok) {
       throw new Error('Booking Failed') 
     }
-    alert("Create Campground successfully!");
+
+    Swal.fire({
+                title: "Good job!",
+                text: "Create Campground successfully!",
+                icon: "success"
+              });
     return await response.json()
   }

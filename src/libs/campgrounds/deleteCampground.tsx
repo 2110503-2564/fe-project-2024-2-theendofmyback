@@ -1,3 +1,5 @@
+import Swal from "sweetalert2"
+
 export default async function deleteCampground(token: string, cid: string) {
     const response = await fetch(
       `https://swdev-backend.vercel.app/api/v1/campgrounds/${cid}`,
@@ -18,7 +20,11 @@ export default async function deleteCampground(token: string, cid: string) {
     if (!response.ok) throw new Error('Delete failed')
 
   
-    alert('Delete campground successfully.' )
+    Swal.fire({
+            title: "Good job!",
+            text: "Delete campground successfully.",
+            icon: "success"
+          });
   
     return await response.json()
 }

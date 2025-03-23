@@ -17,8 +17,9 @@ import getUserList from '@/libs/users/getUserList';
 import { Campground } from '../../../../interface';
 import { Promotion } from '../../../../interface';
 import { UserProfile } from '../../../../interface';
+import Swal from 'sweetalert2';
 
-export default function SingleBookingPage({params}: { params: {bid: string} }) {
+export default function SingleBookingPage({ params }: { params: { bid: string } }) {
   const urlParams = useSearchParams();
   const cid = urlParams.get('id');
   console.log(cid);
@@ -29,7 +30,7 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
   const [promotion, setPromotion] = useState('');
   const [bookingData, setBookingData] = useState<any>(null);
   const [enableEdit, setEnableEdit] = useState(false);
-  
+
   const [selectedCampground, setSelectedCampground] = useState<Campground>({
     _id: '',
     name: '',
@@ -49,7 +50,7 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
     picture: '/img/avatar-1.png',
   });
 
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,11 +64,20 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
     if (dateCheckIn && dateCheckOut) {
       const diffInDays = dayjs(dateCheckOut).diff(dayjs(dateCheckIn), 'day');
       if (dayjs(dateCheckIn).isAfter(dayjs(dateCheckOut))) {
-        alert("Check-in date cannot be later than check-out date.");
+
+        Swal.fire({
+          title: "Check-in date cannot be later than check-out date.",
+          icon: "warning",
+          draggable: true
+        });
         return;
       }
       if (diffInDays > 3) {
-        alert("The stay duration cannot exceed 3 days.");
+        Swal.fire({
+          title: "The stay duration cannot exceed 3 days.",
+          icon: "warning",
+          draggable: true
+        });
         return;
       }
     }
@@ -79,7 +89,11 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
       promotion ? promotion : ''
     ).then(
       () => {
-        alert("Booking updated successfully.");
+        Swal.fire({
+          title: "Booking updated successfully.",
+          icon: "success",
+          draggable: true
+        });
         window.location.reload();
       }
     );
@@ -98,8 +112,8 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
         const response = await getUserList()
         const users = Array.isArray(response) ? response : response.data;
         const foundUser = users.find((u: any) => u._id === bookingData.user);
-        
-        if( !foundUser.tel) {
+
+        if (!foundUser.tel) {
           foundUser.tel = 'none'
         }
         console.log(foundUser)
@@ -127,16 +141,16 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
       </Link>
 
       {!selectedCampground._id ? (
-       <div className="flex flex-col justify-center items-center p-10 mx-auto  w-full max-w-4xl">
-       <div className="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 p-8 rounded-xl shadow-2xl flex flex-col justify-center items-center">
-         <div className="animate-spin-slow">
-           <Loader />
-         </div>
-         <p className="mt-4 text-2xl text-white font-semibold">Please wait...</p>
-       </div>
-     </div>
-     
-     
+        <div className="flex flex-col justify-center items-center p-10 mx-auto  w-full max-w-4xl">
+          <div className="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 p-8 rounded-xl shadow-2xl flex flex-col justify-center items-center">
+            <div className="animate-spin-slow">
+              <Loader />
+            </div>
+            <p className="mt-4 text-2xl text-white font-semibold">Please wait...</p>
+          </div>
+        </div>
+
+
       ) : (
         <div className="flex p-10 mx-auto bg-white rounded-lg shadow-lg w-full max-w-4xl">
           <div className="w-full">
@@ -224,7 +238,13 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
                   onClick={(e) => {
                     e.preventDefault();
                     if (!dateCheckIn || !dateCheckOut) {
-                      alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
+                      Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.",
+                        footer: '<a href="#">Why do I have this issue?</a>'
+                      });
+
                     }
                     handleSubmit(e);
                   }}

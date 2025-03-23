@@ -2,6 +2,7 @@
 import { useState } from "react";
 import register from "@/libs/users/register";
 import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -43,14 +44,22 @@ export default function Register() {
             
                         if (signInResponse?.error) {
                             console.error("Auto-login failed:", signInResponse.error);
-                            alert("Auto-login failed.");
+                            Swal.fire({
+                                title: "Auto-login failed.!",
+                                icon: "error",
+                                draggable: true
+                              });
                         } else {
                             window.location.href = "/";
                         }
                     }
                 } catch (error) {
                     console.error('Error updating user data:', error);
-                    alert("Cannot Register")
+                    Swal.fire({
+                        title: "Cannot Register",
+                        icon: "error",
+                        draggable: true
+                      });
                 }
             }
     

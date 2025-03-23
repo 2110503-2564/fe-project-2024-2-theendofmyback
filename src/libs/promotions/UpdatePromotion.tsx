@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default async function updatePromotion
   ( token:string,
     id:string,
@@ -27,6 +29,12 @@ export default async function updatePromotion
   if (response.status === 500) return null;
 
   if (!response.ok) throw new Error('Cannot Update Promotions');
+
+  Swal.fire({
+          title: "Good job!",
+          text: "Update promotion successfully",
+          icon: "success"
+        });
 
   return response.json();
 }

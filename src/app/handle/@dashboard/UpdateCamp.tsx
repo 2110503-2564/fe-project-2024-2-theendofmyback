@@ -5,6 +5,7 @@ import updateCampground from "@/libs/campgrounds/UpdateCampground";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import deleteCampground from "@/libs/campgrounds/deleteCampground";
 import { Profile, Camp } from "../../../../interface";
+import Swal from "sweetalert2";
 
 export default function UpdateCamp({ profile, token }: { profile: Profile, token: string }) {
 
@@ -31,23 +32,42 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
     };
 
     const handleDelete = (): void => {
-        if (confirm("Are you aware that deleting campground will delete all its booking too")) {
-            console.log(`Deleting campground with ID: ${formData.id}`);
-
-            deleteCampground(
-                token,
-                formData.id
-            ).then(
-                () => {
-                    console.log("Campground deleted successfully.");
-                    window.location.reload();
-                }
-            )
-
-        } else {
-            console.log("Delete not confirmed yet.");
-        }
-    };
+       Swal.fire({
+                 title: "Are you sure?",
+                 text: "You won't be able to revert this!",
+                 icon: "warning",
+                 showCancelButton: true,
+                 confirmButtonColor: "#3085d6",
+                 cancelButtonColor: "#d33",
+                 confirmButtonText: "Yes, delete it!"
+               }).then((result) => {
+                 if (result.isConfirmed) {
+                   console.log(`Deleting promotion with ID: ${formData.id}`);
+             
+                   deleteCampground(token, formData.id)
+                     .then(() => {
+                       console.log("Promotion deleted successfully.");
+                       Swal.fire({
+                         title: "Deleted!",
+                         text: "Your file has been deleted.",
+                         icon: "success"
+                       }).then(() => {
+                         window.location.reload();
+                       });
+                     })
+                     .catch((error) => {
+                       console.error("Error deleting promotion:", error);
+                       Swal.fire({
+                         title: "Error!",
+                         text: "Failed to delete the promotion.",
+                         icon: "error"
+                       });
+                     });
+                 } else {
+                   console.log("Delete not confirmed yet.");
+                 }
+               });
+             };
 
     useEffect(() => {
         const fetchCampgrounds = async () => {
@@ -87,7 +107,11 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
 
             const { id, name, address, tel, price, capacity, description, image } = formData;
             const response = await updateCampground(token, id, name, address, tel, price, capacity, description, image);
-            alert("Update Campground successfully!");
+             Swal.fire({
+                      title: "Good job!",
+                      text: "Update Campground successfully",
+                      icon: "success"
+                    });
             if (response.success) {
                 setError("");
             }
@@ -240,23 +264,15 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
                         </button>
 
                         <button
-                            type="button"
-                            onClick={() => {
-                                if (formData.id) {
-                                    if (confirm("Are you sure you want to delete this camp?")) {
-                                        handleDelete();
-                                    }
-                                } else {
-                                    alert("Please select a camp to delete.");
-                                }
-                            }}
-                            disabled={isLoading}
-                            className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${isLoading
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-red-500 hover:bg-red-700 text-white"
-                                }`}
-                        >
-                            {isLoading ? "Deleting..." : "Delete Camp"}
+    type="button"
+    disabled={isLoading}
+    onClick={handleDelete}
+    className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
+      isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-700 text-white"
+    }`}
+  >
+    {isLoading ? "Deleting..." : "Delete Promotion"}
+
                         </button>
                     </div>
                 </div>

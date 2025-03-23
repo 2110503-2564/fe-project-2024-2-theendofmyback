@@ -11,6 +11,7 @@ import getBookings from '@/libs/bookings/getBookings';
 import Loader from '@/components/load';
 import getPromotions from "@/libs/promotions/getPromotions";
 import PromotionCard from '@/components/PromotionCard';
+import Swal from 'sweetalert2';
 
 export default function AccountPage() {
 
@@ -82,6 +83,19 @@ export default function AccountPage() {
                 if (session && session.user.token) {
                     const response = await updateMe(session.user.token, name, email, tel, address, picture);
                     console.log(response);
+                    Swal.fire({
+                        title: "Do you want to save the changes?",
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: "Save",
+                        denyButtonText: `Don't save`
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire("Saved!", "", "success");
+                        } else if (result.isDenied) {
+                          Swal.fire("Changes are not saved", "", "info");
+                        }
+                      });
                 } else {
                     console.error('Session or token is null');
                 }

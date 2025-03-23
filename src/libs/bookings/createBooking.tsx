@@ -1,3 +1,5 @@
+import Swal from "sweetalert2"
+
 export default async function createReserve(
     token: string, cid: string,
     checkInDate: string, checkOutDate: string,
@@ -33,10 +35,14 @@ export default async function createReserve(
     if (!response.ok) {
       throw new Error('Booking Failed') 
     }
+
+    Swal.fire({
+                title: "Good job!",
+                text: "Create booking successfully.",
+                icon: "success"
+              });
   
-    alert(
-      'Create booking successfully.'
-    )
+    
   
     return await response.json()
   }

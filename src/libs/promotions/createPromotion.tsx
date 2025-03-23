@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default async function createPromotion(
     token:string, 
     name:string, description:string, discount:number
@@ -28,6 +30,11 @@ export default async function createPromotion(
     if (!response.ok) {
       throw new Error('Booking Failed') 
     }
-    alert("Create Promotions successfully!");
+
+    Swal.fire({
+            title: "Good job!",
+            text: "Create Promotions successfully!",
+            icon: "success"
+          });
     return await response.json()
   }

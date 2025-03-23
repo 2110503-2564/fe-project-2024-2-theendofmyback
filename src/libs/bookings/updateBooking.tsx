@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default async function updateBooking(
     token: string, bid: string,
     checkInDate: string, checkOutDate: string,
@@ -29,7 +31,11 @@ export default async function updateBooking(
       if (!response.ok) {
         throw new Error('Updating Failed') 
       }
-  
+  Swal.fire({
+            title: "Good job!",
+            text: "Update Booking successfully",
+            icon: "success"
+          });
   
     return await response.json()
   }

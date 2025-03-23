@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default async function updateCampground(
   token: string,
   id: string,
@@ -35,6 +37,12 @@ export default async function updateCampground(
   if (response.status === 500) return null;
 
   if (!response.ok) throw new Error('Cannot Update Campground');
+
+  Swal.fire({
+          title: "Good job!",
+          text: "Update Campground successfully",
+          icon: "success"
+        });
 
   return response.json();
 }

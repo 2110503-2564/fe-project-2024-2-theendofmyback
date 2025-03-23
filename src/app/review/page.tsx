@@ -8,6 +8,7 @@ import getCampgrounds from '@/libs/campgrounds/getCampgrounds';
 import { useSession } from 'next-auth/react';
 import createReview from '@/libs/reviews/createReviews';
 import Loader from '@/components/load';
+import Swal from 'sweetalert2';
 
 export default function Review() {
     const [rating, setRating] = useState(0);
@@ -47,7 +48,11 @@ export default function Review() {
             campground || '',
             rating * 4
         ).then(() => {
-            alert('Review created successfully!');
+            Swal.fire({
+                      title: "Review created successfully!",
+                      icon: "success",
+                      draggable: true
+                    });
             window.location.reload();
         });
     };

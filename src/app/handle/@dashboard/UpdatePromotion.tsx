@@ -5,6 +5,7 @@ import updatePromotion from "@/libs/promotions/UpdatePromotion";
 import getPromotions from "@/libs/promotions/getPromotions";
 import deletePromotions from "@/libs/promotions/deletePromotion";
 import { Profile } from "../../../../interface";
+import Swal from "sweetalert2";
 
 interface Promotion {
     id: string;
@@ -55,7 +56,11 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
             const { id, name, description, discount } = formData;
             const response = await updatePromotion(token, id, name, description, discount);
             console.log("update reponse: ",response)
-            alert("Update Promotions successfully!");
+            Swal.fire({
+                                  title: "Good job!",
+                                  text: "Update Promotion successfully",
+                                  icon: "success"
+                                });
             if (response.success) setError("");
             
         } catch (err) {
@@ -81,23 +86,43 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
     }, [isLoading, error]);
 
     const handleDelete = (): void => {
-            if (confirm("Are you SURE sure SURE SURE to delete this promotion")) {
-              console.log(`Deleting promotion with ID: ${formData.id}`);
-              
-              deletePromotions(
-                token,
-                formData.id
-              ).then(
-                () => {
-                  console.log("Promotion deleted successfully.");
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            console.log(`Deleting promotion with ID: ${formData.id}`);
+      
+            deletePromotions(token, formData.id)
+              .then(() => {
+                console.log("Promotion deleted successfully.");
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success"
+                }).then(() => {
                   window.location.reload();
-                }
-              )
-        
-            } else {
-              console.log("Delete not confirmed yet.");
-            }
-        }
+                });
+              })
+              .catch((error) => {
+                console.error("Error deleting promotion:", error);
+                Swal.fire({
+                  title: "Error!",
+                  text: "Failed to delete the promotion.",
+                  icon: "error"
+                });
+              });
+          } else {
+            console.log("Delete not confirmed yet.");
+          }
+        });
+      };
+      
 
     return (
         <main className="m-8 p-8 bg-white rounded-xl shadow-xl">
@@ -175,23 +200,15 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                     </button>
     
                     <button
-                        type="button"
-                        disabled={isLoading}
-                        onClick={() => {
-                            if (formData.id) {
-                                if (confirm("Are you sure you want to delete this promotion?")) {
-                                    handleDelete();
-                                }
-                            } else {
-                                alert("Please select a promotion to delete.");
-                            }
-                        }}
-                        className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
-                            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-700 text-white"
-                        }`}
-                    >
-                        {isLoading ? "Deleting..." : "Delete Promotion"}
-                    </button>
+    type="button"
+    disabled={isLoading}
+    onClick={handleDelete}
+    className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
+      isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-700 text-white"
+    }`}
+  >
+    {isLoading ? "Deleting..." : "Delete Promotion"}
+  </button>
                 </div>
                 </div>
     
