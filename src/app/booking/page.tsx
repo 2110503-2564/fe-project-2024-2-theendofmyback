@@ -93,8 +93,12 @@ export default function BookingPage() {
       dateCheckIn ? dateCheckIn.toISOString() : '',
       dateCheckOut ? dateCheckOut.toISOString() : '',
       promotion ? promotion : ''
+    ).then(
+      () => {
+        router.push('/booking/manage');
+      }
     );
-    router.push('/booking/manage');
+    
   };
 
   const { data: session } = useSession()
@@ -240,8 +244,8 @@ export default function BookingPage() {
                           icon: "error",
                           draggable: true
                         });
-                       
-                        return;
+                        
+                        return  ;
                       }
                     }}
                     className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
