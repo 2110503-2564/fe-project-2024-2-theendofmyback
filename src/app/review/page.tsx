@@ -84,7 +84,7 @@ export default function Review() {
                 <select
                     value={selectedCampground}
                     onChange={(e) => setSelectedCampground(e.target.value)}
-                    className="bg-gray-100 text-gray-600 w-full p-3 border border-gray-300 rounded-lg"
+                    className="bg-gray-100 text-emerald-600 w-full p-3 border border-green-300 rounded-lg"
                 >
                     <option value="all">All Reviews</option>
                     {allCampgrounds.map((camp) => (
@@ -94,33 +94,50 @@ export default function Review() {
             </div>
 
             {enableCreate && (
-                <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg w-full max-w-lg">
-                    <h1 className="text-center text-gray-700 text-xl font-bold mb-4">Send Review</h1>
-                    <form onSubmit={handleSubmit}>
-                        <input 
-                            type="text" 
-                            value={title} 
-                            onChange={(e) => setTitle(e.target.value)} 
-                            placeholder="Review Title" 
-                            className="bg-gray-100 text-gray-600 w-full p-3 border border-gray-300 rounded-lg placeholder:text-gray-500 mb-3"
-                        />
-                        <select
-                            value={campground}
-                            onChange={(e) => setCampground(e.target.value)}
-                            className="bg-gray-100 text-gray-600 w-full p-3 border border-gray-300 rounded-lg mb-3"
-                        >
-                            <option value="" disabled>Select Campground</option>
-                            {allCampgrounds.map((camp) => (
-                                <option key={camp._id} value={camp._id}>{camp.name}</option>
-                            ))}
-                        </select>
-                        <textarea name="textarea" placeholder="Your feedback..." className="bg-gray-100 text-gray-600 w-full h-28 border border-gray-300 rounded-lg p-3 resize-none outline-none focus:border-gray-500 mb-3"></textarea>
-                        <button type="submit" className="bg-green-500 text-white font-bold py-2 px-6 rounded-lg w-full transition-all duration-300 hover:bg-green-600">
-                            Submit Review
-                        </button>
-                    </form>
-                </div>
-            )}
+                 <div className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg w-full max-w-lg">
+                     <h1 className="text-center text-gray-700 text-xl font-bold mb-4">Send Review</h1>
+                     <div className="flex justify-center mb-4">
+                         {[...Array(5)].map((_, index) => {
+                             const ratingValue = (index + 1) * 0.5;
+                             return (
+                                 <button
+                                     key={ratingValue}
+                                     className={`text-3xl ${ratingValue <= (hover || rating) ? 'text-yellow-500' : 'text-gray-300'}`}
+                                     onClick={() => setRating(ratingValue)}
+                                     onMouseEnter={() => setHover(ratingValue)}
+                                     onMouseLeave={() => setHover(rating)}
+                                 >
+                                     <StarIcon className="w-8 h-8" />
+                                 </button>
+                             );
+                         })}
+                     </div>
+                     
+                     <form onSubmit={handleSubmit}>
+                         <input 
+                             type="text" 
+                             value={title} 
+                             onChange={(e) => setTitle(e.target.value)} 
+                             placeholder="Review Title" 
+                             className="bg-gray-100 text-gray-600 w-full p-3 border border-gray-300 rounded-lg placeholder:text-gray-500 mb-3"
+                         />
+                         <select
+                             value={campground}
+                             onChange={(e) => setCampground(e.target.value)}
+                             className="bg-gray-100 text-gray-600 w-full p-3 border border-gray-300 rounded-lg mb-3"
+                         >
+                             <option value="" disabled>Select Campground</option>
+                             {allCampgrounds.map((camp) => (
+                                 <option key={camp._id} value={camp._id}>{camp.name}</option>
+                             ))}
+                         </select>
+                         <textarea name="textarea" placeholder="Your feedback..." className="bg-gray-100 text-gray-600 w-full h-28 border border-gray-300 rounded-lg p-3 resize-none outline-none focus:border-gray-500 mb-3"></textarea>
+                         <button type="submit" className="bg-green-500 text-white font-bold py-2 px-6 rounded-lg w-full transition-all duration-300 hover:bg-green-600">
+                             Submit Review
+                         </button>
+                     </form>
+                 </div>
+             )}
 
             {filteredReviews.length === 0 ? (
                 <div className="flex flex-col justify-center items-center p-10 mx-auto w-full max-w-4xl">
