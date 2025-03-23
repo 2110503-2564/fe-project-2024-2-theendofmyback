@@ -19,9 +19,9 @@ export default function PromotionCard({ mockPromotions }: { mockPromotions: Prom
                     <img src={"/img/cedt-coin.png"} className="w-12"></img>
                     <h1 className="font-bold text-[50px] p-4 text-emerald-600">{mockPromotions.discount.toString()}</h1>
                 </div>
-                <Link href="/booking">
+                
                     <div className="justify-items-end"><p className="bg-emerald-600 text-[16px] font-bold text-white py-1 px-2 rounded-2xl -rotate-6 ">discount</p></div>
-                </Link>
+                
             </div>
             <div className="border-l-2 border-emerald-600 h-auto mx-4"></div>
             <div className="w-[250px]">
