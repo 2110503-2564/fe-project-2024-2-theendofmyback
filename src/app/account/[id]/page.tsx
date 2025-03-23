@@ -220,7 +220,7 @@ export default function AccountPage() {
             <div>
             <div className="flex justify-between items-center mx-20 mt-10">
         <h1 className="text-4xl font-bold text-green-600">Recent Booking</h1>
-        <Link href="/promotion">
+        <Link href="/booking/manage">
         <SeeAll />
         </Link>
       </div>
@@ -232,7 +232,7 @@ export default function AccountPage() {
       </div>
       <div>
             <div className="flex justify-between items-center mx-20 mt-10">
-        <h1 className="text-4xl font-bold text-green-600">Your Promotion</h1>
+        <h1 className="text-4xl font-bold text-green-600">See New Promotion</h1>
         <Link href="/promotion">
         <SeeAll />
         </Link>

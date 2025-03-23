@@ -34,11 +34,12 @@ export default function Promotion() {
 
     return (
         <div className="bg-gradient-to-r from-blue-100 to-teal-300 w-full flex flex-col px-2 py-12">
-            <Link href="/promotion/manage">
-    <div className="top-4 right-0 flex justify-end p-4 pt-2 text-3xl font-bold">
+            
+        {/* <Link href="/promotion/manage">
+        <div className="top-4 right-0 flex justify-end p-4 pt-2 text-3xl font-bold">
         <SeeYoursButton name="My Promotion" />
-    </div>
-</Link>
+        </div>
+        </Link> */}
 
             
             <div className="w-full px-10 my-0  p-1">
