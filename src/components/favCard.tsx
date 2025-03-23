@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import getUserList from "@/libs/users/getUserList";
-import { Review,Campground } from '../../interface';
+import { Review, Campground } from '../../interface';
 
 
 const FavCard = ({ reviews }: { reviews?: Review }) => {
@@ -13,7 +13,7 @@ const FavCard = ({ reviews }: { reviews?: Review }) => {
   let campgroundId = reviews.campground._id
 
   console.log(campgroubdImage)
-  
+
   return (
     <StyledWrapper>
       <article className="card">
@@ -85,8 +85,8 @@ const StyledWrapper = styled.div`
     margin: 0;
     font-size: 10px;
     font-weight: 200;
-    padding-right: 1rem;
-    color:rgb(29, 95, 76);
+    padding-right: rem;
+    color:rgb(5, 59, 44);
   }
   .card__hero img {
     width: 300px;
@@ -127,21 +127,47 @@ const StyledWrapper = styled.div`
       gap: 1rem;
     }
   }
+  .card__job {
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+    .card__job-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 140px; 
+  }
   .card__job-summary {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 0.75rem;
+    width: 220px; 
+  height: 80px;
   }
+    .card__job-icon {
+  width: 130px; 
+  height: 80px;
+}
+
+.card__job-icon img {
+  width: 100px; 
+  height: 65px;
+}
+
   .card__btn {
     width: 100%;
     font-weight: 600;
     border: none;
     display: block;
     cursor: pointer;
-    text-align: center;
+    text-align: left;
     padding: 0.5rem 1.25rem;
     border-radius: 1rem;
     background-color:rgb(29, 186, 81);
