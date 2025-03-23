@@ -35,22 +35,7 @@ export default function ReviewCard({ reviews }: { reviews: Review }) {
         tel: "",
     });
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const response = await getUserList()
-                const users = Array.isArray(response) ? response : response.data;
-                const foundUser = users.find((u: any) => u._id === reviews.user);
-                if (!foundUser.picture) {
-                    foundUser.picture = "/img/avatar-1.png";
-                }
-                setUserData(foundUser)
-                console.log(foundUser)
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        })();
-    }, []);
+    
 
     return (
         <div className="px-5 py-10 flex flex-col w-fit bg-white rounded-lg shadow-lg m-2 p-2">
