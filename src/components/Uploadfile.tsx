@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ImageForm = () => {
+const ImageForm: React.FC = () => {
   return (
     <StyledWrapper>
       <div className="container"> 
