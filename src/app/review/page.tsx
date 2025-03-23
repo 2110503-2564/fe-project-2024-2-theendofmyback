@@ -7,6 +7,7 @@ import getReview from '@/libs/reviews/getReviews';
 import getCampgrounds from '@/libs/campgrounds/getCampgrounds';
 import { useSession } from 'next-auth/react';
 import createReview from '@/libs/reviews/createReviews';
+import Loader from '@/components/load';
 
 export default function Review() {
     const [rating, setRating] = useState(0);
@@ -112,6 +113,16 @@ export default function Review() {
                 </div>
             )}
 
+{reviews.length === 0 ? (
+    <div className="flex flex-col justify-center items-center p-10 mx-auto w-full max-w-4xl">
+        
+            <div className="animate-spin-slow">
+                <Loader />
+            </div>
+            <p className="mt-4 text-2xl text-teal-700 font-semibold">Please wait...</p>
+        
+    </div>
+) : 
             <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {reviews.map((review) => (
                     <div key={review._id} className="flex justify-center">
@@ -123,7 +134,9 @@ export default function Review() {
                         </div>
                     </div>
                 ))}
+                
             </div>
+}
         </div>
     );
 }

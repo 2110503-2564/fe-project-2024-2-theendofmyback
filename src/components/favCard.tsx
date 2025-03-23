@@ -1,10 +1,53 @@
-'use client'
 import { Rating } from '@mui/material';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import getUserList from "@/libs/users/getUserList";
 
-const FavCard = () => {
+interface Review {
+  _id: string;
+  title: string;
+  text: string;
+  rating: number;
+  campground: string;
+  user: string;
+  createdAt: string;
+}
+
+interface Campground {
+  _id: string;
+  name: string;
+  address: string;
+  tel: string;
+  price: number;
+  capacity: number;
+  description: string;
+  image: string;
+}
+
+const FavCard = ({ reviews }: { reviews?: Review }) => {
+  const [campgroundName, setCampgroundName] = useState<string>("Loading...");
+  const [campgroubdImage, setCampgroundImage] = useState<string>("Loading...");
+  const [camgroundDescription, setCampgroundDescription] = useState<string>("Loading...");
+  const [campgroundId, setCampgroundId] = useState<string>("Loading...");
+
+  useEffect(() => {
+    if (reviews && reviews.campground) { 
+      (async () => {
+        try {
+          const response = await fetch(`/api/campgrounds/${reviews.campground}`);
+          const campground: Campground = await response.json();
+          setCampgroundName(campground.name);
+          setCampgroundImage(campground.image);
+          setCampgroundDescription(campground.description);
+          setCampgroundId(campground._id);
+        } catch (error) {
+          console.error("Error fetching campground data:", error);
+        }
+      })();
+    }
+  }, [reviews?.campground]); 
+
   return (
     <StyledWrapper>
       <article className="card">
@@ -17,33 +60,33 @@ const FavCard = () => {
               </svg>
             </div>
           </header>
-          <p className="card__job-title">CEDT camp</p>
+          <p className="card__job-title">{campgroundName}</p>
           <img
-                            src="/img/lakeside.jpg"
-                            alt="Description of image"
-                            className="w-full h-full object-cover"
-                        />
+            src={campgroubdImage}
+            alt="Camp img"
+            className="w-full h-full object-cover"
+          />
         </section>
         <footer className="card__footer">
           <div className="card__job-summary">
             <div className="card__job-icon">
-            <img src="/img/logo.png" alt="Logo" width={40} height={40} />
+              <img src="/img/logo.png" alt="Logo" width={40} height={40} />
             </div>
             <div className="card__job">
               <h1 className="card__job-title">
-                Lakeside camp <br />
+                {camgroundDescription} <br />
               </h1>
-              <Rating name="read-only" value={5} readOnly />
+              <Rating name="read-only" value={reviews?.rating || 0} readOnly />
             </div>
           </div>
-          <Link href="/campground">
-          <button className="card__btn">view</button>
-        </Link>
+          <Link href={`/campground/${campgroundId}`}>
+            <button className="card__btn">view</button>
+          </Link>
         </footer>
       </article>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .card {
@@ -67,7 +110,7 @@ const StyledWrapper = styled.div`
     padding-right: 2rem;
     color:rgb(16, 90, 68);
   }
-    .card__hero img {
+  .card__hero img {
     width: 100%;
     height: auto;
     display: block;
@@ -123,15 +166,16 @@ const StyledWrapper = styled.div`
     color: #fff;
     font-size: 1rem;
   }
-.card__btn:hover {
-    background-color:color:rgb(201, 240, 193);
+  .card__btn:hover {
+    background-color:rgb(201, 240, 193);
     color: rgb(8, 95, 89);
     transform: scale(1.05);
-}
+  }
   @media (min-width: 340px) {
     .card__btn {
       width: max-content;
     }
-  }`;
+  }
+`;
 
 export default FavCard;

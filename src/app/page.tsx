@@ -7,12 +7,12 @@ import CampgroundHomeCard from "@/components/CampgroundHomeCard";
 import Link from "next/link";
 import PromotionHomeCard from "@/components/PromotionHomeCard";
 import SeeAll from "@/components/seeAll";
-import Switch from "@/components/mode";
 import PromotionCard from "@/components/PromotionCard";
-import GameComponent from "@/components/game";
 import MapCard from "@/components/map";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import Loader from "@/components/load";
+import getPromotions from "@/libs/promotions/getPromotions";
+import getReview from '@/libs/reviews/getReviews';
 
 export default function Home() {
 
@@ -92,6 +92,41 @@ export default function Home() {
     }
   ];
 
+  const [promotions, setPromotions] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchPromotions = async () => {
+      try {
+        const promotionData = (await getPromotions("")).data
+        console.log(promotionData)
+        setPromotions(promotionData)
+
+      } catch (error) {
+        console.error('Error fetching promotion data:', error);
+      }
+    };
+
+    fetchPromotions();
+  }, []);
+
+  const [reviews, setReviews] = useState<any[]>([]);  
+  const [allCampgrounds, setAllCampgrounds] = useState<any[]>([]);
+
+  useEffect(() => {
+          const fetchData = async () => {
+              try {
+                  const reviewData = (await getReview(""))?.data || [];
+                  reviewData.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                  const allCamps = (await getCampgrounds(""))?.data || [];
+                  setAllCampgrounds(allCamps);
+                  setReviews(reviewData);
+              } catch (error) {
+                  console.error('Error fetching data:', error);
+              }
+          };
+          fetchData();
+      }, []);
+
   return (
     <main className="relative ">
 
@@ -103,15 +138,19 @@ export default function Home() {
 
         </div>
         <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2  flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <FavCard />
-          <FavCard />
-          <FavCard />
+        <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2 flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+  {reviews.slice(0, 3).map((review) => (
+    <div key={review._id} className="flex justify-center">
+      <FavCard reviews={review} />
+    </div>
+  ))}
+</div>
 
         </div>
       </div>
       <div className="min-h-screen fitems-center px-4 py-10 bg-gradient-to-t from-green-100 to-transparent">
 
-        
+
 
         <div className="h-[300px]"></div>
         <hr className="my-3" />
@@ -153,8 +192,22 @@ export default function Home() {
           </Link>
         </div>
         <div className={`flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <PromotionCard mockPromotions={mockPromotions[0]} />
-          <PromotionCard mockPromotions={mockPromotions[1]} />
+          {promotions.length === 0 && (
+            <div className="m-10 justify-items-center"><Loader /></div>
+          )}
+          <div className="flex flex-wrap gap-4 sm:gap-8 md:gap-12 lg:gap-40 justify-center mt-6 ">
+            {promotions.slice(0, 2).map((promotion) => ( 
+              <div
+                key={promotion._id}
+                className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center "
+              >
+                <div className=" bg-white shadow-lg rounded-xl border border-gray-200  transition-all duration-300 hover:scale-105 hover:shadow-xl 
+        flex flex-col items-center justify-center  w-80% h-full">
+                  <PromotionCard mockPromotions={promotion} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <hr className="my-3" />

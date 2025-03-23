@@ -148,15 +148,19 @@ export default function BookingPage() {
 
 
 
-        {!selectedCampground._id ?
-          (
-            <div className='flex flew-row justify-center justify-items-center p-10'>
-              <Loader />
-              <p className="text-emerald-600">Loading...</p>
-            </div>
-          )
+        {!selectedCampground._id ? (
+       <div className="flex flex-col justify-center items-center p-10 mx-auto  w-full max-w-4xl">
+       <div className="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 p-8 rounded-xl shadow-2xl flex flex-col justify-center items-center">
+         <div className="animate-spin-slow">
+           <Loader />
+         </div>
+         <p className="mt-4 text-2xl text-white font-semibold">Please wait...</p>
+       </div>
+     </div> )
           : (
             <div className="flex flex-row p-8 mx-auto bg-white rounded-lg shadow-lg relative">
+
+
 
 
 

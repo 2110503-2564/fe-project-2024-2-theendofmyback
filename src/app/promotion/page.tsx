@@ -50,6 +50,7 @@ export default function Promotion() {
                 {/* Card Container */}
                 {promotions.length === 0 && (
                     <div className="m-10 justify-items-center"><Loader /></div>
+                    
                 )}
                 <div className="flex flex-wrap gap-8 justify-center mt-6">
                     {promotions.map((promotion) => (
