@@ -89,6 +89,7 @@ export interface StyledWrapperProps {
 export interface InputProps {
     value: string;
     onChange: (value: string) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export interface SidebarItemProps {

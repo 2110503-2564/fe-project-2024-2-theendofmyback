@@ -1,12 +1,11 @@
 'use client'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './banner.module.css';
 import Image from 'next/image';
 import Input from '@/components/search';
 import Link from 'next/link';
 import { CampgroundsJson } from '../../interface';
-import { BannerProps } from '../../interface';
 
 export default function Banner({ campgrounds }: { campgrounds: CampgroundsJson }) {
     const covers = ['/img/cover1.jpg', '/img/cover2.jpg', '/img/cover3.jpg'];
@@ -47,13 +46,13 @@ export default function Banner({ campgrounds }: { campgrounds: CampgroundsJson }
                 <h1 className={styles.title}>CAMPGROUND BOOKING</h1>
                 <p className={styles.slogan}>Escape to Nature</p>
 
-
                 <div className={styles.searchContainer}>
-                    <Input value={inputValue} onChange={handleInputChange} />
+                    
                     <button className={styles.searchButton} onClick={handleSearch}>
-                        🔍 ค้นหา
+                        <Input value={inputValue} onChange={handleInputChange} />
                     </button>
                 </div>
+
 
                 <Link href="/campground">
                     <button className={styles.bannerButton}>

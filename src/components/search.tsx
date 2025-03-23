@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { InputProps } from '../../interface';
@@ -12,9 +11,16 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
         onChange(newValue); 
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            onChange(value);   
+        }
+    };
+
     return (
         <StyledWrapper>
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
+            <form className="form" onSubmit={(e) => { e.preventDefault(); onChange(value); }}>
                 <button type="submit">
                     <svg width={17} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
@@ -25,7 +31,8 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
                     placeholder="Type your text..."
                     type="text"
                     value={value}
-                    onChange={handleChange} 
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}  
                     required
                 />
                 <button
@@ -43,7 +50,7 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
             </form>
         </StyledWrapper>
     );
-}
+};
 
 const StyledWrapper = styled.div`
     .form button {
@@ -51,7 +58,6 @@ const StyledWrapper = styled.div`
         background: none;
         color: #8b8ba7;
     }
-    /* styling of whole input container */
     .form {
         --timing: 0.3s;
         --width-of-input: 500px;
@@ -71,7 +77,6 @@ const StyledWrapper = styled.div`
         transition: border-radius 0.5s ease;
         background: var(--input-bg, #fff);
     }
-    /* styling of Input */
     .input {
         font-size: 0.9rem;
         background-color: transparent;
@@ -81,7 +86,6 @@ const StyledWrapper = styled.div`
         padding-block: 0.7em;
         border: none;
     }
-    /* styling of animated border */
     .form:before {
         content: "";
         position: absolute;
@@ -95,7 +99,6 @@ const StyledWrapper = styled.div`
         border-radius: 1px;
         transition: transform var(--timing) ease;
     }
-    /* Hover on Input */
     .form:focus-within {
         border-radius: var(--after-border-radius);
     }
@@ -103,27 +106,27 @@ const StyledWrapper = styled.div`
     input:focus {
         outline: none;
     }
-    /* here is code of animated border */
+
     .form:focus-within:before {
         transform: scale(1);
     }
-    /* styling of close button */
-    /* == you can click the close button to remove text == */
+
     .reset {
         border: none;
         background: none;
         opacity: 0;
         visibility: hidden;
     }
-    /* close button shown when typing */
+
     input:not(:placeholder-shown) ~ .reset {
         opacity: 1;
         visibility: visible;
     }
-    /* sizing svg icons */
+
     .form svg {
         width: 17px;
         margin-top: 3px;
-    }`;
+    }
+`;
 
 export default Input;
