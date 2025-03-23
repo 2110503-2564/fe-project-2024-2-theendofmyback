@@ -7,14 +7,8 @@ import { AuthOptions } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import SignButton from "./SignButtom";
 import Info from "./info";
+import { SidebarItemProps, SidebarProps, SidebarContextProps } from "../../interface";
 
-interface SidebarProps {
-    children: ReactNode;
-}
-
-interface SidebarContextProps {
-    expanded: boolean;
-}
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(undefined);
 
@@ -29,7 +23,7 @@ export default function Sidebar({ children }: SidebarProps) {
         <aside className="h-screen">
             <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                 <div className="p-4 pb-2 flex justify-between items-center">
-                    <img 
+                    <img
                         src='/img/logo.png'
                         className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`}
                         alt="Logo"
@@ -48,13 +42,13 @@ export default function Sidebar({ children }: SidebarProps) {
                     </ul>
                 </SidebarContext.Provider>
 
-                
+
                 <div className="border-t flex p-3">
-                    
+
                     <div
                         className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
                     >
-                        <Info/>
+                        <Info />
                     </div>
                 </div>
             </nav>
@@ -62,13 +56,7 @@ export default function Sidebar({ children }: SidebarProps) {
     );
 }
 
-interface SidebarItemProps {
-    icon: ReactNode;
-    text: string;
-    active?: boolean;
-    alert?: boolean;
-    pageRef: string;
-}
+
 
 export function SidebarItem({ icon, text, active, alert, pageRef }: SidebarItemProps) {
     const context = useContext(SidebarContext);

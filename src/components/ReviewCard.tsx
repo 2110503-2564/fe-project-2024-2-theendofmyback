@@ -2,27 +2,8 @@ import { Rating } from "@mui/material";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import getUserList from "@/libs/users/getUserList";
+import { Review , Campground} from "../../interface";
 
-interface Review {
-    _id: string;
-    title: string;
-    text: string;
-    rating: number;
-    campground: string;
-    user: string;
-    createdAt: string;
-}
-
-interface Campground {
-    _id: string;
-    name: string;
-    address: string;
-    tel: string;
-    price: number;
-    capacity: number;
-    description: string;
-    image: string;
-}
 
 export default function ReviewCard({ reviews }: { reviews: Review }) {
     let campgroundName = reviews.campground.name

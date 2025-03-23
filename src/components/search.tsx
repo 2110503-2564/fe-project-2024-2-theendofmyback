@@ -1,11 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
-interface InputProps {
-    value: string;
-    onChange: (value: string) => void;
-}
+import { InputProps } from '../../interface';
 
 const Input = ({ value: initialValue, onChange }: InputProps) => {
     const [value, setValue] = useState(initialValue);

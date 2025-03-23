@@ -13,34 +13,9 @@ import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import Loader from "@/components/load";
 import getPromotions from "@/libs/promotions/getPromotions";
 import getReview from '@/libs/reviews/getReviews';
+import { Campground , CampgroundsJson } from "../../interface";
 
 export default function Home() {
-
-  interface CampgroundsJson {
-    success: boolean;
-    count: number;
-    pagination?: {
-      next?: {
-        page: number;
-        limit: number;
-      };
-    };
-    data: Campground[];
-  }
-
-
-  interface Campground {
-    _id: string;
-    name: string;
-    address: string;
-    tel: string;
-    price: number;
-    capacity: number;
-    description: string;
-    image: string;
-  }
-
-
 
   const [showExplosion, setShowExplosion] = useState(false);
 

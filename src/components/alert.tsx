@@ -1,6 +1,4 @@
-interface AlertCardProps {
-    alertsentense: string;
-}
+import { AlertCardProps } from "../../interface"
 
 export default function AlertCard({ alertsentense }: AlertCardProps) {
     return (

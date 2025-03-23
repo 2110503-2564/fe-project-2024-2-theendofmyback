@@ -1,20 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface SwitchProps {
-  checked: boolean;
-  onChange: () => void;
-}
+import { SwitchProps, StyledWrapperProps } from '../../interface';
 
 const Switch: React.FC<SwitchProps> = ({ checked, onChange }) => {
   return (
     <StyledWrapper darkMode={checked}>
       <label onClick={onChange}>
-        <input 
-          type="checkbox" 
-          className="toggle-checkbox" 
-          checked={checked} 
-          onChange={onChange} 
+        <input
+          type="checkbox"
+          className="toggle-checkbox"
+          checked={checked}
+          onChange={onChange}
         />
         <div className="toggle-slot">
           <div className="sun-icon-wrapper">
@@ -30,9 +26,7 @@ const Switch: React.FC<SwitchProps> = ({ checked, onChange }) => {
   );
 };
 
-interface StyledWrapperProps {
-  darkMode: boolean;
-}
+
 
 const StyledWrapper = styled.div<StyledWrapperProps>`
   .toggle-checkbox {

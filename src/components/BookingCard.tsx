@@ -6,15 +6,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import getPromotions from "@/libs/promotions/getPromotions";
 import getUserList from "@/libs/users/getUserList";
-
-interface Booking {
-  _id: string;
-  user: string;
-  campground: string;
-  checkInDate: string;
-  checkOutDate: string;
-  bookingAt: string;
-}
+import { Booking } from "../../interface";
 
 export default function BookingCard({ bookingData, isAdmin }: { bookingData: Booking, isAdmin:boolean }) {
   const [confirmDelete, setConfirmDelete] = useState(false);

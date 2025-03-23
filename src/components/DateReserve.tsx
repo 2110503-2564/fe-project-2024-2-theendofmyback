@@ -4,11 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
-
-interface DateReserveProps {
-  value: Dayjs | null;
-  onChange: (newValue: Dayjs | null) => void;
-}
+import { DateReserveProps } from '../../interface';
 
 export default function DateReserve({ value, onChange }: DateReserveProps) {
   return (

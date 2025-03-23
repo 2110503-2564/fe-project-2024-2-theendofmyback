@@ -3,27 +3,8 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import getUserList from "@/libs/users/getUserList";
+import { Review,Campground } from '../../interface';
 
-interface Review {
-  _id: string;
-  title: string;
-  text: string;
-  rating: number;
-  campground: string;
-  user: string;
-  createdAt: string;
-}
-
-interface Campground {
-  _id: string;
-  name: string;
-  address: string;
-  tel: string;
-  price: number;
-  capacity: number;
-  description: string;
-  image: string;
-}
 
 const FavCard = ({ reviews }: { reviews?: Review }) => {
   let campgroundName = reviews.campground.name

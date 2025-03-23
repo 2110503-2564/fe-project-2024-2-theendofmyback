@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface SeeYoursButtonProps {
-  name: string;
-}
+import { SeeYoursButtonProps } from '../../interface';
 
 const SeeYoursButton: React.FC<SeeYoursButtonProps> = ({ name }) => {
   return (
