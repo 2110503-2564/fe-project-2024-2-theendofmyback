@@ -4,7 +4,7 @@ import { useContext, createContext, useState, ReactNode } from "react";
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { AuthOptions } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import SignButton from "./SignButtom";
 import Info from "./info";
 import { SidebarItemProps, SidebarProps, SidebarContextProps } from "../../interface";

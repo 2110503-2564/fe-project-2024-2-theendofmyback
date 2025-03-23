@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { LogIn, LogOut, MoreVertical } from "lucide-react";
 import Sidebar, { SidebarItem } from "@/components/Sidebar";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 const AuthButton = () => {
 
     

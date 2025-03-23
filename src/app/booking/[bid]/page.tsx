@@ -235,8 +235,7 @@ export default function SingleBookingPage({ params }: { params: { bid: string } 
 
                 <button
                   type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     if (!dateCheckIn || !dateCheckOut) {
                       Swal.fire({
                         icon: "warning",
@@ -244,9 +243,7 @@ export default function SingleBookingPage({ params }: { params: { bid: string } 
                         text: "Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.",
                         footer: '<a href="#">Why do I have this issue?</a>'
                       });
-
                     }
-                    handleSubmit(e);
                   }}
                   className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
                 >
