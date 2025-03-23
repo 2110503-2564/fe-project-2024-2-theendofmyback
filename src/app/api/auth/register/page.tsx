@@ -1,5 +1,7 @@
 'use client'
 import { useState } from "react";
+import register from "@/libs/users/register";
+import { signIn } from "next-auth/react";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -29,13 +31,31 @@ export default function Register() {
                         tel,
                         picture,
                     });
+                    const response = await register(name,email,password,address,tel,picture)
+                    console.log(response)
+
+                    if (response?.success) {
+                        const signInResponse = await signIn("credentials", {
+                            redirect: false,
+                            email,
+                            password,
+                        });
+            
+                        if (signInResponse?.error) {
+                            console.error("Auto-login failed:", signInResponse.error);
+                            alert("Auto-login failed.");
+                        } else {
+                            window.location.href = "/";
+                        }
+                    }
                 } catch (error) {
                     console.error('Error updating user data:', error);
+                    alert("Cannot Register")
                 }
             }
     
             update();
-        };
+    };
     
 
     return (
