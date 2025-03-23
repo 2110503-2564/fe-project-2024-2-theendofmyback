@@ -109,23 +109,37 @@ export default function Home() {
     fetchPromotions();
   }, []);
 
-  const [reviews, setReviews] = useState<any[]>([]);  
+  const [reviews, setReviews] = useState<any[]>([]);
   const [allCampgrounds, setAllCampgrounds] = useState<any[]>([]);
 
+  const [uniqueReviews, setUniqueReviews] = useState<any[]>([]);
+
   useEffect(() => {
-          const fetchData = async () => {
-              try {
-                  const reviewData = (await getReview(""))?.data || [];
-                  reviewData.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-                  const allCamps = (await getCampgrounds(""))?.data || [];
-                  setAllCampgrounds(allCamps);
-                  setReviews(reviewData);
-              } catch (error) {
-                  console.error('Error fetching data:', error);
-              }
-          };
-          fetchData();
-      }, []);
+    const fetchData = async () => {
+      try {
+        const reviewData = (await getReview(""))?.data || [];
+        reviewData.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+        const seenCampgrounds = new Set<string>();
+        const uniqueCampgroundReviews = [];
+
+        for (const review of reviewData) {
+          if (!seenCampgrounds.has(review.campground.name)) {
+            seenCampgrounds.add(review.campground.name);
+            uniqueCampgroundReviews.push(review);
+
+            if (uniqueCampgroundReviews.length === 3) break;
+          }
+        }
+
+        setUniqueReviews(uniqueCampgroundReviews);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   return (
     <main className="relative ">
@@ -138,13 +152,17 @@ export default function Home() {
 
         </div>
         <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2  flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-        <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2 flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-  {reviews.slice(0, 3).map((review) => (
-    <div key={review._id} className="flex justify-center">
-      <FavCard reviews={review} />
-    </div>
-  ))}
-</div>
+          <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2 flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          {uniqueReviews.length > 0 ? (
+          uniqueReviews.map((review) => (
+            <div key={review._id} className="flex justify-center">
+              <FavCard reviews={review} />
+            </div>
+          ))
+        ) : (
+          <div><Loader/></div>
+        )}
+          </div>
 
         </div>
       </div>
@@ -162,7 +180,7 @@ export default function Home() {
         </div>
         <div className={`flex justify-center items-center space-x-4 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="p-6 flex flex-row space-x-6 items-center">
-            {campgrounds === null ? (
+            {!campgrounds || campgrounds.data.length === 0 ? (
               <div><Loader /></div>
             ) : filteredCampgrounds?.slice(0, 3).length ? (
               filteredCampgrounds.slice(0, 3).map((campground) => (
@@ -196,7 +214,7 @@ export default function Home() {
             <div className="m-10 justify-items-center"><Loader /></div>
           )}
           <div className="flex flex-wrap gap-4 sm:gap-8 md:gap-12 lg:gap-40 justify-center mt-6 ">
-            {promotions.slice(0, 2).map((promotion) => ( 
+            {promotions.slice(0, 2).map((promotion) => (
               <div
                 key={promotion._id}
                 className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center "

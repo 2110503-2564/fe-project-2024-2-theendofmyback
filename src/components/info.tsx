@@ -69,6 +69,7 @@ const Info = () => {
                             <Link href="/handle">
                                 <button className={styles.SignButton}>Dashboard</button>
                             </Link>
+                            
                         )}
                         </div>
                     <div className="flex items-center space-x-3">
@@ -110,7 +111,7 @@ const Info = () => {
                         </button>
                     </Link>
                     <div className="mt-3 text-xs text-green-500">
-                        <Link href="/api/auth/signup">
+                        <Link href="/api/auth/register">
                             do not have an account? Sign Up
                         </Link>
                     </div>

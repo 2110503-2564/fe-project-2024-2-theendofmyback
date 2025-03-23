@@ -32,6 +32,7 @@ const FavCard = ({ reviews }: { reviews?: Review }) => {
   let campgroundId = reviews.campground._id
 
   console.log(campgroubdImage)
+  
   return (
     <StyledWrapper>
       <article className="card">

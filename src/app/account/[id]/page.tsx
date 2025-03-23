@@ -9,6 +9,9 @@ import { useEffect, useState } from 'react';
 import getBooking from '@/libs/bookings/getBooking';
 import getBookings from '@/libs/bookings/getBookings';
 import Loader from '@/components/load';
+import getPromotions from "@/libs/promotions/getPromotions";
+import PromotionCard from '@/components/PromotionCard';
+
 export default function AccountPage() {
 
     const mockBookings = [
@@ -96,6 +99,23 @@ export default function AccountPage() {
         '/img/avatar-3.png',
         '/img/avatar-4.png',
     ];
+
+    const [promotions, setPromotions] = useState<any[]>([])
+    
+      useEffect(() => {
+        const fetchPromotions = async () => {
+          try {
+            const promotionData = (await getPromotions("")).data
+            console.log(promotionData)
+            setPromotions(promotionData)
+    
+          } catch (error) {
+            console.error('Error fetching promotion data:', error);
+          }
+        };
+    
+        fetchPromotions();
+      }, []);
 
     return (
         <div className="min-h-screen flex flex-col items-center px-4 py-10 bg-gradient-to-t from-teal-100 to-tea-200">
@@ -206,7 +226,7 @@ export default function AccountPage() {
       </div>
       <div className="flex justify-center items-center space-x-12 p-4 transition-all duration-500" >
         {bookingData.slice(0, 2).map((booking) => (
-                            <BookingCard key={booking._id} bookingData={booking} />
+                            <BookingCard key={booking._id} bookingData={booking} isAdmin={false} />
                         ))}
       </div>
       </div>
@@ -218,11 +238,24 @@ export default function AccountPage() {
         </Link>
       </div>
       <div className="flex justify-center items-center space-x-12 p-4 transition-all duration-500" >
-        {mockBookings.map((booking) => (
-                            <BookingCard key={booking._id} bookingData={booking} />
-                        ))}
+      {promotions.length === 0 && (
+            <div className="m-10 justify-items-center"><Loader /></div>
+          )}
+          <div className="flex flex-wrap gap-4 sm:gap-8 md:gap-12 lg:gap-40 justify-center mt-6 ">
+            {promotions.slice(0, 2).map((promotion) => ( 
+              <div
+                key={promotion._id}
+                className="w-full sm:w-[80%] md:w-1/4 lg:w-1/3 flex justify-center "
+              >
+                <div className=" bg-white shadow-lg rounded-xl border border-gray-200  transition-all duration-300 hover:scale-105 hover:shadow-xl 
+        flex flex-col items-center justify-center  w-80% h-full">
+                  <PromotionCard mockPromotions={promotion} />
+                </div>
+              </div>
+            ))}
       </div>
       </div>
+        </div>
         </div>
         </div>
     );
