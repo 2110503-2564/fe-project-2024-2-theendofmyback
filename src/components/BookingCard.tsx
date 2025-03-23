@@ -1,9 +1,11 @@
 "use client";
 import { Pen, Trash2 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import deleteBooking from "@/libs/bookings/deleteBooking";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import getPromotions from "@/libs/promotions/getPromotions";
+import getUserList from "@/libs/users/getUserList";
 
 interface Booking {
   _id: string;
@@ -14,10 +16,26 @@ interface Booking {
   bookingAt: string;
 }
 
-export default function BookingCard({ bookingData }: { bookingData: Booking }) {
+export default function BookingCard({ bookingData, isAdmin }: { bookingData: Booking, isAdmin:boolean }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [userData, setUserData] = useState<any[]>([]);
   const { data: session } = useSession()
   
+    useEffect(() => {
+      (async () => {
+        try {
+          const response = await getUserList()
+          const users = Array.isArray(response) ? response : response.data;
+          const foundUser = users.find((u: any) => u._id === bookingData.user);
+          console.log(foundUser)
+          setUserData(foundUser)
+          const promotions = (await getPromotions("")).data;
+        } catch (error) {
+          console.error("Error fetching", error);
+        }
+      })();
+    }, [session]);
+
   const handleDelete = (): void => {
     if (confirmDelete) {
       console.log(`Deleting booking with ID: ${bookingData._id}`);
@@ -59,7 +77,7 @@ export default function BookingCard({ bookingData }: { bookingData: Booking }) {
       </div>
 
       <div className="bg-green-50 p-3 rounded-lg flex flex-col md:flex-row items-center md:items-start">
-        <img src="/img/mountain-view.jpg" className="w-full md:w-40 h-auto rounded-lg object-cover" alt="Mountain View" />
+        <img src={bookingData.campground.image} className="w-full md:w-40 h-auto rounded-lg object-cover" alt="Mountain View" />
         <div className="mt-3 md:mt-0 md:ml-5 w-full text-green-900">
           <p className="text-sm bg-green-200 px-3 py-1 w-fit rounded-full">
             {`${Math.ceil(
@@ -75,10 +93,43 @@ export default function BookingCard({ bookingData }: { bookingData: Booking }) {
               <span className="font-medium">Check-Out:</span>
               <span className="bg-green-100 px-2 py-1 rounded-md">{new Date(bookingData.checkOutDate).toLocaleDateString()}</span>
             </div>
-            <div className="flex flex-col sm:col-span-2">
-              <span className="font-medium">Booking At:</span>
-              <span className="bg-green-100 px-2 py-1 rounded-md">{new Date(bookingData.bookingAt).toLocaleDateString()}</span>
-            </div>
+            
+            {
+              isAdmin?(<>
+                <div className="flex flex-col sm:col-span-1">
+                  <span className="font-medium">Booking At:</span>
+                  <span className="bg-green-100 px-2 py-1 rounded-md">{new Date(bookingData.bookingAt).toLocaleDateString()}</span>
+                </div>
+                <div className="flex flex-col sm:col-span-1">
+                  <span className="font-medium">Booking By:</span>
+                  <span className="bg-green-100 px-2 py-1 rounded-md">
+                    <span className="relative group">
+                      {userData?.name || "Unknown"}
+                        <div className="absolute left-0 mt-2 w-64 p-3 bg-white border border-gray-300 rounded-lg shadow-lg text-sm text-gray-700 hidden group-hover:block">
+                        <div className="flex flex-row items-center space-x-3">
+                          <img
+                          src={userData?.picture || "/img/avatar-1.png"}
+                          alt="User Profile"
+                          className="w-12 h-12 p-1 border-2 border-green-500 rounded-full object-cover mb-2 shadow-md"
+                          />
+                          <div className="flex flex-col">
+                          <p className="text-green-700 font-semibold"><strong>Name:</strong> {userData?.name || "N/A"}</p>
+                            <p className="text-gray-400 text-[10px]">ID: {userData?._id || "N/A"}</p>
+                          </div>
+                        </div>
+                        <p><strong>Email:</strong> {userData?.email || "N/A"}</p>
+                        <p><strong>Tel:</strong> {userData?.tel || "N/A"}</p>
+                        </div>
+                    </span>
+                  </span>
+                </div>
+                </>
+              )
+              : <div className="flex flex-col sm:col-span-2">
+                  <span className="font-medium">Booking At:</span>
+                  <span className="bg-green-100 px-2 py-1 rounded-md">{new Date(bookingData.bookingAt).toLocaleDateString()}</span>
+              </div>
+            }
           </div>
         </div>
       </div>

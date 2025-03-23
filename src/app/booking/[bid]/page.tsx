@@ -8,14 +8,12 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import getCampground from '@/libs/campgrounds/getCampground';
 import { useSession } from 'next-auth/react';
-import getMe from '@/libs/users/getMe';
 import Loader from "@/components/load";
 import updateBooking from '@/libs/bookings/updateBooking';
 import getBooking from '@/libs/bookings/getBooking';
-import SeeYoursButton from '@/components/seeYours';
-import { useRouter } from 'next/navigation';
 import getPromotions from '@/libs/promotions/getPromotions';
 import GoBackButton from "@/components/Gobackbutton";
+import getUserList from '@/libs/users/getUserList';
 
 interface Campground {
   _id: string;
@@ -55,6 +53,7 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
   const [promotion, setPromotion] = useState('');
   const [bookingData, setBookingData] = useState<any>(null);
   const [enableEdit, setEnableEdit] = useState(false);
+  
   const [selectedCampground, setSelectedCampground] = useState<Campground>({
     _id: '',
     name: '',
@@ -74,8 +73,7 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
     picture: '/img/avatar-1.png',
   });
 
-  const [isLoading, setIsLoading] = useState(true); // เพิ่มสถานะการโหลด
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true); 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -121,28 +119,31 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
         const bookingData = (await getBooking(session?.user?.token || "", params.bid)).data;
         setBookingData(bookingData);
 
+        const response = await getUserList()
+        const users = Array.isArray(response) ? response : response.data;
+        const foundUser = users.find((u: any) => u._id === bookingData.user);
+        
+        if( !foundUser.tel) {
+          foundUser.tel = 'none'
+        }
+        console.log(foundUser)
+        setUserData(foundUser)
         const promotions = (await getPromotions("")).data;
         setAllPromotions(promotions);
 
-        if (session && session.user.token) {
-          const response = await getMe(session.user.token);
-          setUserData(response.data);
-        }
 
         setSelectedCampground(campgroundData);
 
-        // เมื่อโหลดเสร็จแล้ว ให้ตั้งค่า isLoading เป็น false
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching campground data:", error);
-        setIsLoading(false); // ถ้าเกิดข้อผิดพลาดก็ตั้งค่าให้โหลดเสร็จ
+        setIsLoading(false);
       }
     })();
   }, [cid, session]);
 
   return (
     <div className="bg-gradient-to-bl from-emerald-50 to-emerald-300 min-h-screen p-5">
-      {/* GoBackButton moved outside container */}
       <Link href="/booking/manage">
         <div className="flex justify-start p-4">
           <GoBackButton name="My Booking" />
@@ -186,9 +187,9 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
               <h2 className="font-semibold text-lg text-green-600">Information</h2>
               <div className="flex gap-6">
                 <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
-                  <p>Your Name: {userData.name}</p>
-                  <p>Your Email: {userData.email}</p>
-                  <p>Your Tel: {userData.tel}</p>
+                  <p>Name: {userData.name}</p>
+                  <p>Email: {userData.email}</p>
+                  <p>Tel: {userData.tel}</p>
                 </div>
                 <div className="w-full p-3 border text-green-600 rounded-lg space-y-4">
                   <p>Check In Date: {dayjs(bookingData.checkInDate).format('MMMM D, YYYY')}</p>
@@ -246,7 +247,6 @@ export default function SingleBookingPage({params}: { params: {bid: string} }) {
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
                     if (!dateCheckIn || !dateCheckOut) {
                       alert("Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.");
                     }

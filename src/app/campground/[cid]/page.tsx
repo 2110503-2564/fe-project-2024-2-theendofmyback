@@ -1,10 +1,7 @@
-import ReviewCard from "@/components/ReviewCard";
 import ReviewSlider from "@/components/ReviewSlider";
-import PromotionCard from "@/components/PromotionCard";
 import PromotionSlider from "@/components/PromotionSlider";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { useSession } from "next-auth/react";
 import getCampground from "@/libs/campgrounds/getCampground";
 import getReview from "@/libs/reviews/getReviews";
 
@@ -37,17 +34,6 @@ export default async function CampgroundPage({params} : { params: {cid:string}})
         description: string;
         image: string;
       }
-
-    /*const campInfo = {
-        Name: "The LaBaLaKe Camp",
-        Address: "123 Forest Road, Rocky Hills",
-        Tel: "555-1234",
-        Price: "25",
-        Capacity: "60",
-        Description: "A lakeside camp with outdoor activities",
-        picture: "/img/lakeside.jpg"
-      };*/
-
     
     const campInfo:Campground =(await getCampground(params.cid)).data;
     if (campInfo.image[0] !== '/') {
@@ -78,9 +64,11 @@ export default async function CampgroundPage({params} : { params: {cid:string}})
             </Link> 
             <div className="px-10 mt-9 w-full flex flex-row items-center justify-between">
                 <h2 className="px-2 my-2 font-bold text-[30px] font-sans">{campInfo.name}</h2>
-                <button className="bg-orange-300 hover:bg-orange-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
-                    Book
-                </button>
+                <Link href={`/booking?id=${params.cid}`}>
+                    <button className="bg-orange-300 hover:bg-orange-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
+                        Book
+                    </button>
+                </Link>
             </div>
 
             <div className="px-10 w-full flex flex-col">

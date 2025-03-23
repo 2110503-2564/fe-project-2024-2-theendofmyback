@@ -6,11 +6,13 @@ import getBookings from "@/libs/bookings/getBookings";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loader from "@/components/load";
+import getMe from "@/libs/users/getMe";
 
 export default function ManagePage() {
 
     const { data: session } = useSession();
     const [bookingData, setBookingData] = useState([]);
+    const [isAdmin, setAdmin] = useState(false);
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -19,6 +21,15 @@ export default function ManagePage() {
                 console.log(response.data)
                 response.sort((a, b) => new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime());
                 setBookingData(response);
+
+                if (session?.user?.token) {
+                    const me = (await getMe(session.user.token)).data;
+                    if (me.role === "admin") {
+                        setAdmin(true);
+                    }
+                }
+                
+
             } catch (error) {
                 console.error("Error fetching bookings:", error);
             }
@@ -49,7 +60,7 @@ export default function ManagePage() {
             ) : null}
             <div className="flex flex-col w-4/5 items-center gap-6">
                 {bookingData.map((booking) => (
-                    <BookingCard key={booking._id} bookingData={booking} />
+                    <BookingCard key={booking._id} isAdmin={isAdmin} bookingData={booking} />
                 ))}
             </div>
             </div>
