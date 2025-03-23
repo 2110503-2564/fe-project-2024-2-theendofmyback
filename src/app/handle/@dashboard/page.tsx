@@ -42,9 +42,9 @@ export default async function DashboardPage() {
     <div>
       <Prof profile={profile} />
       <CreateCamp profile={profile} />
-      <UpdateCamp profile={profile} camp={mockCamp} token={session.user.token}/>
+      <UpdateCamp profile={profile} token={session.user.token}/>
       <CreatePromotion profile={profile} />
-      <UpdatePromotion profile={profile} promotion={mockPromotion} />
+      <UpdatePromotion profile={profile} token={session.user.token} />
       
     </div>
   );
