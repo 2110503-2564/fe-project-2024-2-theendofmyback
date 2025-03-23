@@ -106,3 +106,7 @@ export interface SidebarProps {
 export interface SidebarContextProps {
     expanded: boolean;
 }
+
+export interface BannerProps {
+    campgrounds: CampgroundsJson | null;
+}

@@ -120,7 +120,9 @@ export default function Home() {
     <main className="relative ">
 
       <div className="mx-auto transform">
-        <Banner />
+      <Banner campgrounds={campgrounds as CampgroundsJson} />
+
+
 
 
         <div className="flex justify-between items-center mx-10 mt-10">

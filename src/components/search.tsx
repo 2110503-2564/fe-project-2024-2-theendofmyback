@@ -6,9 +6,15 @@ import { InputProps } from '../../interface';
 const Input = ({ value: initialValue, onChange }: InputProps) => {
     const [value, setValue] = useState(initialValue);
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+        setValue(newValue);
+        onChange(newValue); 
+    };
+
     return (
         <StyledWrapper>
-            <form className="form">
+            <form className="form" onSubmit={(e) => e.preventDefault()}>
                 <button type="submit">
                     <svg width={17} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
@@ -19,13 +25,16 @@ const Input = ({ value: initialValue, onChange }: InputProps) => {
                     placeholder="Type your text..."
                     type="text"
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={handleChange} 
                     required
                 />
                 <button
                     className="reset"
                     type="button"
-                    onClick={() => setValue("")}
+                    onClick={() => {
+                        setValue("");
+                        onChange("");
+                    }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -49,7 +58,7 @@ const StyledWrapper = styled.div`
         --height-of-input: 40px;
         --border-height: 2px;
         --input-bg: #fff;
-        --border-color:rgb(78, 201, 41);
+        --border-color: rgb(78, 201, 41);
         --border-radius: 30px;
         --after-border-radius: 1px;
         position: relative;
@@ -60,7 +69,7 @@ const StyledWrapper = styled.div`
         padding-inline: 0.8em;
         border-radius: var(--border-radius);
         transition: border-radius 0.5s ease;
-        background: var(--input-bg,#fff);
+        background: var(--input-bg, #fff);
     }
     /* styling of Input */
     .input {
