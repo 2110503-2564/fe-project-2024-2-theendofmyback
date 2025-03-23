@@ -25,8 +25,17 @@ interface Profile {
     };
 }
 
-export default function UpdateCamp({ profile, camp, token }: { profile: Profile; camp: Camp, token:string }) {
-    const [formData, setFormData] = useState<Camp>(camp);
+export default function UpdateCamp({ profile, token }: { profile: Profile, token:string }) {
+    const [formData, setFormData] = useState<Camp>({
+        id: "",
+        name: "",
+        address: "",
+        tel: "",
+        price: 0,
+        capacity: 0,
+        description: "",
+        image: "",
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [campgrounds, setCamgrounds] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -79,7 +88,7 @@ export default function UpdateCamp({ profile, camp, token }: { profile: Profile;
             const { id, name, address, tel, price, capacity, description, image } = formData;
             const response = await updateCampground(token, id, name, address, tel, price, capacity, description, image);
             //console.log("update reponse: ",response)
-            alert("Camp updated successfully!");
+            alert("Update Campground successfully!");
             if (response.success) {
                 setError("");
               }

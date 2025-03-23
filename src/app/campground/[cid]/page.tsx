@@ -1,9 +1,11 @@
+'use client'
 import ReviewSlider from "@/components/ReviewSlider";
 import PromotionSlider from "@/components/PromotionSlider";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import getCampground from "@/libs/campgrounds/getCampground";
 import getReview from "@/libs/reviews/getReviews";
+import { useEffect, useState } from "react";
 
 interface Review {
     _id: string;
@@ -23,7 +25,7 @@ interface Promotion {
     discount: number;
 }
 
-export default async function CampgroundPage({params} : { params: {cid:string}}) {
+export default function CampgroundPage({params} : { params: {cid:string}}) {
     interface Campground {
         _id: string;
         name: string;
@@ -35,25 +37,53 @@ export default async function CampgroundPage({params} : { params: {cid:string}})
         image: string;
       }
     
-    const campInfo:Campground =(await getCampground(params.cid)).data;
-    if (campInfo.image[0] !== '/') {
-        campInfo.image = '/' + campInfo.image;
-    }
+    const [campInfo, setCampInfo] = useState<Campground>({
+        _id: "",
+        name: "Loading...",
+        address: "Loading...",
+        tel: "Loading...",
+        price: 0,
+        capacity: 0,
+        description: "Loading...",
+        image: "/img/loading-placeholder.png",
+    });
 
-    const queryReview = `?campground=${params.cid}`;
-    let allReviews: Review[] = [];
-
-    try {
-        const response = await getReview(queryReview);
-        if (response && response.data) {
-            allReviews = response.data; 
-        } else {
-            console.error("Unexpected response format:", response);
+    useEffect(() => {
+        async function fetchCampground() {
+            try {
+                const fetchedCampInfo: Campground = (await getCampground(params.cid)).data;
+                if (fetchedCampInfo.image[0] !== '/') {
+                    fetchedCampInfo.image = '/' + fetchedCampInfo.image;
+                }
+                setCampInfo(fetchedCampInfo);
+                console.log("debug: ", fetchedCampInfo);
+            } catch (error) {
+                console.error("Error fetching campground info:", error);
+            }
         }
-    } catch (error) {
-        console.error("Error fetching reviews:", error);
-    } 
-    
+
+        fetchCampground();
+    }, [params.cid]);
+
+    const [allReviews, setAllReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        async function fetchReviews() {
+            const queryReview = `?campground=${params.cid}`;
+            try {
+                const response = await getReview(queryReview);
+                if (response && response.data) {
+                    setAllReviews(response.data);
+                } else {
+                    console.error("Unexpected response format:", response);
+                }
+            } catch (error) {
+                console.error("Error fetching reviews:", error);
+            }
+        }
+
+        fetchReviews();
+    }, [params.cid]);
 
     return(
         <div className="bg-white w-full p-5"> 
