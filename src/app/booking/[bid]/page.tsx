@@ -14,33 +14,9 @@ import getBooking from '@/libs/bookings/getBooking';
 import getPromotions from '@/libs/promotions/getPromotions';
 import GoBackButton from "@/components/Gobackbutton";
 import getUserList from '@/libs/users/getUserList';
-
-interface Campground {
-  _id: string;
-  name: string;
-  address: string;
-  tel: string;
-  price: number;
-  capacity: number;
-  description: string;
-  image: string;
-  promotions?: Promotion[];
-}
-interface Promotion {
-  _id: string;
-  name: string;
-  campground: string;
-  description: string;
-  discount: number;
-}
-
-interface UserProfile {
-  name: string;
-  email: string;
-  tel: string;
-  address: string;
-  picture: string;
-}
+import { Campground } from '../../../../interface';
+import { Promotion } from '../../../../interface';
+import { UserProfile } from '../../../../interface';
 
 export default function SingleBookingPage({params}: { params: {bid: string} }) {
   const urlParams = useSearchParams();

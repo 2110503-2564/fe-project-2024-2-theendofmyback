@@ -148,10 +148,10 @@ export default function Home() {
         <Banner />
 
 
-        <div className="flex justify-between items-center mx-20 mt-10">
+        <div className="flex justify-between items-center mx-10 mt-10">
 
         </div>
-        <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2  flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className={`z-20 absolute top-[70%] left-1/2 transform -translate-x-1/2  flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className={`z-20 absolute top-[80%] left-1/2 transform -translate-x-1/2 flex justify-center items-center space-x-12 p-4 transition-all duration-500 ${showExplosion ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           {uniqueReviews.length > 0 ? (
           uniqueReviews.map((review) => (

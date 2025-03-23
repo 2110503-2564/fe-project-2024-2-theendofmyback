@@ -76,17 +76,22 @@ const FavCard = ({ reviews }: { reviews?: Review }) => {
 const StyledWrapper = styled.div`
   .card {
     margin: auto;
-    width: 300px;
+    width: 350px;
+    height: 450px;
     background-color: #fefefe;
     border-radius: 1rem;
     padding: 0.5rem;
     color: #141417;
+
   }
   .card__hero {
     background-color:rgb(234, 240, 226);
     border-radius: 0.5rem 0.5rem 0 0;
     padding: 1.5rem;
     font-size: 0.875rem;
+    width: 333px;
+    height: 350px;
+    position: relative;
   }
   .card__hero .card__job-title {
     margin: 0;
@@ -95,12 +100,23 @@ const StyledWrapper = styled.div`
     padding-right: 2rem;
     color:rgb(16, 90, 68);
   }
+    .card__job-title {
+    margin: 0;
+    font-size: 10px;
+    font-weight: 200;
+    padding-right: 1rem;
+    color:rgb(29, 95, 76);
+  }
   .card__hero img {
-    width: 100%;
-    height: auto;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
     display: block;
     border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  }
+    position: absolute; 
+    bottom : 10px;
+    left : 17px;
+    }
   .card__hero-header {
     display: flex;
     justify-content: space-between;
