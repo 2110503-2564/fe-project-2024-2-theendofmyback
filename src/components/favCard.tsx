@@ -26,28 +26,12 @@ interface Campground {
 }
 
 const FavCard = ({ reviews }: { reviews?: Review }) => {
-  const [campgroundName, setCampgroundName] = useState<string>("Loading...");
-  const [campgroubdImage, setCampgroundImage] = useState<string>("Loading...");
-  const [camgroundDescription, setCampgroundDescription] = useState<string>("Loading...");
-  const [campgroundId, setCampgroundId] = useState<string>("Loading...");
+  let campgroundName = reviews.campground.name
+  let camgroundDescription = reviews.campground.description
+  let campgroubdImage = reviews.campground.image
+  let campgroundId = reviews.campground._id
 
-  useEffect(() => {
-    if (reviews && reviews.campground) { 
-      (async () => {
-        try {
-          const response = await fetch(`/api/campgrounds/${reviews.campground}`);
-          const campground: Campground = await response.json();
-          setCampgroundName(campground.name);
-          setCampgroundImage(campground.image);
-          setCampgroundDescription(campground.description);
-          setCampgroundId(campground._id);
-        } catch (error) {
-          console.error("Error fetching campground data:", error);
-        }
-      })();
-    }
-  }, [reviews?.campground]); 
-
+  console.log(campgroubdImage)
   return (
     <StyledWrapper>
       <article className="card">
