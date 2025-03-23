@@ -40,12 +40,19 @@ export default async function DashboardPage() {
   
   return (
     <div>
-      <Prof profile={profile} />
-      <CreateCamp profile={profile} token={session.user.token}/>
-      <UpdateCamp profile={profile} token={session.user.token}/>
-      <CreatePromotion profile={profile} token={session.user.token}/>
-      <UpdatePromotion profile={profile} token={session.user.token} />
-      
+      {!profile.isAdmin ? 
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <h1 className="text-2xl font-bold text-red-500 mb-4">Access Denied</h1>
+        <p className="text-gray-700">You do not have access to this page.</p>
+      </div>
+      :<div>
+        <Prof profile={profile} />
+        <CreateCamp profile={profile} token={session.user.token}/>
+        <UpdateCamp profile={profile} token={session.user.token}/>
+        <CreatePromotion profile={profile} token={session.user.token}/>
+        <UpdatePromotion profile={profile} token={session.user.token} />
+      </div>
+      }
     </div>
   );
 }
