@@ -1,20 +1,12 @@
-
+"use client"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormEvent } from "react";
 import { useState } from "react";
-
-interface Promotion {
-    name: string;
-    description: string;
-    discount: number;
-    startDate: string;
-    endDate: string;
-    image: string;
-}
-
+import { Promotion } from "../../../../interface";
+import createPromotion from "@/libs/promotions/createPromotion";
 interface Profile {
     data: {
         name: string;
@@ -25,53 +17,87 @@ interface Profile {
     };
 }
 
-const addPromotion = async (addPromotionForm: FormData) => {
-    "use server";
 
-    const promotion: Promotion = {
-        name: addPromotionForm.get("name") as string,
-        description: addPromotionForm.get("desc") as string,
-        discount: Number(addPromotionForm.get("discount")),
-        startDate: addPromotionForm.get("startDate") as string,
-        endDate: addPromotionForm.get("endDate") as string,
-        image: addPromotionForm.get("image") as string,
+
+export default function CreatePromotion({ profile, token }: { profile: Profile, token:string }) {
+    const [promotionData, setPromotionData] = useState<Promotion>({
+        _id: "no use",
+        name: "New Promotion",
+        campground: "no use",
+        description: "this is a promotion",
+        discount: 10, 
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setPromotionData((prev) => ({
+            ...prev,
+            [name]: name === "discount" ? Number(value) : value,
+        }));
     };
 
-    console.log("Adding promotion:", promotion);
-
-    revalidateTag("Promotions");
-    redirect("/Promotions");
-};
-
-export default function CreatePromotion({ profile }: { profile: Profile }) {
+    
+    const addPromotion = async () => {
+        const { name, description, discount } = promotionData;
+        try {
+            const response = await createPromotion(token, name, description, discount)        
+            console.log("Camp created successfully:", response);
+        } catch (error) {
+            console.error("Error creating camp:", error);
+        }
+    };
 
     return (
         <main className="m-5 p-5">
-            {profile?.data.role === "admin" ? (
+            
                 <form action={addPromotion} className="mt-6 space-y-6">
                     <div className="text-2xl text-green-700 font-semibold">Create New Promotion</div>
 
                     <div className="flex flex-col w-1/2 mx-auto space-y-4">
-                        {[ 
-                            { id: "name", label: "Promotion Name", type: "text", placeholder: "Promotion Name" },
-                            { id: "desc", label: "Description", type: "text", placeholder: "Promotion Description" },
-                            { id: "discount", label: "Discount (%)", type: "number", placeholder: "Discount Percentage" },
-                            { id: "startDate", label: "Start Date", type: "date", placeholder: "Start Date" },
-                            { id: "endDate", label: "End Date", type: "date", placeholder: "End Date" },
-                            { id: "image", label: "Image URL", type: "text", placeholder: "Image URL" },
-                        ].map((field) => (
-                            <div key={field.id}>
-                                <label htmlFor={field.id} className="block text-gray-700">{field.label}</label>
-                                <input
-                                    type={field.type}
-                                    required
-                                    id={field.id}
-                                    name={field.id}
-                                    placeholder={field.placeholder}
-                                    className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
-                                />
-                            </div>
-                        ))}
+                    <div>
+                    <div>
+                        <label htmlFor="name" className="block text-gray-700">Promotion Name (unique field)</label>
+                        <input
+                            type="text"
+                            required
+                            id="name"
+                            name="name"
+                            value={promotionData.name}
+                            onChange={handleChange}
+                            placeholder="Promotion Name"
+                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="desc" className="block text-gray-700">Description</label>
+                        <input
+                            type="text"
+                            required
+                            id="desc"
+                            name="desc"
+                            value={promotionData.description}
+                            onChange={handleChange}
+                            placeholder="Promotion Description"
+                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="discount" className="block text-gray-700">Discount</label>
+                        <input
+                            type="number"
+                            required
+                            id="discount"
+                            name="discount"
+                            value={promotionData.discount}
+                            onChange={handleChange}
+                            placeholder="Discount Percentage"
+                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                        />
+                    </div>
+                </div>
+
 
                         <div className="text-center">
                             <button
@@ -83,7 +109,7 @@ export default function CreatePromotion({ profile }: { profile: Profile }) {
                         </div>
                     </div>
                 </form>
-            ) : null}
+            
         </main>
     );
 }

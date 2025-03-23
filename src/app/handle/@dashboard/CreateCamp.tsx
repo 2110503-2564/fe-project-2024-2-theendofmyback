@@ -75,7 +75,7 @@ export default function CreateCamp({ profile, token }: { profile: Profile, token
 
             <div className="flex flex-col w-1/2 mx-auto space-y-4">
                 <div>
-                    <label htmlFor="name" className="block text-gray-700">Camp Name</label>
+                    <label htmlFor="name" className="block text-gray-700">Camp Name (unique field) </label>
                     <input
                         type="text"
                         required

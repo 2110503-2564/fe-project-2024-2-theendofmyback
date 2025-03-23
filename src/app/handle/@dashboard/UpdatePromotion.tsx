@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import updatePromotion from "@/libs/promotions/UpdatePromotion"; 
 import getPromotions from "@/libs/promotions/getPromotions";
+import deletePromotions from "@/libs/promotions/deletePromotion";
+
 
 interface Promotion {
     id: string;
@@ -87,6 +89,25 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
         }
     }, [isLoading, error]);
 
+    const handleDelete = (): void => {
+            if (confirm("Are you SURE sure SURE SURE to delete this promotion")) {
+              console.log(`Deleting promotion with ID: ${formData.id}`);
+              
+              deletePromotions(
+                token,
+                formData.id
+              ).then(
+                () => {
+                  console.log("Promotion deleted successfully.");
+                  window.location.reload();
+                }
+              )
+        
+            } else {
+              console.log("Delete not confirmed yet.");
+            }
+        }
+
     return (
         <main className="m-5 p-5">
         
@@ -165,7 +186,15 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                     <button
                         type="button"
                         disabled={isLoading}
-                       // onClick={} // Replace with your actual delete function
+                        onClick={() => {
+                            if (formData.id) {
+                                if (confirm("Are you sure you want to delete this promotion?")) {
+                                    handleDelete();
+                                }
+                            } else {
+                                alert("Please select a promotion to delete.");
+                            }
+                        }}
                         className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
                             isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700 text-white"
                         }`}

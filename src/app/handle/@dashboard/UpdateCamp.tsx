@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import updateCampground from "@/libs/campgrounds/UpdateCampground";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
-
+import deleteCampground from "@/libs/campgrounds/deleteCampground";
 interface Camp {
     id: string;
     name: string;
@@ -26,6 +26,7 @@ interface Profile {
 }
 
 export default function UpdateCamp({ profile, token }: { profile: Profile, token:string }) {
+       
     const [formData, setFormData] = useState<Camp>({
         id: "",
         name: "",
@@ -46,6 +47,27 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
             [name]: name === "price" || name === "capacity" ? parseFloat(value) : value,
         }));
     };
+
+
+    const handleDelete = (): void => {
+        if (confirm("Are you aware that deleting campground will delete all its booking too")) {
+          console.log(`Deleting campground with ID: ${formData.id}`);
+          
+          deleteCampground(
+            token,
+            formData.id
+          ).then(
+            () => {
+              console.log("Campground deleted successfully.");
+              window.location.reload();
+            }
+          )
+    
+        } else {
+          console.log("Delete not confirmed yet.");
+        }
+    }
+     
 
     useEffect(() => {
         const fetchCampgrounds = async () => {
@@ -74,7 +96,7 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
             fetchCampgroundsAfterSubmit();
         }
     }, [isLoading, error]);
-
+    
     
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -97,8 +119,7 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
         } finally {
             setIsLoading(false);
         }
-    };
-
+    }
     return (
         <main className="m-5 p-5">
             
@@ -234,7 +255,15 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
 
                         <button
                             type="button"
-                            
+                            onClick={() => {
+                                if (formData.id) {
+                                    if (confirm("Are you sure you want to delete this camp?")) {
+                                        handleDelete();
+                                    }
+                                } else {
+                                    alert("Please select a camp to delete.");
+                                }
+                            }}
                             disabled={isLoading}
                             className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
                                 isLoading
