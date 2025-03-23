@@ -4,29 +4,12 @@ import { useState, useEffect } from "react";
 import updateCampground from "@/libs/campgrounds/UpdateCampground";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import deleteCampground from "@/libs/campgrounds/deleteCampground";
-interface Camp {
-    id: string;
-    name: string;
-    address: string;
-    tel: string;
-    price: number;
-    capacity: number;
-    description: string;
-    image: string;
-}
+import { Profile, Camp } from "../../../../interface";
 
-interface Profile {
-    data: {
-        name: string;
-        email: string;
-        tel: string;
-        createdAt: string;
-        role: string;
-    };
-}
 
-export default function UpdateCamp({ profile, token }: { profile: Profile, token:string }) {
-       
+
+export default function UpdateCamp({ profile, token }: { profile: Profile, token: string }) {
+
     const [formData, setFormData] = useState<Camp>({
         id: "",
         name: "",
@@ -51,23 +34,23 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
 
     const handleDelete = (): void => {
         if (confirm("Are you aware that deleting campground will delete all its booking too")) {
-          console.log(`Deleting campground with ID: ${formData.id}`);
-          
-          deleteCampground(
-            token,
-            formData.id
-          ).then(
-            () => {
-              console.log("Campground deleted successfully.");
-              window.location.reload();
-            }
-          )
-    
+            console.log(`Deleting campground with ID: ${formData.id}`);
+
+            deleteCampground(
+                token,
+                formData.id
+            ).then(
+                () => {
+                    console.log("Campground deleted successfully.");
+                    window.location.reload();
+                }
+            )
+
         } else {
-          console.log("Delete not confirmed yet.");
+            console.log("Delete not confirmed yet.");
         }
     }
-     
+
 
     useEffect(() => {
         const fetchCampgrounds = async () => {
@@ -96,8 +79,8 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
             fetchCampgroundsAfterSubmit();
         }
     }, [isLoading, error]);
-    
-    
+
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -106,14 +89,14 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
 
         try {
             console.log("Form Data:", formData);
-            
+
             const { id, name, address, tel, price, capacity, description, image } = formData;
             const response = await updateCampground(token, id, name, address, tel, price, capacity, description, image);
             //console.log("update reponse: ",response)
             alert("Update Campground successfully!");
             if (response.success) {
                 setError("");
-              }
+            }
         } catch (err) {
             setError("Failed to update camp. Please try again .");
         } finally {
@@ -121,134 +104,139 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
         }
     }
     return (
-        <main className="m-5 p-5">
-            
-                <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-                    <div className="text-2xl text-blue-700 font-semibold">Update Camp Information</div>
+        <main className="m-8 p-8 bg-white rounded-xl shadow-xl">
 
-                    {error && <p className="text-red-500">{error}</p>}
+            <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+                <div className="text-3xl text-teal-700 font-semibold text-center mb-8"
+                >   - Update Camp Information -</div>
 
-                    <input type="hidden" name="id" value={formData.id} />
-                    <div className="flex flex-col w-1/2 mx-auto space-y-4">
-                        <div>
-                            <label htmlFor="name" className="block text-gray-700">Camp Name</label>
-                            <select
-                                id="name"
-                                name="name"
-                                value={formData.id}
-                                onChange={(e) => {
-                                    const selectedCampground = campgrounds.find(
-                                        (campground) => campground.id === e.target.value
-                                    );
-                                    if (selectedCampground) {
-                                        setFormData({
-                                            ...selectedCampground,
-                                            price: parseFloat(selectedCampground.price),
-                                            capacity: parseFloat(selectedCampground.capacity),
-                                        });
-                                    }
-                                }}
-                                required
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            >
-                                <option value="" disabled>Select a camp</option>
-                                {campgrounds.map((campground) => (
-                                    <option key={campground.id} value={campground.id}>
-                                        {campground.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                {error && <p className="text-red-500">{error}</p>}
 
-                        <div>
-                            <label htmlFor="address" className="block text-gray-700">Address</label>
-                            <input
-                                type="text"
-                                required
-                                id="address"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
+                <input type="hidden" name="id" value={formData.id} />
+                <div className="flex flex-col w-2/3 mx-auto space-y-6">
+                    <div>
+                        <label htmlFor="name" className="block text-teal-600 font-medium mb-2">Camp Name</label>
+                        <select
+                            id="name"
+                            name="name"
+                            value={formData.id}
+                            onChange={(e) => {
+                                const selectedCampground = campgrounds.find(
+                                    (campground) => campground.id === e.target.value
+                                );
+                                if (selectedCampground) {
+                                    setFormData({
+                                        ...selectedCampground,
+                                        price: parseFloat(selectedCampground.price),
+                                        capacity: parseFloat(selectedCampground.capacity),
+                                    });
+                                }
+                            }}
+                            required
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        >
+                            <option value="" disabled>Select a camp</option>
+                            {campgrounds.map((campground) => (
+                                <option key={campground.id} value={campground.id}>
+                                    {campground.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                        <div>
-                            <label htmlFor="tel" className="block text-gray-700">Phone Number</label>
-                            <input
-                                type="text"
-                                required
-                                id="tel"
-                                name="tel"
-                                value={formData.tel}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="address" className="block text-teal-600 font-medium mb-2">Address</label>
+                        <input
+                            type="text"
+                            required
+                            id="address"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="price" className="block text-gray-700">Price</label>
-                            <input
-                                type="number"
-                                required
-                                id="price"
-                                name="price"
-                                value={formData.price.toString()}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="tel" className="block text-teal-600 font-medium mb-2">Phone Number</label>
+                        <input
+                            type="text"
+                            required
+                            id="tel"
+                            name="tel"
+                            value={formData.tel}
+                            onChange={handleChange}
+                             className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="capacity" className="block text-gray-700">Capacity</label>
-                            <input
-                                type="number"
-                                required
-                                id="capacity"
-                                name="capacity"
-                                value={formData.capacity.toString()}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="price" className="block text-teal-600 font-medium mb-2">Price</label>
+                        <input
+                            type="number"
+                            required
+                            id="price"
+                            name="price"
+                            value={formData.price.toString()}
+                            onChange={handleChange}
+                           className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="description" className="block text-gray-700">Description</label>
-                            <input
-                                type="text"
-                                required
-                                id="description"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
+                    <div>
+                        <label htmlFor="capacity" className="block text-teal-600 font-medium mb-2">Capacity</label>
+                        <input
+                            type="number"
+                            required
+                            id="capacity"
+                            name="capacity"
+                            value={formData.capacity.toString()}
+                            onChange={handleChange}
+                           className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
 
-                        <div>
-                            <label htmlFor="image" className="block text-gray-700">Image URL</label>
-                            <input
-                                type="text"
-                                required
-                                id="image"
-                                name="image"
-                                value={formData.image}
-                                onChange={handleChange}
-                                className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
-                            />
-                        </div>
-                        <img src={formData.image} className="w-44"/>
+                    <div>
+                        <label htmlFor="description" className="block text-teal-600 font-medium mb-2">Description</label>
+                        <input
+                            type="text"
+                            required
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
+
+                
+
+                    <div>
+                        <label htmlFor="image" className="block text-teal-600 font-medium mb-2">Image URL</label>
+                        <input
+                            type="text"
+                            required
+                            id="image"
+                            name="image"
+                            value={formData.image}
+                            onChange={handleChange}
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                        />
+                    </div>
+
+                    <div className="mb-6">
+                        <img src={formData.image} alt="Camp preview" className="w-44 h-44 object-cover rounded-lg mx-auto" />
+                    </div>
 
 
                     <div className="text-center">
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
-                                isLoading
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-blue-600 hover:bg-blue-700 text-white"
-                            }`}
+                            className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${isLoading
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                                }`}
                         >
                             {isLoading ? "Updating..." : "Update Camp"}
                         </button>
@@ -265,18 +253,17 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
                                 }
                             }}
                             disabled={isLoading}
-                            className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
-                                isLoading
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-red-600 hover:bg-red-700 text-white"
-                            }`}
+                            className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${isLoading
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-red-500 hover:bg-red-700 text-white"
+                                }`}
                         >
                             {isLoading ? "Deleting..." : "Delete Camp"}
                         </button>
                     </div>
-                    </div>
-                </form>
-            
+                </div>
+            </form>
+
         </main>
     );
 }

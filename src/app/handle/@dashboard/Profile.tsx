@@ -1,25 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface Camp {
-    name: string;
-    address: string;
-    tel: string;
-    price: number;
-    capacity: number;
-    description: string;
-    image: string;
-  }
-
-interface Profile {
-  data: {
-    name: string;
-    email: string;
-    tel: string;
-    createdAt: string;
-  };
-}
+import { Camp, Profile } from "../../../../interface";
 
 export default function Prof({ profile }: { profile: Profile }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -31,15 +13,30 @@ export default function Prof({ profile }: { profile: Profile }) {
   };
 
   return (
-    <main className="m-5 p-5">
-      <div className="text-3xl font-semibold text-green-700">
-        {profile.data.name}
+    <main className="m-8 p-6 bg-white rounded-xl shadow-xl">
+      <div className="text-4xl font-semibold text-teal-700 mb-6">
+        - {profile.data.name} -
       </div>
-      <table className="table-auto border-separate border-spacing-4 mt-5">
+      <div className="bg-teal-50 p-4 rounded-lg shadow-md mb-5">
+        <h2 className="text-2xl font-semibold text-teal-600"> Be Careful !!</h2>
+        <p className="text-lg text-teal-500">Your action will effect the database</p>
+      </div>
+      <table className="table-auto w-full border-collapse border-separate border-spacing-3">
         <tbody>
-          <tr><td className="font-medium text-gray-600">Email</td><td>{profile.data.email}</td></tr>
-          <tr><td className="font-medium text-gray-600">Tel</td><td>{profile.data.tel}</td></tr>
-          <tr><td className="font-medium text-gray-600">Member Since</td><td>{new Date(profile.data.createdAt).toLocaleDateString()}</td></tr>
+          <tr className="border-b border-teal-200">
+            <td className="font-medium text-emerald-600 py-2 px-4">Email : </td>
+            <td className="text-emerald-800 py-2 px-4">{profile.data.email}</td>
+          </tr>
+          <tr className="border-b border-teal-200">
+            <td className="font-medium text-emerald-600 py-2 px-4">Tel : </td>
+            <td className="text-emerald-800 py-2 px-4">{profile.data.tel}</td>
+          </tr>
+          <tr>
+            <td className="font-medium text-emerald-600 py-2 px-4">Member Since : </td>
+            <td className="text-emerald-800 py-2 px-4">
+              {new Date(profile.data.createdAt).toLocaleDateString()}
+            </td>
+          </tr>
         </tbody>
       </table>
     </main>

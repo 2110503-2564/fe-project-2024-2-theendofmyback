@@ -38,9 +38,10 @@ export default async function DashboardPage() {
 
   const profile = await getMe(session.user.token);
   
+  console.log("Profile:", profile);
   return (
     <div>
-      {!profile.isAdmin ? 
+      {!(profile.data.role === "admin") ? 
       <div className="flex flex-col items-center justify-center h-full text-center">
         <h1 className="text-2xl font-bold text-red-500 mb-4">Access Denied</h1>
         <p className="text-gray-700">You do not have access to this page.</p>
