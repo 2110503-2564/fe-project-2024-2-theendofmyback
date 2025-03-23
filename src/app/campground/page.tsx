@@ -5,22 +5,30 @@ import { Search } from "lucide-react";
 import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import Loader from "@/components/load";
 import { CampgroundsJson } from "../../../interface";
+import { useSearchParams } from "next/navigation";
 
 export default function Campground() {
+  const urlParams = useSearchParams()
+  
   
 
   const [campgrounds, setCampgrounds] = useState<CampgroundsJson | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    const search = urlParams.get('search_query')
+    if (search) {
+      setSearchTerm(search);
+    }
+
     const fetchCampground = async () => {
-      let queryString = "";
+      let queryString = search ? `?search_query=${search}` : "";
 
       try {
-        const campgroundList = await getCampgrounds(queryString);
-        setCampgrounds(campgroundList);
+      const campgroundList = await getCampgrounds(queryString);
+      setCampgrounds(campgroundList);
       } catch (error) {
-        console.error("Error fetching campgrounds:", error);
+      console.error("Error fetching campgrounds:", error);
       }
     };
 

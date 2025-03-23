@@ -27,7 +27,7 @@ export default function Banner({ campgrounds }: { campgrounds: CampgroundsJson }
         if (foundCampground) {
             router.push(`/campground/${foundCampground._id}`);
         } else {
-            alert("ไม่พบแคมป์กราวด์ที่ค้นหา");
+            router.push(`/campground/?search_query=${inputValue}`)
         }
     };
 
