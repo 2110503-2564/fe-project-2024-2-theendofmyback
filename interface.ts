@@ -133,3 +133,9 @@ export interface Profile {
     };
 }
 
+export interface Promotion {
+    id: string;
+    name: string;
+    description: string;
+    discount: number;
+}

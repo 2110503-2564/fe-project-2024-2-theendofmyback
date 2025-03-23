@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import updatePromotion from "@/libs/promotions/UpdatePromotion"; 
 import getPromotions from "@/libs/promotions/getPromotions";
 import deletePromotions from "@/libs/promotions/deletePromotion";
-
+import { Profile } from "../../../../interface";
 
 interface Promotion {
     id: string;
@@ -13,15 +13,6 @@ interface Promotion {
     discount: number;
 }
 
-interface Profile {
-    data: {
-        name: string;
-        email: string;
-        tel: string;
-        createdAt: string;
-        role: string;
-    };
-}
 
 export default function UpdatePromotion({ profile, token }: { profile: Profile, token:string }) {
     const [formData, setFormData] = useState<Promotion>({
@@ -109,17 +100,17 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
         }
 
     return (
-        <main className="m-5 p-5">
+        <main className="m-8 p-8 bg-white rounded-xl shadow-xl">
         
             <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-                <div className="text-2xl text-blue-700 font-semibold">Update Promotion Information</div>
+                <div className="text-3xl text-teal-700 font-semibold text-center mb-8">- Update Promotion Information -</div>
     
                 {error && <p className="text-red-500">{error}</p>}
                 <input type="hidden" name="id" value={formData.id} />
     
                 <div className="flex flex-col w-1/2 mx-auto space-y-4">
                     <div>
-                        <label htmlFor="promotion" className="block text-gray-700">Select Promotion</label>
+                        <label htmlFor="promotion" className="block text-teal-600 font-medium mb-2">Select Promotion</label>
                         <select
                             id="promotion"
                             name="promotion"
@@ -135,7 +126,7 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                                     });
                                 }
                             }}
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         >
                             <option value="" disabled>Select a promotion</option>
                             {promotions.map((promotion) => (
@@ -147,7 +138,7 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                     </div>
     
                     <div>
-                        <label htmlFor="description" className="block text-gray-700">Description</label>
+                        <label htmlFor="description" className="block text-teal-600 font-medium mb-2">Description</label>
                         <input
                             type="text"
                             required
@@ -155,12 +146,12 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         />
                     </div>
     
                     <div>
-                        <label htmlFor="discount" className="block text-gray-700">Discount Percentage</label>
+                        <label htmlFor="discount" className="block text-teal-600 font-medium mb-2">Discount Percentage</label>
                         <input
                             type="number"
                             required
@@ -168,7 +159,7 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                             name="discount"
                             value={formData.discount.toString()}
                             onChange={handleChange}
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-blue-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         />
                     </div>
                 
@@ -177,7 +168,7 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                         type="submit"
                         disabled={isLoading}
                         className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
-                            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"
+                            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700 text-white"
                         }`}
                     >
                         {isLoading ? "Updating..." : "Update Promotion"}
@@ -196,7 +187,7 @@ export default function UpdatePromotion({ profile, token }: { profile: Profile, 
                             }
                         }}
                         className={`p-3 rounded-lg w-full mt-4 transition duration-300 ease-in-out ${
-                            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700 text-white"
+                            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-700 text-white"
                         }`}
                     >
                         {isLoading ? "Deleting..." : "Delete Promotion"}

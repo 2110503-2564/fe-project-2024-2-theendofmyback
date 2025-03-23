@@ -6,8 +6,6 @@ import getCampgrounds from "@/libs/campgrounds/getCampgrounds";
 import deleteCampground from "@/libs/campgrounds/deleteCampground";
 import { Profile, Camp } from "../../../../interface";
 
-
-
 export default function UpdateCamp({ profile, token }: { profile: Profile, token: string }) {
 
     const [formData, setFormData] = useState<Camp>({
@@ -23,6 +21,7 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
     const [isLoading, setIsLoading] = useState(false);
     const [campgrounds, setCamgrounds] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -30,7 +29,6 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
             [name]: name === "price" || name === "capacity" ? parseFloat(value) : value,
         }));
     };
-
 
     const handleDelete = (): void => {
         if (confirm("Are you aware that deleting campground will delete all its booking too")) {
@@ -49,8 +47,7 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
         } else {
             console.log("Delete not confirmed yet.");
         }
-    }
-
+    };
 
     useEffect(() => {
         const fetchCampgrounds = async () => {
@@ -80,8 +77,6 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
         }
     }, [isLoading, error]);
 
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
@@ -92,7 +87,6 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
 
             const { id, name, address, tel, price, capacity, description, image } = formData;
             const response = await updateCampground(token, id, name, address, tel, price, capacity, description, image);
-            //console.log("update reponse: ",response)
             alert("Update Campground successfully!");
             if (response.success) {
                 setError("");
@@ -102,13 +96,15 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
         } finally {
             setIsLoading(false);
         }
-    }
+    };
+
     return (
         <main className="m-8 p-8 bg-white rounded-xl shadow-xl">
 
+            
+
             <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-                <div className="text-3xl text-teal-700 font-semibold text-center mb-8"
-                >   - Update Camp Information -</div>
+                <div className="text-3xl text-teal-700 font-semibold text-center mb-8">- Update Camp Information -</div>
 
                 {error && <p className="text-red-500">{error}</p>}
 
@@ -144,92 +140,94 @@ export default function UpdateCamp({ profile, token }: { profile: Profile, token
                         </select>
                     </div>
 
-                    <div>
-                        <label htmlFor="address" className="block text-teal-600 font-medium mb-2">Address</label>
-                        <input
-                            type="text"
-                            required
-                            id="address"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
+                    <div className="flex w-full space-x-6">
+                        <div className="flex-1">
+                            <label htmlFor="description" className="block text-teal-600 font-medium mb-2">Description</label>
+                            <input
+                                type="text"
+                                required
+                                id="description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
+
+                        <div className="flex-1">
+                            <label htmlFor="image" className="block text-teal-600 font-medium mb-2">Image URL</label>
+                            <input
+                                type="text"
+                                required
+                                id="image"
+                                name="image"
+                                value={formData.image}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex w-full space-x-6">
+                        <div className="flex-1">
+                            <label htmlFor="address" className="block text-teal-600 font-medium mb-2">Address</label>
+                            <input
+                                type="text"
+                                required
+                                id="address"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
+
+                        <div className="flex-1">
+                            <label htmlFor="tel" className="block text-teal-600 font-medium mb-2">Phone Number</label>
+                            <input
+                                type="text"
+                                required
+                                id="tel"
+                                name="tel"
+                                value={formData.tel}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="tel" className="block text-teal-600 font-medium mb-2">Phone Number</label>
-                        <input
-                            type="text"
-                            required
-                            id="tel"
-                            name="tel"
-                            value={formData.tel}
-                            onChange={handleChange}
-                             className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
+                    <div className="flex w-full space-x-6">
+                        <div className="flex-1">
+                            <label htmlFor="price" className="block text-teal-600 font-medium mb-2">Price</label>
+                            <input
+                                type="number"
+                                required
+                                id="price"
+                                name="price"
+                                value={formData.price.toString()}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
+
+                        <div className="flex-1">
+                            <label htmlFor="capacity" className="block text-teal-600 font-medium mb-2">Capacity</label>
+                            <input
+                                type="number"
+                                required
+                                id="capacity"
+                                name="capacity"
+                                value={formData.capacity.toString()}
+                                onChange={handleChange}
+                                className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
+                            />
+                        </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="price" className="block text-teal-600 font-medium mb-2">Price</label>
-                        <input
-                            type="number"
-                            required
-                            id="price"
-                            name="price"
-                            value={formData.price.toString()}
-                            onChange={handleChange}
-                           className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
+                    <div className="flex justify-center my-6">
+                        <img src={formData.image} alt="Camp preview" className="w-44 h-44 object-cover rounded-lg" />
                     </div>
 
-                    <div>
-                        <label htmlFor="capacity" className="block text-teal-600 font-medium mb-2">Capacity</label>
-                        <input
-                            type="number"
-                            required
-                            id="capacity"
-                            name="capacity"
-                            value={formData.capacity.toString()}
-                            onChange={handleChange}
-                           className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="description" className="block text-teal-600 font-medium mb-2">Description</label>
-                        <input
-                            type="text"
-                            required
-                            id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
-                    </div>
-
-                
-
-                    <div>
-                        <label htmlFor="image" className="block text-teal-600 font-medium mb-2">Image URL</label>
-                        <input
-                            type="text"
-                            required
-                            id="image"
-                            name="image"
-                            value={formData.image}
-                            onChange={handleChange}
-                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
-                        />
-                    </div>
-
-                    <div className="mb-6">
-                        <img src={formData.image} alt="Camp preview" className="w-44 h-44 object-cover rounded-lg mx-auto" />
-                    </div>
-
-
-                    <div className="text-center">
+                    <div className="w-full text-center">
                         <button
                             type="submit"
                             disabled={isLoading}

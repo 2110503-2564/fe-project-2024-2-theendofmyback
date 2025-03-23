@@ -17,15 +17,14 @@ interface Profile {
     };
 }
 
-
-
 export default function CreatePromotion({ profile, token }: { profile: Profile, token:string }) {
     const [promotionData, setPromotionData] = useState<Promotion>({
         _id: "no use",
+        id: "no use",
         name: "New Promotion",
-        campground: "no use",
         description: "this is a promotion",
-        discount: 10, 
+        discount: 10,
+        campground: "default campground",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +47,7 @@ export default function CreatePromotion({ profile, token }: { profile: Profile, 
     };
 
     return (
-        <main className="m-5 p-5">
+        <main className="m-8 p-8 bg-white rounded-xl shadow-xl">
             
                 <form action={addPromotion} className="mt-6 space-y-6">
                     <div className="text-2xl text-green-700 font-semibold">Create New Promotion</div>
@@ -56,7 +55,7 @@ export default function CreatePromotion({ profile, token }: { profile: Profile, 
                     <div className="flex flex-col w-1/2 mx-auto space-y-4">
                     <div>
                     <div>
-                        <label htmlFor="name" className="block text-gray-700">Promotion Name (unique field)</label>
+                        <label htmlFor="name" className="block text-teal-600 font-medium mb-2">Promotion Name (unique field)</label>
                         <input
                             type="text"
                             required
@@ -65,12 +64,12 @@ export default function CreatePromotion({ profile, token }: { profile: Profile, 
                             value={promotionData.name}
                             onChange={handleChange}
                             placeholder="Promotion Name"
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="desc" className="block text-gray-700">Description</label>
+                        <label htmlFor="desc" className="block text-teal-600 font-medium mb-2">Description</label>
                         <input
                             type="text"
                             required
@@ -79,12 +78,12 @@ export default function CreatePromotion({ profile, token }: { profile: Profile, 
                             value={promotionData.description}
                             onChange={handleChange}
                             placeholder="Promotion Description"
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="discount" className="block text-gray-700">Discount</label>
+                        <label htmlFor="discount" className="block text-teal-600 font-medium mb-2">Discount</label>
                         <input
                             type="number"
                             required
@@ -93,7 +92,7 @@ export default function CreatePromotion({ profile, token }: { profile: Profile, 
                             value={promotionData.discount}
                             onChange={handleChange}
                             placeholder="Discount Percentage"
-                            className="bg-white border-2 border-gray-300 rounded w-full p-3 focus:outline-none focus:border-green-500 shadow-sm"
+                            className="bg-white border-2 border-emerald-300 rounded-lg w-full p-4 focus:outline-none focus:border-emerald-500 shadow-sm"
                         />
                     </div>
                 </div>
