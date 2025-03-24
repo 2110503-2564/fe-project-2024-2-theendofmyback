@@ -26,7 +26,7 @@ const FavCard = ({ reviews }: { reviews?: Review }) => {
               </svg>
             </div>
           </header>
-          <p className="w-full card__job-title">{campgroundName}</p>
+          <p className="w-72 text-emerald-700 text-4xl font-bold">{campgroundName}</p>
           <img
             src={campgroubdImage}
             alt="Camp img"
@@ -140,7 +140,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 300px; 
+    width: 140px; 
   }
   .card__job-summary {
     display: flex;
