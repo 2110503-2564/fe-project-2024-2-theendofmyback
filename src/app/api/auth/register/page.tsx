@@ -36,11 +36,29 @@ export default function Register() {
                     console.log(response)
 
                     if (response?.success) {
+
+                        const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                  toast.onmouseenter = Swal.stopTimer;
+                                  toast.onmouseleave = Swal.resumeTimer;
+                                }
+                              });
+                              Toast.fire({
+                                icon: "success",
+                                title: "Signed up successfully"
+                              });
+
                         const signInResponse = await signIn("credentials", {
                             redirect: false,
                             email,
                             password,
                         });
+                        
             
                         if (signInResponse?.error) {
                             console.error("Auto-login failed:", signInResponse.error);
