@@ -11,7 +11,7 @@ export default function AboutUs() {
 
     const coversPhu = ['/img/phu.jpg', '/img/phu1.jpg', '/img/phu2.jpg'];
     const coversKwan = ['/img/kwan.jpg', '/img/kwan1.jpg', '/img/kwan2.jpg'];
-    const coversNat = ['/img/nat.png', '/img/nat1.jpg', '/img/nat2.png'];
+    const coversNat = ['/img/nat.png', '/img/nat1.jpg', '/img/nat2.jpg'];
     const [indexN, setIndexN] = useState(0);
     const [indexP, setIndexP] = useState(0);
     const [indexK, setIndexK] = useState(0);
