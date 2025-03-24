@@ -24,7 +24,8 @@ export function VideoCard() {
 
     return (
         
-        <div className="bg-white py-20 w-full ">
+        <div className="py-20 w-full bg-gradient-to-b from-green-100 from-10% to-white to-25%">
+            <div className="py-20 w-full ">
             <div className="container mx-auto flex flex-col items-center">
                 <div className="flex justify-start items-center w-full py-1 pl-4">
                 <video 
@@ -48,6 +49,7 @@ export function VideoCard() {
                         </Link>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );
