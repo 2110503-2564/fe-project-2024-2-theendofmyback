@@ -102,7 +102,7 @@ export default function Home() {
 
   return (
     <main className="relative ">
-      <div className="mx-auto transform">
+      <div className="mx-auto transform flex flex-col items-center justify-center">
         <Banner campgrounds={campgrounds as CampgroundsJson} />
         <div className="flex justify-between items-center mx-10 mt-10">
 
@@ -190,7 +190,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center mx-20 mt-10" />
+        
 
         
 
