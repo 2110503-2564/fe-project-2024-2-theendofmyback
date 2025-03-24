@@ -66,7 +66,7 @@ export default function SingleBookingPage({ params }: { params: { bid: string } 
       if (dayjs(dateCheckIn).isAfter(dayjs(dateCheckOut))) {
 
         Swal.fire({
-          title: "Check-in date cannot be later than check-out date.",
+          title: "Check-in date cannot be later than check-out date!",
           icon: "warning",
           draggable: true
         });
@@ -74,7 +74,7 @@ export default function SingleBookingPage({ params }: { params: { bid: string } 
       }
       if (diffInDays > 3) {
         Swal.fire({
-          title: "The stay duration cannot exceed 3 days.",
+          title: "The stay duration cannot exceed 3 days!",
           icon: "warning",
           draggable: true
         });

@@ -20,25 +20,26 @@ const Input: React.FC<InputProps & { onClick: () => void }> = ({ value: initialV
 
     return (
         <StyledWrapper>
-            <form className="form" 
+            <form className="relative flex h-10 w-[700px] items-center rounded-[30px] bg-white px-3 transition-all focus-within:rounded-md border border-transparent focus-within:border-green-500"
+ 
                 onSubmit={(e) => { e.preventDefault(); onClick(); onChange(value)}}>
-                <button type="submit">
+                <button type="submit" className="text-gray-500 hover:text-gray-700">
                     <svg width={17} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
                 <input
-                    className="input"
+                    className="w-full bg-white px-2 py-2 text-sm text-black outline-none placeholder-gray-400 border-none shadow-none"
                     placeholder="Type your text..."
                     type="text"
                     value={value}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     onClick={(e) => e.stopPropagation()}
-                    required
+                    
                 />
                 <button
-                    className="reset"
+                    className="text-gray-500 hover:text-gray-700"
                     type="button"
                     onClick={(e) => {
                         e.stopPropagation();

@@ -15,6 +15,18 @@ export default function ManagePage() {
     const [bookingData, setBookingData] = useState<Booking[]>([]);
     const [isAdmin, setAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [selectSort, setSelectedSort]  = useState("ByUpcoming")
+
+    useEffect(() => {
+        setBookingData(prevBookingData => 
+            [...prevBookingData].sort((a, b) => 
+                selectSort === "ByBookingAt"
+                    ? new Date(b.bookingAt).getTime() - new Date(a.bookingAt).getTime()
+                    : new Date(a.checkInDate).getTime() - new Date(b.checkInDate).getTime()
+            )
+        );
+    }, [selectSort]); 
+    
     
 
     useEffect(() => {
@@ -57,7 +69,17 @@ export default function ManagePage() {
             </h2>
             </div>
             
-            
+            <div className="my-5 text-emerald-700 ">
+                <select
+                    value={selectSort}
+                    onChange={(e) => setSelectedSort(e.target.value)}
+                    className="border border-gray-300 rounded-md px-4 py-2"
+                >
+                    <option value="ByUpcoming">Sort by Up Coming</option>
+                    <option value="ByBookingAt">Sort by Booking At</option>
+                </select>
+            </div>
+
             {bookingData.length === 0 ? (
                 <div className="m-10"><Loader /></div>
             ) : null}

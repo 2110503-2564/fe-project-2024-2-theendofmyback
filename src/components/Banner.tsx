@@ -46,7 +46,7 @@ export default function Banner({ campgrounds }: { campgrounds: CampgroundsJson }
                 <h1 className={styles.title}>CAMPGROUND BOOKING</h1>
                 <p className={styles.slogan}>Escape to Nature</p>
 
-                <div className={styles.searchContainer}>
+                <div className="">
                     <Input value={inputValue} onChange={handleInputChange} onClick={handleSearch}/>
 
                 </div>
