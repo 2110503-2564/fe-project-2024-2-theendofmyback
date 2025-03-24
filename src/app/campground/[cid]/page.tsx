@@ -79,7 +79,7 @@ export default function CampgroundPage({params} : { params: {cid:string}}) {
             <div className="px-10 mt-9 w-full flex flex-row items-center justify-between">
                 <h2 className="px-2 my-2 font-bold text-[30px] font-sans">{campInfo.name}</h2>
                 <Link href={`/booking?id=${params.cid}`}>
-                    <button className="bg-orange-300 hover:bg-orange-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
+                    <button className="bg-teal-300 hover:bg-teal-400 text-white px-6 py-4 rounded-3xl m-2 font-bold text-lg text-[30px]">
                         Book
                     </button>
                 </Link>
@@ -90,7 +90,7 @@ export default function CampgroundPage({params} : { params: {cid:string}}) {
                     <img src={"/img/cedt-coin.png"} className="w-10 inline-block" />
                     <h2 className="text-green-700 px-2 font-bold text-[25px] font-sans">{campInfo.price}</h2>
                 </div>
-                <img src={campInfo.image} className="my-10 w-full h-[300px] object-cover" ></img>
+                <img src={campInfo.image} className="my-10 w-full h-[400px] object-cover object-[50%_80%] " ></img>
                 
                 <p className="my-2 font-medium text-[20px] font-sans">{campInfo.description}</p>    
                 <div className="flex flex-row bg-slate-200 w-fit p-2 my-2 rounded-lg font-medium relative group">

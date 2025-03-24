@@ -53,7 +53,7 @@ export default function Promotion() {
                     <div className="m-10 justify-items-center"><Loader /></div>
                     
                 )}
-                <div className="flex flex-wrap gap-8 justify-center mt-6">
+                <div className="flex flex-wrap gap-20 justify-center mt-6">
                     {promotions.map((promotion) => (
                         <div
                             key={promotion._id}
