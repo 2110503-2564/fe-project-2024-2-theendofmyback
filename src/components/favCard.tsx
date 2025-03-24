@@ -39,7 +39,7 @@ const FavCard = ({ reviews }: { reviews?: Review }) => {
               <img src="/img/logo.png" alt="Logo" width={40} height={40} />
             </div>
             <div className="card__job">
-              <h1 className="card__job-title">
+              <h1 className="card__job-title width: 140px;">
                 {camgroundDescription} <br />
               </h1>
               <Rating name="read-only" value={reviews?.rating || 0} readOnly />
