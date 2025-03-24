@@ -118,7 +118,28 @@ export default function Review() {
                          })}
                      </div>
                      
-                     <form onSubmit={handleSubmit}>
+                     <form
+                         onSubmit={(event) => {
+                             if (!title || !campground || rating === 0) {
+                                 event.preventDefault();
+
+                                 const missingFields = [];
+                                 if (rating === 0) missingFields.push("Rating");
+                                 if (!title) missingFields.push("Review Title");
+                                 if (!campground) missingFields.push("Campground");
+                                 
+
+                                 Swal.fire({
+                                     icon: "warning",
+                                     title: "Oops...",
+                                     text: `Please fill in all required fields: ${missingFields.join(", ")}.`,
+                                 });
+                                 console.log("Missing fields:", missingFields);
+                             } else {
+                                handleSubmit(event);
+                             }
+                         }}
+                     >
                          <input 
                              type="text" 
                              value={title} 
