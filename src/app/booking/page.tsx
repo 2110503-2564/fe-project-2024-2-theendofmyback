@@ -200,57 +200,67 @@ export default function BookingPage() {
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form
+                  onSubmit={(event) => {
+                    const confirmInfoCheckbox = document.getElementById("confirmInfo") as HTMLInputElement;
 
+                    if (!dateCheckIn || !dateCheckOut || !promotion || !confirmInfoCheckbox.checked) {
+                    event.preventDefault();
+
+                    const missingFields = [];
+                    if (!confirmInfoCheckbox.checked) missingFields.push("Confirmation Checkbox");
+                    if (!dateCheckIn) missingFields.push("Check-in Date");
+                    if (!dateCheckOut) missingFields.push("Check-out Date");
+                    if (!promotion) missingFields.push("Promotion");
+
+                    Swal.fire({
+                      icon: "warning",
+                      title: "Oops...",
+                      text: `Please fill in all required fields: ${missingFields.join(", ")}.`,
+                    });
+                    console.log("Missing fields:", missingFields);
+                    } else {
+                    handleSubmit(event);
+                    }
+                  }}
+                >
                   <div className="space-y-2 mb-4">
-                    <div className="font-bold text-green-600">Select Promotion: </div>
-                    <select
-                      value={promotion}
-                      onChange={(e) => setPromotion(e.target.value)}
-                      className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    >
-                        <option value="">-- Select Promotion --</option>
-                        {allPromotions.map((promo) => (
-                          <option key={promo._id} value={promo._id}>
-                            {promo.name} - ${promo.discount} OFF
-                          </option>
-                        ))}
-                    </select>
+                  <div className="font-bold text-green-600">Select Promotion: </div>
+                  <select
+                    value={promotion}
+                    onChange={(e) => setPromotion(e.target.value)}
+                    className="w-full p-3 bg-gray-100 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    <option value="">-- Select Promotion --</option>
+                    {allPromotions.map((promo) => (
+                    <option key={promo._id} value={promo._id}>
+                      {promo.name} - ${promo.discount} OFF
+                    </option>
+                    ))}
+                  </select>
                   </div>
 
                   <hr className="my-6 border-gray-200" />
 
                   <div className="flex flex-row justify-center gap-6 mb-6">
-                    <div className="w-1/2">
-                      <div className="font-bold text-green-600">Check-in Date</div>
-                      <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
-                    </div>
+                  <div className="w-1/2">
+                    <div className="font-bold text-green-600">Check-in Date</div>
+                    <DateReserve value={dateCheckIn} onChange={(newValue) => setDateCheckIn(newValue)} />
+                  </div>
 
-                    <div className="w-1/2">
-                      <div className="font-bold text-green-600">Check-out Date</div>
-                      <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
-                    </div>
+                  <div className="w-1/2">
+                    <div className="font-bold text-green-600">Check-out Date</div>
+                    <DateReserve value={dateCheckOut} onChange={(newValue) => setDateCheckOut(newValue)} />
+                  </div>
                   </div>
 
                   <hr className="my-6 border-gray-200" />
 
                   <button
-                    type="submit"
-                    onClick={() => {
-                      const confirmInfoCheckbox = document.getElementById('confirmInfo') as HTMLInputElement;
-                      if (!dateCheckIn || !dateCheckOut || !confirmInfoCheckbox.checked) {
-                        Swal.fire({
-                          title: "Please fill in all required fields: Check-in Date, Check-out Date, and confirm your information.",
-                          icon: "error",
-                          draggable: true
-                        });
-                        
-                        return  ;
-                      }
-                    }}
-                    className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
+                  type="submit"
+                  className="w-full p-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-lg mt-4 hover:bg-green-600 transition-all"
                   >
-                    Book Camp
+                  Book Camp
                   </button>
                 </form>
               </div>

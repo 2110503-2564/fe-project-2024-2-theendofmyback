@@ -200,7 +200,27 @@ export default function SingleBookingPage({ params }: { params: { bid: string } 
             )}
 
             {enableEdit && (
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={(event) => {
+                  if (!dateCheckIn || !dateCheckOut || !promotion) {
+                    event.preventDefault();
+                  
+                    const missingFields = [];
+                    if (!dateCheckIn) missingFields.push("Check-in Date");
+                    if (!dateCheckOut) missingFields.push("Check-out Date");
+                    if (!promotion) missingFields.push("Promotion");
+                  
+                    Swal.fire({
+                      icon: "warning",
+                      title: "Oops...",
+                      text: `Please fill in all required fields: ${missingFields.join(", ")}.`,
+                    });
+                    console.log("Missing fields:", missingFields);
+                  } else {
+                    handleSubmit(event);
+                  }
+                }}
+              >
                 <div className="space-y-4 mb-4">
                   <div className="font-bold text-green-600">Select Promotion:</div>
                   <select
