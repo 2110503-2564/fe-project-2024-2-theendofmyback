@@ -26,15 +26,17 @@ const Switch: React.FC<SwitchProps> = ({ checked, onChange }) => {
   );
 };
 
-
-
 const StyledWrapper = styled.div<StyledWrapperProps>`
   .toggle-checkbox {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-    height: 0;
-    width: 0;
+    height: 8em;
+    width: 20em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z : 100;
   }
 
   .toggle-slot {
